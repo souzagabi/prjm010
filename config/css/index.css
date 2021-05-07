@@ -1,0 +1,36 @@
+
+.col {
+    height: 50px;
+}
+.top {
+    height: 80px;
+}
+.top .btn{
+    margin: 15px 0;
+}
+.title{
+    height: 40px;
+}
+.title h4{
+    margin-left: 10px;
+}
+.breadcrumb{
+    margin-right: 20px;
+    line-height: 30px;
+}
+table thead .buy, table tbody .buy, table thead .com-estoque th{
+    background-color: #dcf6e9;
+}
+table thead .sell, table tbody .sell, .sem-estoque{
+    background-color: #f6dcdc;
+}
+.com-estoque th, .sem-estoque th{
+    text-align: center;
+    font-size: 2.2rem;
+}
+img{
+    background: url('../../img/avatar.jpg') center/cover;
+}
+.pagination{
+    margin: 8px;
+}

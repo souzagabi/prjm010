@@ -1,0 +1,132 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Lista de Notas
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active"><a href="/notas">Notas</a></li>
+    </ol>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+    <div class="box box-primary">
+      <div class="col form-control top">
+        <div class="row">
+          <div class="col col-md-4">
+            <form action="/acoes/create" method="get">
+              <input type="submit" name="compra" class="btn btn-success" value="Cadastrar Compra">
+              <input type="text" name="notas" value="notas" hidden>
+            </form>
+          </div>
+          
+          <form action="/notas" method="get">
+            <div class="col col-md-2"><label for="sgcompany">Sigla</label><input type="text" name="sgcompany" id="sgcompany" class="form-control"></div>
+            <div class="col col-md-2"><label for="dtbuy">Data Inicio</label><input type="text" name="dtbuy" id="dtbuy" class="form-control" onChange="replaceSlash(dtbuy)"></div>
+            <div class="col col-md-2"><label for="dtsell">Data Fim</label><input type="text" name="dtsell" id="dtsell" class="form-control" onChange="replaceSlash(dtsell)"></div>
+            <div class="col col-md-1"><label for="limit">Data Fim</label>
+              <select name="limit" id="limit" class="form-control">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <input type="submit" name="search" class="btn btn-primary" value="Search">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="box box-primary">
+      <div class="row">
+        <div class="col col-md-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {$i = 1}
+              {loop="$pgs"}
+              <li><a href="notas?pg={$i}{if="$pgs.list.sgcompany"}&sgcompany={$pgs.list.sgcompany}{/if}{if="$pgs.list.dtbuy"}&dtbuy={$pgs.list.dtbuy}{/if}{if="$pgs.list.dtsell"}&dtsell={$pgs.list.dtsell}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}">{$i++}</a></li>
+              {/loop}
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="box box-primary">
+      <div class="box-body no-padding">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>Empresa</th>
+              <th class="buy">DtCompra</th>
+              <th class="buy">Qtde</th>
+              <th class="buy">Valor Compra</th>
+              <th class="buy">Valor Médio</th>
+              <th class="sell">DtVenda</th>
+              <th class="sell">Qtde</th>
+              <th class="sell">Valor Médio</th>
+              <th class="sell">Valor Venda</th>
+              <th>Tipo</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loop="$acoes"}
+            <tr>
+              <th>{$value.sgcompany}</th>
+              <td class="buy">{$value.dtbuy}</td>
+              <td class="buy">{$value.qtdebuy}</td>
+              <td class="buy">{$value.prcbuy}</td>
+              <td class="buy">{$value.bprcaverage}</td>
+              <td class="sell">{$value.dtsell}</td>
+              <td class="sell">{$value.qtdesell}</td>
+              <td class="sell">{$value.prcsell}</td>
+              <td class="sell">{$value.sprcaverage}</td>
+              <td>{if="$value.btipe == 1"}Swing Trade{else}Day Trade{/if}</td>
+              <td>
+                <a href="/notas/{$value.idinvestiment}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                <a href="/notas/{$value.idinvestiment}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+              </td>
+            </tr>
+            {/loop}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="box box-primary">
+      <div class="row">
+        <div class="col col-md-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              {$i = 1}
+              {loop="$pgs"}
+              <li><a href="notas?pg={$i}{if="$pgs.list.sgcompany"}&sgcompany={$pgs.list.sgcompany}{/if}{if="$pgs.list.dtbuy"}&dtbuy={$pgs.list.dtbuy}{/if}{if="$pgs.list.dtsell"}&dtsell={$pgs.list.dtsell}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}">{$i++}</a></li>
+              {/loop}
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

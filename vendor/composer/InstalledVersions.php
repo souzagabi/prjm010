@@ -30,8 +30,8 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'fc57444e9a301388d86903663122ef3c76135074',
-    'name' => 'souzagabi/investimento',
+    'reference' => '7bc230ef97eaf2b24d36d1314963b0329b56123c',
+    'name' => 'souzagabi/prjm010',
   ),
   'versions' => 
   array (
@@ -62,14 +62,14 @@ private static $installed = array (
       ),
       'reference' => '3e95c9abbc57a8f023ab4dacebcab9dae4d9f1f0',
     ),
-    'souzagabi/investimento' => 
+    'souzagabi/prjm010' => 
     array (
       'pretty_version' => 'dev-master',
       'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => 'fc57444e9a301388d86903663122ef3c76135074',
+      'reference' => '7bc230ef97eaf2b24d36d1314963b0329b56123c',
     ),
   ),
 );

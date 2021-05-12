@@ -21,11 +21,11 @@
             </form>
           </div>
           
-          <!-- <form action="/visitant" method="get">
-            <div class="col col-md-2"><label for="sgcompany">Sigla</label><input type="text" name="sgcompany" id="sgcompany" class="form-control"></div>
-            <div class="col col-md-2"><label for="dtbuy">Data Inicio</label><input type="text" name="dtbuy" id="dtbuy" class="form-control" onChange="replaceSlash(dtbuy)"></div>
-            <div class="col col-md-2"><label for="dtsell">Data Fim</label><input type="text" name="dtsell" id="dtsell" class="form-control" onChange="replaceSlash(dtsell)"></div>
-            <div class="col col-md-1"><label for="limit">Data Fim</label>
+          <form action="/visitant" method="get">
+            <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+            <div class="col col-md-2"><label for="date_save">Data Inicio</label><input type="text" name="date_save" id="date_save" class="form-control" onChange="replaceSlash(date_save)"></div>
+            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+            <div class="col col-md-1"><label for="limit">Qtde</label>
               <select name="limit" id="limit" class="form-control">
                 <option value="10" selected>10</option>
                 <option value="15">15</option>
@@ -34,8 +34,8 @@
                 <option value="30">30</option>
               </select>
             </div>
-            <input type="submit" name="search" class="btn btn-primary" value="Search">
-          </form> -->
+            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+          </form>
         </div>
       </div>
     </div>

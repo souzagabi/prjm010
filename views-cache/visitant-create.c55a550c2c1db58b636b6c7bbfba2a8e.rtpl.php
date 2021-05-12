@@ -45,7 +45,7 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="company">Empresa</label>
-                <input type="text" class="form-control" name="company" id="company">
+                <input type="text" class="form-control" name="company" id="company" onkeyup="convertLowToUpper(company)" >
               </div>
             </div>
             <div class="col col-md-4">
@@ -102,10 +102,9 @@
                 <label for="classification">Classificação</label>
                 <select class="form-control" name="classification" id="classification">
                   <option value=""></option>
-                  <option value="1">Paciente</option>
-                  <option value="2">Visitante</option>
-                  <option value="3">Fornecedor</option>
-                  <option value="4">Colaborador</option>
+                  <?php $counter1=-1;  if( isset($classifications) && ( is_array($classifications) || $classifications instanceof Traversable ) && sizeof($classifications) ) foreach( $classifications as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["classification_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -113,7 +112,7 @@
           
           <!-- /.box-body -->
           <div class="box-footer">
-            <input type="submit"name="compra" class="btn btn-success" value="Cadastrar Compra">
+            <input type="submit" id="compra" class="btn btn-success" value="Cadastrar Compra">
             
             <a href="/visitant?limit=10" class="btn btn-warning">Voltar</a>
             

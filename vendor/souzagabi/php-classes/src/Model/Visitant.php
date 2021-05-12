@@ -60,15 +60,21 @@
                 $l["start"] = 0;
             }
            
-            return $sql->select("CALL prc_sel_visitant(:name_person, :date_save, :start, :limit)", array(
-                ":name_person" => $list["name_person"],   
-                ":date_save"     => $list["date_save"],
-                ":start"     => $list["start"],
-                ":limit"     => $list["limit"]
+            return $sql->select("CALL prc_visitant_sel(:name_person, :date_save, :date_fim, :start, :limit)", array(
+                ":name_person"  => $list["name_person"],   
+                ":date_save"    => $list["date_save"],
+                ":date_fim"     => $list["date_fim"],
+                ":start"        => $list["start"],
+                ":limit"        => $list["limit"]
             ));
          
         }
 
+        public static function listClassification()
+        {
+            $sql = new Sql();
+            return $sql->select("Call prc_classification_sel()");
+        }
         // public static function listAllEstoque($list)
         // {
         //     $sql = new Sql();
@@ -170,12 +176,12 @@
         public function save()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';
-            exit;
+            // echo '<pre>';
+            // print_r($this);
+            // echo '</pre>';
+            // exit;
           
-            $results = $sql->select("CALL sp_acoes_save(:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification)", array(
+            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
@@ -188,7 +194,7 @@
                 ":dayhour"          => $this->getdayhour(),
                 ":user_id"          => $this->getuser_id(),
                 ":classification"   => $this->getclassification()
-            );
+            ));
             
             $this->setData($results);
         }
@@ -257,8 +263,10 @@
         public function convertDateToDataBase($object = array())
         {
             for ($i=0; $i < count($object); $i++) { 
-                if (isset($object["daydate"]) && $object["daydate"] !='') {
-                    $object["daydate"] =  Visitant::convertDateDataBase($object["daydate"]);
+                foreach ($object as $key => $value) {
+                    if (isset($object[$key]) && $object[$key] !='') {
+                        $object[$key] =  Visitant::convertDateDataBase($object[$key]);
+                    }
                 }
             }
             return $object;
@@ -301,19 +309,23 @@
         }
         public function selectRegister($act = array())
         {
-            $Visitants 	= "";
+            $visitants 	= "";
             $pgs        = [];
             if ($act["visitants"]) {
-                $Visitants 	    = Visitant::listAll($act);
-                $Visitants[0] 	= Visitant::convertDateToView($Visitants[0]);
-                $Visitants 	    = Visitant::convertToInt($Visitants);
+                $visitants 	    = Visitant::listAll($act);
+                // echo '<pre>';
+                // print_r($visitants);
+                // echo '</pre>';
+                // exit;
+                $visitants[0] 	= Visitant::convertDateToView($visitants[0]);
+                $visitants 	    = Visitant::convertToInt($visitants);
             }
               
-            if (isset($Visitants[0]["pgs"]) && count($Visitants) > 0 && $Visitants != '') {
-                $pgs 	= Visitant::countRegister($Visitants[0]["pgs"], $act);
+            if (isset($visitants[0]["pgs"]) && count($visitants) > 0 && $visitants != '') {
+                $pgs 	= Visitant::countRegister($visitants[0]["pgs"], $act);
             }
           
-            return [$Visitants, $pgs];
+            return [$visitants, $pgs];
         }
     }
 ?>

@@ -25,6 +25,8 @@ $app->get('/', function() {
 	User::verifyLogin();
 	$company["name_person"]	= NULL;
 	$company["date_save"] 	= NULL;
+	$company["date_save"] 	= date('Y-m-d');
+	$company["date_fim"] 	= date('Y-m-d');
 	$company["visitants"]	= "visitants";
 	$company["search"]		= NULL;
 
@@ -44,17 +46,28 @@ $app->get('/visitant', function() {
 	User::verifyLogin();
 
 	$company["name_person"]	= NULL;
-	$company["date_save"] 	= NULL;
 	$company["visitants"]	= NULL;
 	$company["search"]		= NULL;
-
-	if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
-		$_GET = Visitant::convertDateToDataBase($_GET);
+	
+	echo '<pre>';
+	print_r($_GET);
+	echo '</pre>';
+	//exit;
+	if ((isset($_GET["date_save"]) && $_GET["date_save"] != '') || (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) {
+		$_GET = $_GET+Visitant::convertDateToDataBase([$_GET["date_save"], $_GET["date_fim"]]);
+	} else {
+		$_GET["date_save"] 	= date('Y-m-d');
+		$_GET["date_fim"] 	= date('Y-m-d');
 	}
+
 	foreach ($_GET as $key => $value) {
 		$company[$key] = $value;
 	}
 	$company["visitants"]	= "visitants";
+	echo '<pre>';
+	print_r($company);
+	echo '</pre>';
+	//exit;
 	$visitants 	= Visitant::selectRegister($company);
 	
 	$page = new PageVisitant();
@@ -65,7 +78,8 @@ $app->get('/visitant', function() {
 });
 $app->get('/visitant/create', function() {
 	User::verifyLogin();
-	
+	$classification = Visitant::listClassification();
+
 	for ($i=0; $i < 200 ; $i++) 
 	{ 
 		$j[$i] = $i;
@@ -74,12 +88,14 @@ $app->get('/visitant/create', function() {
 	$dt["date"] = $date[0];
 	$dt1["hour"] =$date[1];
 
+
 	$page = new PageVisitant();
 
 	$page->setTpl("visitant-create", array(
 		"j"	=>$j,
 		"date"	=>$dt,
 		"hour"	=>$dt1,
+		"classifications" =>$classification
 	));
 });
 $app->post('/visitant/create', function() {
@@ -95,13 +111,12 @@ $app->post('/visitant/create', function() {
 
 	$_POST["user_id"] = $_SESSION["User"]["user_id"];
 
-
 	$visitant->setData($_POST);
+	$visitant->save();
 	// echo '<pre>';
 	// print_r($visitant);
-	// echo '</pre>';exit;
-	$visitant->save();
-	
+	// echo '</pre>';
+	// exit;
 	
 	header("Location: /visitant/create");
 	exit;

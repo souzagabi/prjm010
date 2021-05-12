@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -19,12 +19,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- jvectormap -->
   <link rel="stylesheet" href="../../config/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../config/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../res/admin/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="../../config/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../../res/admin/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="../../config/css/index.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -60,8 +60,8 @@ desired effect
   <!-- Main Header -->
   <header class="main-header">
 
-<!-- Logo -->
-    <a href="../../config/index2.html" class="logo">
+    <!-- Logo -->
+    <a href="../../res/admin/index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>I</b>AC</span>
       <!-- logo for regular state and mobile devices -->
@@ -186,6 +186,7 @@ desired effect
               
               <li class="user-header">
                 <img class="img-circle">
+
                 <p>
                   Gabriel Alves - Web Developer
                   <small>Member since Nov. 2012</small>
@@ -260,10 +261,10 @@ desired effect
       <!-- Optionally, you can add icons to the links -->
       <li><a href="/admin"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
       <li><a href="/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
-      <!-- <li><a href="/persons"><i class="fa fa-user"></i> <span>Pessoas</span></a></li>
+      <li><a href="/persons"><i class="fa fa-user"></i> <span>Pessoas</span></a></li>
       <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
       <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
-      <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->
+      <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li>
       <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
           <span class="pull-right-container">

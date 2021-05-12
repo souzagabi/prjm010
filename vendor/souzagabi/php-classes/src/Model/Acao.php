@@ -40,6 +40,7 @@
         public static function listAll($list)
         {
             $sql = new Sql();
+            
             $list["start"] = 1;
             $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;

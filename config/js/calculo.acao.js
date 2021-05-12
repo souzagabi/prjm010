@@ -47,6 +47,7 @@ function replaceSlash(element)
 function convertLowToUpper(element)
 {
     var company = element.value;
+
     if(company != '' || company != NULL)
     {
         document.getElementById(element.name).value = company.toUpperCase();

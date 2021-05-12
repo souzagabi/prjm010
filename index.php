@@ -6,32 +6,111 @@
 	use \PRJM010\Page;
 	use \PRJM010\PageAdmin;
 	use \PRJM010\PageUser;
-	use \PRJM010\PageAcoes;
+	use \PRJM010\PageVisitant;
 	use \PRJM010\PagePerson;
 	use \PRJM010\Model\User;
-	use \PRJM010\Model\Acao;
+	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Person;
 
+	date_default_timezone_set('America/Sao_Paulo');	
+	
 	$app = new Slim();
 
 	$app->config('debug', true);
+
+/*======================================================================================*/
+/*										Rotas do Visitants								*/
+/*======================================================================================*/
+$app->get('/', function() {
+	User::verifyLogin();
+	$company["name_person"]	= NULL;
+	$company["date_save"] 	= NULL;
+	$company["visitants"]	= "visitants";
+	$company["search"]		= NULL;
+
+	$visitants = Visitant::selectRegister($company);
 	
+	$page = new PageVisitant();
+		
+	$page->setTpl("visitant", array(
+		"visitants"	=> $visitants[0],
+		"pgs"		=> $visitants[1]
+	));
+	
+});
+
+$app->get('/visitant', function() {
+		
+	User::verifyLogin();
+
+	$company["name_person"]	= NULL;
+	$company["date_save"] 	= NULL;
+	$company["visitants"]	= NULL;
+	$company["search"]		= NULL;
+
+	if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
+		$_GET = Visitant::convertDateToDataBase($_GET);
+	}
+	foreach ($_GET as $key => $value) {
+		$company[$key] = $value;
+	}
+	$company["visitants"]	= "visitants";
+	$visitants 	= Visitant::selectRegister($company);
+	
+	$page = new PageVisitant();
+	$page->setTpl("visitant", array(
+		"visitants"	=> $visitants[0],
+		"pgs"		=> $visitants[1]
+	));
+});
+$app->get('/visitant/create', function() {
+	User::verifyLogin();
+	
+	for ($i=0; $i < 200 ; $i++) 
+	{ 
+		$j[$i] = $i;
+	}
+	$date = explode(" ",date('d-m-Y H:i'));
+	$dt["date"] = $date[0];
+	$dt1["hour"] =$date[1];
+
+	$page = new PageVisitant();
+
+	$page->setTpl("visitant-create", array(
+		"j"	=>$j,
+		"date"	=>$dt,
+		"hour"	=>$dt1,
+	));
+});
+$app->post('/visitant/create', function() {
+	User::verifyLogin();
+	
+	$visitant = new Visitant();
+	if (isset($_POST["tax"])) {
+		$tax = explode(" ",$_POST["tax"]);
+		$_POST["tax"] = $tax[0];
+	}
+
+	$_POST = Visitant::convertDateToDataBase($_POST);
+
+	$_POST["user_id"] = $_SESSION["User"]["user_id"];
+
+
+	$visitant->setData($_POST);
+	// echo '<pre>';
+	// print_r($visitant);
+	// echo '</pre>';exit;
+	$visitant->save();
+	
+	
+	header("Location: /visitant/create");
+	exit;
+});
+
 /*======================================================================================*/
 /*										Rotas das Ações									*/
 /*======================================================================================*/
-	$app->get('/', function() {
-		User::verifyLogin();
-		$acoes = Acao::listAll("listacoes", "");
-		
-		$page = new PageAcoes([
-			"acoes"=> $acoes
-		]);
-			
-		$page->setTpl("acoes", array(
-			"acoes"=> $acoes
-		));
-		
-	});
+	
 
 	$app->get('/acoes-estoque', function() {
 		User::verifyLogin();
@@ -326,6 +405,7 @@
 			"footer"=> false
 
 		]);
+		
 		$page->setTpl("login");
 		
 	});
@@ -333,7 +413,8 @@
 	$app->post('/admin/login', function() {
 		
 		User::login($_POST["login"], $_POST["password"]);
-		header("Location: /admin");
+		
+		header("Location: /");
 		exit;
 		
 	});

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -260,10 +260,10 @@ desired effect
       <!-- Optionally, you can add icons to the links -->
       <li><a href="/admin"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
       <li><a href="/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
-      <!-- <li><a href="/persons"><i class="fa fa-user"></i> <span>Pessoas</span></a></li>
+      <li><a href="/persons"><i class="fa fa-user"></i> <span>Pessoas</span></a></li>
       <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
       <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
-      <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->
+      <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li>
       <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
           <span class="pull-right-container">

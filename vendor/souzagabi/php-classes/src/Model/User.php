@@ -12,7 +12,7 @@
         {
             $sql = new Sql();
 
-            $results = $sql->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", array(
+            $results = $sql->select("SELECT * FROM prjm010013 WHERE login = :LOGIN", array(
                 ":LOGIN"=>$login
             ));
             
@@ -20,20 +20,22 @@
                 throw new \Exception("Usuário inexistente ou senha inválida", 1);
             }
             $data = $results[0];
-            
-            if (password_verify($password, $data["despassword"]) === true) {
+
+            if (password_verify($password, $data["password"]) === true) {
                 $user = new User;
                 $user->setData($data);
                 $_SESSION[User::SESSION] = $user->getValues();
+                
                 return $user;
             } else{
                 throw new \Exception("Usuário inexistente ou senha inválida", 1);
             }
+            
         }
 
         public static function verifyLogin($inadmin = true)
         {
-            if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["iduser"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin) {
+            if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["user_id"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin) {
                 header("Location: /admin/login");
                 exit;
             } 
@@ -47,7 +49,7 @@
         public static function listAll()
         {
             $sql = new Sql();
-            return $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) ORDER BY b.idperson");
+            return $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) ORDER BY PRJM010.name_person");
         }
 
         public function get($iduser) 
@@ -67,12 +69,12 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL sp_users_save(:desperson, :sgcompany, :descpfcnpj, :deslogin, :despassword, :inadmin)", array(
+            $results = $sql->select("CALL sp_users_save(:desperson, :sgcompany, :descpfcnpj, :deslogin, :password, :inadmin)", array(
                 ":desperson"    =>  $this->getdesperson(),
                 ":sgcompany"    =>  $this->getsgcompany(),
                 ":descpfcnpj"   =>  $this->getdescpfcnpj(),
                 ":deslogin"     =>  $this->getdeslogin(),
-                ":despassword"  =>  $this->getdespassword(),
+                ":password"  =>  $this->getpassword(),
                 ":inadmin"      =>  $this->getinadmin()
             ));
             $this->setData($results);
@@ -82,14 +84,14 @@
         {
             $sql = new Sql();
                        
-            $results = $sql->select("CALL sp_users_update_save(:iduser, :idperson, :desperson, :sgcompany, :descpfcnpj, :deslogin, :despassword, :inadmin)", array(
+            $results = $sql->select("CALL sp_users_update_save(:iduser, :idperson, :desperson, :sgcompany, :descpfcnpj, :deslogin, :password, :inadmin)", array(
                 ":iduser"       =>  $this->getiduser(),
                 ":idperson"     =>  $this->getidperson(),
                 ":desperson"    =>  $this->getdesperson(),
                 ":descpfcnpj"   =>  $this->getdescpfcnpj(),
                 ":sgcompany"    =>  $this->getsgcompany(),
                 ":deslogin"     =>  $this->getdeslogin(),
-                ":despassword"  =>  $this->getdespassword(),
+                ":password"  =>  $this->getpassword(),
                 ":inadmin"      =>  $this->getinadmin()
             ));
             $this->setData($results);
@@ -181,10 +183,10 @@
 
         public function setPassword($password)
         {
-            $aql = new Sql();
-            $sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :udsuser", array(
+            $sql = new Sql();
+            $sql->query("UPDATE tb_users SET password = :password WHERE iduser = :iduser", array(
                 ":password" =>$password,
-                ":udsuser"  =>$udsuser
+                ":iduser"  =>1
             ));
         }
     }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
@@ -60,7 +60,7 @@ desired effect
   <!-- Main Header -->
   <header class="main-header">
 
-<!-- Logo -->
+    <!-- Logo -->
     <a href="../../config/index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>I</b>AC</span>
@@ -186,6 +186,7 @@ desired effect
               
               <li class="user-header">
                 <img class="img-circle">
+
                 <p>
                   Gabriel Alves - Web Developer
                   <small>Member since Nov. 2012</small>

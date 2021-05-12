@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '7bc230ef97eaf2b24d36d1314963b0329b56123c',
+    'reference' => '3cb55916dd7fa221b4eb6a760a29f5b81daabe14',
     'name' => 'souzagabi/prjm010',
   ),
   'versions' => 
@@ -45,7 +45,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '7bc230ef97eaf2b24d36d1314963b0329b56123c',
+      'reference' => '3cb55916dd7fa221b4eb6a760a29f5b81daabe14',
     ),
   ),
 );

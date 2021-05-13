@@ -4,7 +4,7 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro Visita
+      Edição de Visita
     </h4>
   </div>
   <ol class="breadcrumb">
@@ -22,36 +22,37 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/create" method="post">
+        <form role="form" action="/visitant/{$visitant.person_id}" method="post">
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="name_person">Nome</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" autofocus="autofocus" required>
+                <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" value="{$visitant.name_person}" autofocus="autofocus" required>
               </div>
+              
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="rg_person">RG</label>
-                <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)" required>
+                <input type="text" class="form-control" name="rg_person" id="rg_person" value="{$visitant.rg_person}" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="phonenumber">Telefone</label>
-                <input type="text" class="form-control" name="phonenumber" id="phonenumber">
+                <input type="text" class="form-control" name="phonenumber" id="phonenumber" value="{$visitant.phonenumber}">
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="company">Empresa</label>
-                <input type="text" class="form-control" name="company" id="company" onkeyup="convertLowToUpper(company)" >
+                <input type="text" class="form-control" name="company" id="company" value="{$visitant.company}" onkeyup="convertLowToUpper(company)" >
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
                 <label for="reason">Motivo da Visita</label>
-                <input type="text" class="form-control" name="reason" id="reason">
+                <input type="text" class="form-control" name="reason" id="reason" value="{$visitant.reason}">
               </div>
             </div>
             
@@ -64,7 +65,7 @@
                   {$i = 1}
                   <option value=""></option>
                   {loop="$j"}
-                  <option value="{$i}">{$i++}</option>
+                  <option value="{$i}"{if="$visitant.badge == $i"}selected{/if}>{$i++}</option>
                   {/loop}
                 </select>
               </div>
@@ -72,29 +73,25 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="auth">Autorização</label>
-                <input type="text" class="form-control" name="auth" id="auth" required>
+                <input type="text" class="form-control" name="auth" id="auth" value="{$visitant.auth}" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
                 <label for="sign">Assinatura</label>
-                <input type="text" class="form-control" name="sign" id="sign" required>
+                <input type="text" class="form-control" name="sign" id="sign" value="{$visitant.sign}" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
-                {loop="$date"}
-                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}" readonly>
-                {/loop}
+                <input type="text" class="form-control" id="daydate" name="daydate" value="{$visitant.daydate}" readonly>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="dayhour">Hora do Dia</label>
-                {loop="$hour"}
-                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}" readonly>
-                {/loop}
+                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$visitant.dayhour}" readonly>
               </div>
             </div>
             <div class="col col-md-2">
@@ -103,15 +100,16 @@
                 <select class="form-control" name="classification_id" id="classification_id">
                   <option value=""></option>
                   {loop="$classifications"}
-                  <option value="{$value.classification_id}">{$value.description}</option>
+                  <option value="{$value.classification_id}" {if="$visitant.classification_id == $value.classification_id"}selected{/if}>{$value.description}</option>
                   {/loop}
                 </select>
               </div>
             </div>
           </div>
+         
           <!-- /.box-body -->
           <div class="box-footer">
-            <input type="submit" id="compra" class="btn btn-success" value="Cadastrar Visita">
+            <input type="submit" id="compra" class="btn btn-success" value="Atualizar Visita">
             
             <a href="/visitant?limit=10" class="btn btn-warning">Voltar</a>
             

@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Investimento</title>
+  <title>Manutenção</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -261,8 +261,8 @@ desired effect
       <!-- Optionally, you can add icons to the links -->
       <li><a href="/admin"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
       <li><a href="/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
-      <!-- <li><a href="/persons"><i class="fa fa-user"></i> <span>Pessoas</span></a></li>
-      <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
+      <li><a href="/visitant?pg=1"><i class="fa fa-user"></i> <span>Visitas</span></a></li>
+      <!-- <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
       <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
       <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->
       <li class="treeview">

@@ -21,107 +21,162 @@
 /*======================================================================================*/
 /*										Rotas do Visitants								*/
 /*======================================================================================*/
-$app->get('/', function() {
-	User::verifyLogin();
-	$company["name_person"]	= NULL;
-	$company["date_save"] 	= NULL;
-	$company["date_save"] 	= date('Y-m-d');
-	$company["date_fim"] 	= date('Y-m-d');
-	$company["visitants"]	= "visitants";
-	$company["search"]		= NULL;
+	$app->get('/', function() {
+		User::verifyLogin();
+		$company["name_person"]	= NULL;
+		$company["date_save"] 	= NULL;
+		$company["date_save"] 	= date('Y-m-d');
+		$company["date_fim"] 	= date('Y-m-d');
+		$company["visitants"]	= "visitants";
+		$company["search"]		= NULL;
 
-	$visitants = Visitant::selectRegister($company);
-	
-	$page = new PageVisitant();
+		exit;
 		
-	$page->setTpl("visitant", array(
-		"visitants"	=> $visitants[0],
-		"pgs"		=> $visitants[1]
-	));
-	
-});
-
-$app->get('/visitant', function() {
+		$visitants = Visitant::selectRegister($company);
 		
-	User::verifyLogin();
+		$page = new PageVisitant();
+			
+		$page->setTpl("visitant", array(
+			"visitants"	=> $visitants[0],
+			"pgs"		=> $visitants[1]
+		));
+		
+	});
 
-	$company["name_person"]	= NULL;
-	$company["visitants"]	= NULL;
-	$company["search"]		= NULL;
-	
-	echo '<pre>';
-	print_r($_GET);
-	echo '</pre>';
-	//exit;
-	if ((isset($_GET["date_save"]) && $_GET["date_save"] != '') || (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) {
-		$_GET = $_GET+Visitant::convertDateToDataBase([$_GET["date_save"], $_GET["date_fim"]]);
-	} else {
-		$_GET["date_save"] 	= date('Y-m-d');
-		$_GET["date_fim"] 	= date('Y-m-d');
-	}
+	$app->get('/visitant', function() {
+			
+		User::verifyLogin();
 
-	foreach ($_GET as $key => $value) {
-		$company[$key] = $value;
-	}
-	$company["visitants"]	= "visitants";
-	echo '<pre>';
-	print_r($company);
-	echo '</pre>';
-	//exit;
-	$visitants 	= Visitant::selectRegister($company);
-	
-	$page = new PageVisitant();
-	$page->setTpl("visitant", array(
-		"visitants"	=> $visitants[0],
-		"pgs"		=> $visitants[1]
-	));
-});
-$app->get('/visitant/create', function() {
-	User::verifyLogin();
-	$classification = Visitant::listClassification();
+		$company["name_person"]	= NULL;
+		$company["visitants"]	= NULL;
+		$company["search"]		= NULL;
+		$company["date_fim"] 	= NULL;
+		$company["date_save"] 	= NULL;
+		
 
-	for ($i=0; $i < 200 ; $i++) 
-	{ 
-		$j[$i] = $i;
-	}
-	$date = explode(" ",date('d-m-Y H:i'));
-	$dt["date"] = $date[0];
-	$dt1["hour"] =$date[1];
+		if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
+			$gget = Visitant::convertDateToDataBase(["date_save"=>$_GET["date_save"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Visitant::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+
+		foreach ($_GET as $key => $value) {
+			$company[$key] = $value;
+		}
+		$company["visitants"]	= "visitants";
+		$visitants 	= Visitant::selectRegister($company);
+		
+		$page = new PageVisitant();
+		$page->setTpl("visitant", array(
+			"visitants"	=> $visitants[0],
+			"pgs"		=> $visitants[1]
+		));
+	});
+
+	$app->get('/visitant/create', function() {
+		User::verifyLogin();
+		$classification = Visitant::listClassification();
+		
+		for ($i=0; $i < 200 ; $i++) 
+		{ 
+			$j[$i] = $i;
+		}
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"] = $date[0];
+		$dt1["hour"] =$date[1];
 
 
-	$page = new PageVisitant();
+		$page = new PageVisitant();
 
-	$page->setTpl("visitant-create", array(
-		"j"	=>$j,
-		"date"	=>$dt,
-		"hour"	=>$dt1,
-		"classifications" =>$classification
-	));
-});
-$app->post('/visitant/create', function() {
-	User::verifyLogin();
-	
-	$visitant = new Visitant();
-	if (isset($_POST["tax"])) {
-		$tax = explode(" ",$_POST["tax"]);
-		$_POST["tax"] = $tax[0];
-	}
+		$page->setTpl("visitant-create", array(
+			"j"	=>$j,
+			"date"	=>$dt,
+			"hour"	=>$dt1,
+			"classifications" =>$classification
+		));
+	});
+	$app->post('/visitant/create', function() {
+		User::verifyLogin();
+		
+		$visitant = new Visitant();
 
-	$_POST = Visitant::convertDateToDataBase($_POST);
+		$_POST = Visitant::convertDateToDataBase($_POST);
 
-	$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
 
-	$visitant->setData($_POST);
-	$visitant->save();
-	// echo '<pre>';
-	// print_r($visitant);
-	// echo '</pre>';
-	// exit;
-	
-	header("Location: /visitant/create");
-	exit;
-});
+		$visitant->setData($_POST);
+		$visitant->save();
+		// echo '<pre>';
+		// print_r($visitant);
+		// echo '</pre>';
+		// exit;
+		
+		header("Location: /visitant/create");
+		exit;
+	});
 
+
+	$app->get('/visitant/:person_id', function($person_id) {
+		
+		User::verifyLogin();
+		$classifications = Visitant::listClassification();
+
+		$visitant = new Visitant();
+		$visitant->getById($person_id);
+		
+		//$visitant = Visitant::convertDateToView($visitant);
+		// echo '<pre>';
+		// print_r($visitant);
+		// echo '</pre>';
+		// exit;
+		for ($i=0; $i < 200 ; $i++) 
+		{ 
+			$j[$i] = $i;
+		}
+
+		$page = new PageVisitant();
+		
+		$page ->setTpl("visitant-update", array(
+			"visitant"		=>$visitant->getValues(),
+			"j"				=>$j,
+			"classifications"=>$classifications
+		));
+		
+	});
+
+	$app->post("/visitant/:person_id", function ($person_id){
+		User::verifyLogin();
+			
+		$visitant = new Visitant();
+
+		if (isset($_POST)) {
+			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+		
+		$visitant->getById($person_id);
+		$visitant->setData($_POST);
+		// echo '<pre>';
+		// print_r($visitant);
+		// echo '</pre>';
+		// exit;
+		$msg = $visitant->update();
+		header("Location: /visitant?sgcompany=".$_POST["sgcompany"]."&dtbuy=&dtsell=&search=Search&limit=10&msg=".$msg);
+		exit;
+	});
 /*======================================================================================*/
 /*										Rotas das Ações									*/
 /*======================================================================================*/

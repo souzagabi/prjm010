@@ -52,7 +52,7 @@
               {$i = 1}
               {loop="$pgs"}
               
-              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">
@@ -111,7 +111,7 @@
               </li>
               {$i = 1}
               {loop="$pgs"}
-              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">

@@ -43,23 +43,24 @@
             
             $list["start"] = 1;
             $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
+          
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             if (($pg - 1) * $list["limit"] > 0) {
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            foreach ($list as $key => $value) 
-            {
-                if (isset($value) && ($value != '' || $value != NULL)) {
-                    $l[$key] = $value;
-                }else if (!isset($value) || ($value == '' || $value == NULL)){
-                    $l[$key] = '';
-                }
+            // foreach ($list as $key => $value) 
+            // {
+            //     if (isset($value) && ($value != '' || $value != NULL)) {
+            //         $l[$key] = $value;
+            //     }else if (!isset($value) || ($value == '' || $value == NULL)){
+            //         $l[$key] = '';
+            //     }
+            // }
+            if ($list["start"] == 1) {
+                $list["start"] = 0;
             }
-            if ($l["start"] == 1) {
-                $l["start"] = 0;
-            }
-           
+            
             return $sql->select("CALL prc_visitant_sel(:name_person, :date_save, :date_fim, :start, :limit)", array(
                 ":name_person"  => $list["name_person"],   
                 ":date_save"    => $list["date_save"],
@@ -155,23 +156,18 @@
         //     $this->setData($data);
         // }
 
-        // public function getByBuy($idinvestiment) 
-        // {
-        //     $sql = new Sql();
+        public function getById($person_id) 
+        {
+            $sql = new Sql();
                         
-        //     $results = $sql->select("CALL sp_acoes_select_buy(:idinvestiment)", array(
-        //         ":idinvestiment"=>(int)$idinvestiment
-        //     ));
-            
-        //     if (isset($results[0]["tax"]) && $results[0]["tax"] > 0) {
-        //         $results[0]["tax"] = $results[0]["tax"]." %";
-        //     }
-        //     $results[0]["unit"] = "unit";
-                 
-        //     $results[0] = Acao::convertDateToView($results[0]);
-            
-        //     $this->setData($results[0]);
-        // }
+            $results = $sql->select("CALL sp_visitant_sel_byid(:person_id)", array(
+                ":person_id"=>(int)$person_id
+            ));
+                  
+            $results[0] = Visitant::convertDateToView($results[0]);
+         
+            $this->setData($results[0]);
+        }
 
         public function save()
         {
@@ -181,7 +177,7 @@
             // echo '</pre>';
             // exit;
           
-            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification)", array(
+            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
@@ -193,51 +189,37 @@
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
                 ":user_id"          => $this->getuser_id(),
-                ":classification"   => $this->getclassification()
+                ":classification_id"=> $this->getclassification_id()
             ));
             
             $this->setData($results);
         }
         
-        // public function update()
-        // {
-        //     $sql = new Sql();
-        //     $qtdeTotal = ["qtdetotal"=>$this->getqtdetotal() + $this->getqtdebuy() - $this->getqtdesell()];
-           
-        //     $this->setData($qtdeTotal);
-            
-        //     $results = $sql->select("CALL sp_acoes_update_save(:idinvestiment, :iduser, :idperson, :desperson, :sgcompany, :descpfcnpj, :dtbuy, :qtdebuy, :prcbuy, :tlbuy, :bprcaverage, :btptransaction, :btipe, :dtsell, :qtdesell, :prcsell, :tlsell, :sprcaverage, :stptransaction, :btipe, :tax, :lucre, :idestoque, :sgecompany, :qtdeestoque)", array(
-        //                         ":idinvestiment"    => $this->getidinvestiment(),
-        //                         ":iduser"           => $this->getiduser(),   
-        //                         ":idperson"         => $this->getidperson(),
-        //                         ":desperson"        => $this->getdesperson(),    
-        //                         ":sgcompany"        => $this->getsgcompany(),    
-        //                         ":descpfcnpj"       => $this->getdescpfcnpj(),    
-        //                         ":dtbuy"            => $this->getdtbuy(),
-        //                         ":qtdebuy"          => $this->getqtdebuy(),
-        //                         ":prcbuy"           => $this->getprcbuy(),
-        //                         ":tlbuy"            => $this->gettlbuy(),
-        //                         ":bprcaverage"      => $this->getbprcaverage(),
-        //                         ":btptransaction"   => "C",
-        //                         ":btipe"            => $this->getbtipe(),
-        //                         ":dtsell"           => $this->getdtsell(),
-        //                         ":qtdesell"         => $this->getqtdesell(),
-        //                         ":prcsell"          => $this->getprcsell(),
-        //                         ":tlsell"           => $this->gettlsell(),
-        //                         ":sprcaverage"      => $this->getsprcaverage(),
-        //                         ":stptransaction"   => "V",
-        //                         ":stipe"            => $this->getbtipe(),
-        //                         ":tax"              => $this->gettax(),
-        //                         ":lucre"            => $this->getlucre(),
-        //                         ":idestoque"        => $this->getidestoque(),
-        //                         ":sgecompany"       => $this->getsgecompany(),
-        //                         ":qtdeestoque"      => $this->getqtdetotal()
-                        
-        //     ));
-           
-        //     $this->setData($results);
-        //     return $results[0]["MESSAGE"];
-        // }
+        public function update()
+        {
+            $sql = new Sql();
+            echo '<pre>';
+            print_r($this);
+            echo '</pre>';
+            exit;
+            $results = $sql->select("CALL prc_visitant_update(:person_id,:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
+                ":person_id"        => $this->getperson_id(),    
+                ":name_person"      => $this->getname_person(),    
+                ":rg_person"        => $this->getrg_person(),    
+                ":phonenumber"      => $this->getphonenumber(),    
+                ":company"          => $this->getcompany(),    
+                ":reason"           => $this->getreason(),
+                ":badge"            => $this->getbadge(),
+                ":auth"             => $this->getauth(),
+                ":sign"             => $this->getsign(),
+                ":daydate"          => $this->getdaydate(),
+                ":dayhour"          => $this->getdayhour(),
+                ":user_id"          => $this->getuser_id(),
+                ":classification_id"   => $this->getclassification_id()
+            ));
+            $this->setData($results);
+            return $results[0]["MESSAGE"];
+        }
 
         // public function delete()
         // {
@@ -262,11 +244,9 @@
         
         public function convertDateToDataBase($object = array())
         {
-            for ($i=0; $i < count($object); $i++) { 
-                foreach ($object as $key => $value) {
-                    if (isset($object[$key]) && $object[$key] !='') {
-                        $object[$key] =  Visitant::convertDateDataBase($object[$key]);
-                    }
+            foreach ($object as $key => $value) {
+                if (isset($value) && $value !='') {
+                    $object[$key] =  Visitant::convertDateDataBase($object[$key]);
                 }
             }
             return $object;
@@ -312,13 +292,9 @@
             $visitants 	= "";
             $pgs        = [];
             if ($act["visitants"]) {
-                $visitants 	    = Visitant::listAll($act);
-                // echo '<pre>';
-                // print_r($visitants);
-                // echo '</pre>';
-                // exit;
-                $visitants[0] 	= Visitant::convertDateToView($visitants[0]);
-                $visitants 	    = Visitant::convertToInt($visitants);
+                $visitants 	= Visitant::listAll($act);
+                $visitants 	= Visitant::convertDateToView($visitants);
+                $visitants 	= Visitant::convertToInt($visitants);
             }
               
             if (isset($visitants[0]["pgs"]) && count($visitants) > 0 && $visitants != '') {

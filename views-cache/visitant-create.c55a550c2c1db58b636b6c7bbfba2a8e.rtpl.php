@@ -19,12 +19,15 @@
 
   <div class="row">
   	<div class="col-md-12">
+      <div class="box box-primary" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" id="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
+      </div>
   		<div class="box box-success">
         <!-- form start -->
         
         <form role="form" action="/visitant/create" method="post">
           <div class="box-body">
-            <div class="col col-md-2">
+            <div class="col col-md-4">
               <div class="form-group">
                 <label for="name_person">Nome</label>
                 <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" autofocus="autofocus" required>
@@ -36,6 +39,14 @@
                 <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="cpf_person">CPF</label>
+                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)" required>
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="phonenumber">Telefone</label>
@@ -51,7 +62,7 @@
             <div class="col col-md-4">
               <div class="form-group">
                 <label for="reason">Motivo da Visita</label>
-                <input type="text" class="form-control" name="reason" id="reason">
+                <input type="text" class="form-control" name="reason" id="reason"onkeyup="convertLowToUpper(reason)">
               </div>
             </div>
             
@@ -72,13 +83,13 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="auth">Autorização</label>
-                <input type="text" class="form-control" name="auth" id="auth" required>
+                <input type="text" class="form-control" name="auth" id="auth" onkeyup="convertLowToUpper(auth)" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
                 <label for="sign">Assinatura</label>
-                <input type="text" class="form-control" name="sign" id="sign" required>
+                <input type="text" class="form-control" name="sign" id="sign" onkeyup="convertLowToUpper(sign)" required>
               </div>
             </div>
             <div class="col col-md-2">
@@ -99,8 +110,8 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="classification">Classificação</label>
-                <select class="form-control" name="classification" id="classification">
+                <label for="classification_id">Classificação</label>
+                <select class="form-control" name="classification_id" id="classification_id">
                   <option value=""></option>
                   <?php $counter1=-1;  if( isset($classifications) && ( is_array($classifications) || $classifications instanceof Traversable ) && sizeof($classifications) ) foreach( $classifications as $key1 => $value1 ){ $counter1++; ?>
                   <option value="<?php echo htmlspecialchars( $value1["classification_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
@@ -109,10 +120,9 @@
               </div>
             </div>
           </div>
-          
           <!-- /.box-body -->
           <div class="box-footer">
-            <input type="submit" id="compra" class="btn btn-success" value="Cadastrar Compra">
+            <input type="submit" id="compra" class="btn btn-success" value="Cadastrar Visita">
             
             <a href="/visitant?limit=10" class="btn btn-warning">Voltar</a>
             

@@ -30,7 +30,14 @@
 		$company["visitants"]	= "visitants";
 		$company["search"]		= NULL;
 
-		exit;
+		$msg= '';
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		} else {
+			$msg = ["state"=>'', "msg"=> ''];
+		}
 		
 		$visitants = Visitant::selectRegister($company);
 		
@@ -38,12 +45,14 @@
 			
 		$page->setTpl("visitant", array(
 			"visitants"	=> $visitants[0],
-			"pgs"		=> $visitants[1]
+			"pgs"		=> $visitants[1],
+			"msg"		=> $msg
 		));
 		
 	});
 
-	$app->get('/visitant', function() {
+	$app->get('/visitant', function() 
+	{
 			
 		User::verifyLogin();
 
@@ -53,6 +62,15 @@
 		$company["date_fim"] 	= NULL;
 		$company["date_save"] 	= NULL;
 		
+		$msg= '';
+		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		} else {
+			$msg = ["state"=>'', "msg"=> ''];
+		}
 
 		if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
 			$gget = Visitant::convertDateToDataBase(["date_save"=>$_GET["date_save"]]);
@@ -79,13 +97,25 @@
 		$page = new PageVisitant();
 		$page->setTpl("visitant", array(
 			"visitants"	=> $visitants[0],
-			"pgs"		=> $visitants[1]
+			"pgs"		=> $visitants[1],
+			"msg"		=> $msg
 		));
 	});
 
-	$app->get('/visitant/create', function() {
+	$app->get('/visitant/create', function() 
+	{
 		User::verifyLogin();
 		$classification = Visitant::listClassification();
+		
+		$msg= '';
+		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		} else {
+			$msg = ["state"=>'', "msg"=> ''];
+		}
 		
 		for ($i=0; $i < 200 ; $i++) 
 		{ 
@@ -102,43 +132,42 @@
 			"j"	=>$j,
 			"date"	=>$dt,
 			"hour"	=>$dt1,
-			"classifications" =>$classification
+			"classifications" =>$classification,
+			"msg" =>$msg,
 		));
 	});
-	$app->post('/visitant/create', function() {
+	$app->post('/visitant/create', function() 
+	{
 		User::verifyLogin();
 		
 		$visitant = new Visitant();
 
-		$_POST = Visitant::convertDateToDataBase($_POST);
+		$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
 		$_POST["user_id"] = $_SESSION["User"]["user_id"];
 
-		$visitant->setData($_POST);
-		$visitant->save();
 		// echo '<pre>';
-		// print_r($visitant);
+		// print_r($_POST);
 		// echo '</pre>';
 		// exit;
-		
-		header("Location: /visitant/create");
+		$visitant->setData($_POST);
+		$msg = $visitant->save();
+
+		header("Location: /visitant/create?msg=".$msg);
 		exit;
 	});
 
-
-	$app->get('/visitant/:person_id', function($person_id) {
-		
+	$app->get('/visitant/:person_id', function($person_id) 
+	{
 		User::verifyLogin();
 		$classifications = Visitant::listClassification();
 
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
-		
-		//$visitant = Visitant::convertDateToView($visitant);
-		// echo '<pre>';
-		// print_r($visitant);
-		// echo '</pre>';
-		// exit;
+
 		for ($i=0; $i < 200 ; $i++) 
 		{ 
 			$j[$i] = $i;
@@ -154,27 +183,24 @@
 		
 	});
 
-	$app->post("/visitant/:person_id", function ($person_id){
+	$app->post("/visitant/:person_id", function ($person_id)
+	{
 		User::verifyLogin();
 			
 		$visitant = new Visitant();
-
+		$visitant->getById($person_id);
 		if (isset($_POST)) {
-			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"], "dt_save"=>$_POST["dt_save"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
 			$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		}
-		
-		$visitant->getById($person_id);
+				
 		$visitant->setData($_POST);
-		// echo '<pre>';
-		// print_r($visitant);
-		// echo '</pre>';
-		// exit;
 		$msg = $visitant->update();
-		header("Location: /visitant?sgcompany=".$_POST["sgcompany"]."&dtbuy=&dtsell=&search=Search&limit=10&msg=".$msg);
+		
+		header("Location: /visitant?msg=".$msg);
 		exit;
 	});
 /*======================================================================================*/

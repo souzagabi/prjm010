@@ -5,38 +5,6 @@
     
     class Visitant extends Model {
 
-        // public static function listAllIds()
-        // {
-        //     $sql = new Sql();
-        //     return $sql->select("CALL sp_acoes_list_all_id()");
-        // }
-        // public static function listAllAction($list)
-        // {
-        //     $sql = new Sql();
-        //     $list["start"] = 1;
-        //     $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-            
-        //     $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-           
-        //     $list["start"] = ($pg - 1) * $list["limit"];
-           
-        //     foreach ($list as $key => $value) 
-        //     {
-        //         if ($value != '') {
-        //             $l[$key] = $value;
-        //         }else {
-        //             $l[$key] = '';
-        //         }
-        //     }
-            
-        //     if(isset($list["listacoes"]) && $list["listacoes"] === "listacoes")
-        //     {
-        //         return $sql->select("CALL sp_acoes_list(:start, :limit)", array(
-        //             ":start"=> $l["start"],
-        //             ":limit"=> $l["limit"],
-        //         ));
-        //     }
-        // }
         public static function listAll($list)
         {
             $sql = new Sql();
@@ -49,14 +17,6 @@
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            // foreach ($list as $key => $value) 
-            // {
-            //     if (isset($value) && ($value != '' || $value != NULL)) {
-            //         $l[$key] = $value;
-            //     }else if (!isset($value) || ($value == '' || $value == NULL)){
-            //         $l[$key] = '';
-            //     }
-            // }
             if ($list["start"] == 1) {
                 $list["start"] = 0;
             }
@@ -76,91 +36,12 @@
             $sql = new Sql();
             return $sql->select("Call prc_classification_sel()");
         }
-        // public static function listAllEstoque($list)
-        // {
-        //     $sql = new Sql();
-        //     $list["start"] = 0;
-        //     $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-            
-        //     $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-        //     $list["start"] = ($pg - 1) * $list["limit"];
-        //     foreach ($list as $key => $value) 
-        //     {
-        //         if ($value != '') {
-        //             $l[$key] = $value;
-        //         }else {
-        //             $l[$key] = '';
-        //         }
-        //     }
-            
-        //     if (isset($list) && $list != '') {
-                
-        //         if (count($list) >= 3) {
-                   
-        //             return $sql->select("CALL sp_acoes_select_estoque(:sgcompany, :dtbuy, :dtsell, :start, :limit)", array(
-        //                 ":sgcompany"    => $l["sgcompany"],    
-        //                 ":dtbuy"        => $l["dtbuy"],
-        //                 ":dtsell"       => $l["dtsell"],
-        //                 ":start"        => $l["start"],
-        //                 ":limit"        => $l["limit"]
-        //             ));
-        //         } else if ($data[0] === "sgcompany") {
-        //             return $sql->select("CALL sp_acoes_select_estoque(:sgcompany, :dtbuy, :dtsell, :start, :limit)", array(
-        //                 ":sgcompany"    => $l["sgcompany"],    
-        //                 ":dtbuy"        => $l["dtbuy"],
-        //                 ":dtsell"       => $l["dtsell"],
-        //                 ":start"        => $l["start"],
-        //                 ":limit"        => $l["limit"]
-        //             ));
-                
-        //         } else {
-        //             return $sql->select("CALL sp_acoes_select_estoque(:sgcompany, :dtbuy, :dtsell, :start, :limit)", array(
-        //                 ":sgcompany"    => $l["sgcompany"],    
-        //                 ":dtbuy"        => $l["dtbuy"],
-        //                 ":dtsell"       => $l["dtsell"],
-        //                 ":start"        => $l["start"],
-        //                 ":limit"        => $l["limit"]
-        //             ));
-        //         }
-        //     } else{ // (isset($listestoque) && $listestoque != '')
-        //         return $sql->select("CALL sp_acoes_select_estoque(:sgcompany, :dtbuy, :dtsell, :start, :limit)", array(
-        //             ":sgcompany"    => $l["sgcompany"],    
-        //             ":dtbuy"        => $l["dtbuy"],
-        //             ":dtsell"       => $l["dtsell"],
-        //             ":start"        => $l["start"],
-        //             ":limit"        => $l["limit"]
-        //         ));
-        //     }
-        // }
-
-        // //não está sendo usada
-        // public function getByPerson($idperson) 
-        // {
-        //     $sql = new Sql();
-            
-        //     $results = $sql->select("CALL sp_acoes_person(:idperson)", array(
-        //     ":idperson"=>$idperson
-        //     ));
-            
-        //     if (isset($results[0]["tax"])) {
-        //         $results[0]["tax"] = $results[0]["tax"]." %";
-        //     }
-        //     if (isset($results[0]["dtbuy"])) {
-        //         $results[0]["dtbuy"] = $this->convertDateView($results[0]["dtbuy"]);
-        //     }
-        //     if (isset($results[0]["dtsell"])) {
-        //         $results[0]["dtsell"] = $this->convertDateView($results[0]["dtsell"]);
-        //     }
-        //     $data = $results[0];
-            
-        //     $this->setData($data);
-        // }
-
+   
         public function getById($person_id) 
         {
             $sql = new Sql();
                         
-            $results = $sql->select("CALL sp_visitant_sel_byid(:person_id)", array(
+            $results = $sql->select("CALL prc_visitant_sel_byid(:person_id)", array(
                 ":person_id"=>(int)$person_id
             ));
                   
@@ -172,14 +53,15 @@
         public function save()
         {
             $sql = new Sql();
-            // echo '<pre>';
-            // print_r($this);
-            // echo '</pre>';
-            // exit;
-          
-            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
+        //  echo '<pre>';
+        //  print_r($this);
+        //  echo '</pre>';
+        //  exit;
+        
+            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
+                ":cpf_person"       => $this->getcpf_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
                 ":company"          => $this->getcompany(),    
                 ":reason"           => $this->getreason(),
@@ -193,19 +75,25 @@
             ));
             
             $this->setData($results);
+            // echo '<pre>';
+            // print_r($results);
+            // echo '</pre>';
+            // exit;
+            return $results[0]["MESSAGE"];
         }
         
         public function update()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';
-            exit;
-            $results = $sql->select("CALL prc_visitant_update(:person_id,:name_person,:rg_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
+            
+            $results = $sql->select("CALL prc_visitant_update(:seq_person_id,:seq_classp_id,:visitant_id,:person_id,:name_person,:rg_person,:cpf_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id,:situation)", array(
+                ":seq_person_id"    => $this->getseq_person_id(),    
+                ":seq_classp_id"    => $this->getseq_classp_id(),    
+                ":visitant_id"      => $this->getvisitant_id(),    
                 ":person_id"        => $this->getperson_id(),    
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
+                ":cpf_person"        => $this->getcpf_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
                 ":company"          => $this->getcompany(),    
                 ":reason"           => $this->getreason(),
@@ -215,9 +103,11 @@
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
                 ":user_id"          => $this->getuser_id(),
-                ":classification_id"   => $this->getclassification_id()
+                ":classification_id"=> $this->getclassification_id(),
+                ":situation"        => $this->getsituation()
             ));
             $this->setData($results);
+          
             return $results[0]["MESSAGE"];
         }
 
@@ -237,6 +127,9 @@
             for ($i=0; $i < count($object); $i++) { 
                 if (isset($object["daydate"]) && $object["daydate"] != '') {
                     $object["daydate"] =  Visitant::convertDateView($object["daydate"]);
+                }
+                if (isset($object["dt_save"]) && $object["dt_save"] != '') {
+                    $object["dt_save"] =  Visitant::convertDateView($object["dt_save"]);
                 }
             }
             return $object;

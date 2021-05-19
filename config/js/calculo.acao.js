@@ -54,4 +54,15 @@ function convertLowToUpper(element)
         
     }
 }
-    
+
+function removeMensagem(){
+    setTimeout(function(){ 
+        var msg = document.getElementById("msg-success");
+        msg.parentNode.removeChild(msg);   
+    }, 2000);
+}
+document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+        removeMensagem(); 
+    }
+};

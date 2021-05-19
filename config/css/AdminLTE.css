@@ -2262,12 +2262,12 @@ a:focus {
 }
 .btn-success {
   background-color: #00a65a;
-  border-color: #008d4c;
+  border-color: #d5f8da;
 }
 .btn-success:hover,
 .btn-success:active,
 .btn-success.hover {
-  background-color: #008d4c;
+  background-color: #d5f8da;
 }
 .btn-info {
   background-color: #00c0ef;
@@ -2419,7 +2419,7 @@ a:focus {
   text-decoration: underline;
 }
 .alert-success {
-  border-color: #008d4c;
+  border-color: #d5f8da;
 }
 .alert-danger,
 .alert-error {
@@ -4508,7 +4508,7 @@ table.text-center th {
 .bg-green-active,
 .modal-success .modal-header,
 .modal-success .modal-footer {
-  background-color: #008d4c !important;
+  background-color: #d5f8da !important;
 }
 .bg-navy-active {
   background-color: #001a35 !important;

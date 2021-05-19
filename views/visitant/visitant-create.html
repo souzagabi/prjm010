@@ -19,13 +19,22 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div class="box box-primary" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
+      <div id="{if="$msg.state == 'SUCCESS' "}msg-success{/if}" class="box box-success" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
         <div class="msg"><input type="text" class="form-control {if="$msg.state == 'SUCCESS' "}alert-success{else}alert-danger{/if}" name="msg" id="msg" value="{if="$msg.state == 'SUCCESS' "}{$msg.msg}{/if}" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/create" method="post">
+        <form role="form" action="/visitant/create" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <div class="col col-md-4">
+              <div>
+                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
+              </div>
+            </div>
+            
+          </div>
+
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
@@ -67,6 +76,8 @@
             </div>
             
           </div>
+        </div>
+
           <div class="box-body">
             <div class="col col-md-1">
               <div class="form-group">

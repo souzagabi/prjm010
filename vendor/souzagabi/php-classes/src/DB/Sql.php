@@ -5,8 +5,8 @@
 	class Sql {
 
 		const HOSTNAME = "127.0.0.1";
-		const USERNAME = "root";
-		const PASSWORD = "root";
+		const USERNAME = "prjm010";
+		const PASSWORD = "@V1s@r3!!2021";
 		const DBNAME = "prjm010";
 
 		private $conn;

@@ -54,8 +54,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_person_save`(
 	par_name_person varchar(200),
     par_phonenumber varchar(11),
     par_rg_person varchar(10),
-    par_classification tinyint(1),
-    par_date_save date,
+    par_cpf_person varchar(11),
+    par_classification_id tinyint(1),
+    par_daydate date,
     par_situation tinyint(1),
     par_login varchar(64),
     par_password varchar(200),
@@ -71,15 +72,15 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
     START TRANSACTION;
     
-    INSERT INTO PRJM010001 (dt_save, situation) VALUES (par_date_save, par_situation);
+    INSERT INTO PRJM010001 (dt_save, situation) VALUES (par_daydate, par_situation);
     SET par_person_id = LAST_INSERT_ID();
     
     IF EX = 1 THEN
 		SELECT MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010001";
 	END IF;
         
-	INSERT INTO PRJM010010 (person_id, name_person, phonenumber, rg_person) 
-		VALUES (par_person_id, par_name_person, par_phonenumber, par_rg_person);
+	INSERT INTO PRJM010010 (person_id, name_person, phonenumber, rg_person, cpf_person) 
+		VALUES (par_person_id, par_name_person, par_phonenumber, par_rg_person, par_cpf_person);
 	 
     IF EX = 1 THEN
 		SELECT  MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010010";
@@ -92,18 +93,20 @@ BEGIN
     END IF;
     
     IF EX = 1 THEN
-		SELECT MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010013";
+		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010013";
 	END IF;
     
-    INSERT INTO PRJM010012 
-    SET
-		classification_id = par_classification,
-        person_id = par_person_id;
+    INSERT INTO PRJM010012 (classification_id, person_id) VALUES ( par_classification_id, par_person_id);
     
     IF EX = 1 THEN
+		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010012";
+	END IF;
+    
+    IF EX = 1 THEN
+		SELECT MESSAGE;
 		ROLLBACK;
 	ELSE
-		SELECT "SUCCESS: Dados salvo com sucesso!!" MESSAGE;
+		SELECT "SUCCESS: Dados salvos com sucesso!!" MESSAGE;
 		COMMIT;
 	END IF; #Fim do if EX = 1 THEN
 
@@ -113,7 +116,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `prc_sel_classification` */;
+/*!50003 DROP PROCEDURE IF EXISTS `prc_person_update` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -123,9 +126,62 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_sel_classification`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_person_update`(
+	par_seq_person_id int(11),
+    par_seq_classp_id int(11),
+    par_name_person varchar(200),
+    par_phonenumber varchar(11),
+    par_rg_person varchar(10),
+    par_cpf_person varchar(11),
+    par_classification_id tinyint(1),
+    par_daydate date,
+    par_situation tinyint(1)
+)
 BEGIN
-	SELECT * FROM PRJM010011;
+	DECLARE MESSAGE, MSG001, MSG010 varchar(1000);
+    DECLARE EX SMALLINT DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET EX = 1;
+    DECLARE EXIT HANDLER FOR 1062 SELECT  "ERROR: ERRO de duplicidade do ID." AS MSGID;
+	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
+    START TRANSACTION;
+    #set MESSAGE = msg;
+    
+    UPDATE PRJM010010
+		SET
+			name_person      =  par_name_person,
+			phonenumber      =  par_phonenumber,
+			rg_person        =  par_rg_person,
+			cpf_person       =  par_cpf_person
+
+	WHERE seq_person_id = par_seq_person_id;
+    
+    IF EX = 1 THEN
+		SET  MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010010 <=>
+        UPDATE PRJM010010 SET name_person = ", par_name_person, "phonenumber = ",par_phonenumber, " rg_person = ",par_rg_person,
+			" cpf_person = ",par_cpf_person, " WHERE seq_person_id = ",par_seq_person_id,";", "  <=> ", MESSAGE);
+	END IF;
+    
+    IF par_seq_classp_id IS NOT NULL AND par_seq_classp_id != '' THEN
+		UPDATE PRJM010012 
+			SET classification_id = par_classification_id
+		WHERE seq_classp_id = par_seq_classp_id;   
+	END IF;
+    
+    IF EX = 1 THEN
+		SET  MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010012 
+						<=> UPDATE PRJM010012 
+						SET classification_id = ",par_classification_id,
+							" WHERE seq_classp_id = ", par_seq_classp_id,";", "  <=> ", MESSAGE);
+	END IF;
+    
+    IF EX = 1 THEN
+		SELECT MESSAGE;
+		ROLLBACK;
+	ELSE
+		SET MESSAGE = CONCAT("SUCCESS: Dados atualizados com sucesso!!");
+        SELECT MESSAGE;
+		COMMIT;
+	END IF; #Fim do if EX = 1 THEN
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -145,6 +201,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_save`(
 	par_name_person varchar(200),
 	par_rg_person varchar(10),
+    par_cpf_person varchar(11),
 	par_phonenumber varchar(11),
 	par_company varchar(100),
 	par_reason varchar(100),
@@ -165,9 +222,9 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
     START TRANSACTION;
     
-    CALL prc_person_save(par_name_person,par_phonenumber,par_rg_person,par_classification,par_daydate,'0','','',0);
+    CALL prc_person_save(par_name_person,par_phonenumber,par_rg_person,par_cpf_person,par_classification,par_daydate,'0','','',0);
     IF EX = 1 THEN
-		SELECT MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010010";
+		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010010";
 	END IF;
     
     SELECT LAST_INSERT_ID() INTO par_Person_id FROM PRJM010001 ;
@@ -175,11 +232,16 @@ BEGIN
 	INSERT INTO prjm010014
 		(person_id,user_id,daydate,dayhour,company,reason,badge,auth,sign)
 		VALUES( par_Person_id,par_user_id,par_daydate,par_dayhour,par_company,par_reason,par_badge,par_auth,par_sign);
-        
+     
 	IF EX = 1 THEN
+		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010014";
+	END IF;
+    
+	IF EX = 1 THEN
+		SELECT MESSAGE;
 		ROLLBACK;
 	ELSE
-		SELECT "SUCCESS: Dados salvo com sucesso!!" MESSAGE;
+		SELECT "SUCCESS: Dados salvos com sucesso!!" MESSAGE;
 		COMMIT;
 	END IF; #Fim do if EX = 1 THEN
 END ;;
@@ -251,7 +313,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `prc_visitant_update` */;
+/*!50003 DROP PROCEDURE IF EXISTS `prc_visitant_sel_byid` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -261,40 +323,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_update`(
-	par_person_id int,
-    par_name_person varchar(200),
-	par_rg_person varchar(10),
-	par_phonenumber varchar(11),
-	par_company varchar(100),
-	par_reason varchar(100),
-	par_badge char(3),
-	par_auth varchar(45), 
-	par_sign varchar(100),
-	par_daydate date,
-	par_dayhour time,
-	par_user_id int,
-    par_classification int
-)
-BEGIN
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `sp_visitant_sel_byid` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_visitant_sel_byid`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_sel_byid`(
 	par_person_id INT(11)
 )
 BEGIN
@@ -306,7 +335,8 @@ BEGIN
     START TRANSACTION;
     
     SET @sql = CONCAT('SELECT * ');
-	SET @sql = CONCAT(@sql, ' FROM PRJM010010 PRJM010 ');
+	SET @sql = CONCAT(@sql, ' FROM PRJM010001 PRJM001 ');
+    SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010010 PRJM010 USING(person_id) ');
 	SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010014 PRJM014 USING(person_id) ');
     SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010012 PRJM012 USING(person_id) ');
     SET @sql = CONCAT(@sql, ' WHERE PRJM010.person_id = "', par_person_id, '"');
@@ -330,6 +360,77 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `prc_visitant_update` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_update`(
+	par_seq_person_id int,
+    par_seq_classp_id int,
+    par_visitant_id int,
+    par_person_id int,
+    par_name_person varchar(200),
+	par_rg_person varchar(10),
+    par_cpf_person varchar(11),
+	par_phonenumber varchar(11),
+	par_company varchar(100),
+	par_reason varchar(100),
+	par_badge char(3),
+	par_auth varchar(45), 
+	par_sign varchar(100),
+	par_daydate date,
+	par_dayhour time,
+	par_user_id int,
+    par_classification_id int,
+    par_situation tinyint(1)
+)
+BEGIN
+	DECLARE MESSAGE, MSG001, MSG010 varchar(1000);
+    DECLARE EX SMALLINT DEFAULT 0;
+	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET EX = 1;
+    DECLARE EXIT HANDLER FOR 1062 SELECT  "ERRO de duplicidade do ID." AS MSGID;
+	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
+    START TRANSACTION;
+    
+	CALL prc_person_update(par_seq_person_id,par_seq_classp_id,par_name_person,par_phonenumber,par_rg_person,par_cpf_person,par_classification_id,par_daydate,par_situation);
+     
+    IF EX = 1 THEN
+		SET MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na procedure prc_person_update");
+	END IF;
+  
+    UPDATE PRJM010014
+	SET
+		company		= par_company,
+		reason		= par_reason,
+		badge		= par_badge,
+		auth		= par_auth,
+		sign		= par_sign
+    WHERE visitant_id 	= par_visitant_id;
+    
+    IF EX = 1 THEN
+		SET MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010014 ");
+	END IF;
+    
+    IF EX = 1 THEN
+		SELECT MESSAGE;
+		ROLLBACK;
+	ELSE
+		SET MESSAGE = CONCAT("SUCCESS: Dados atualizados com sucesso!! ") ;
+        SELECT MESSAGE;
+		COMMIT;
+	END IF; #Fim do if EX = 1 THEN
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -339,4 +440,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-13 17:47:21
+-- Dump completed on 2021-05-14 16:52:29

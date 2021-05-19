@@ -53,16 +53,13 @@
         public function save()
         {
             $sql = new Sql();
-        //  echo '<pre>';
-        //  print_r($this);
-        //  echo '</pre>';
-        //  exit;
         
-            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
+            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
                 ":cpf_person"       => $this->getcpf_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
+                ":photo"            => $this->getphoto(),    
                 ":company"          => $this->getcompany(),    
                 ":reason"           => $this->getreason(),
                 ":badge"            => $this->getbadge(),
@@ -75,10 +72,7 @@
             ));
             
             $this->setData($results);
-            // echo '<pre>';
-            // print_r($results);
-            // echo '</pre>';
-            // exit;
+            
             return $results[0]["MESSAGE"];
         }
         
@@ -86,7 +80,7 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_visitant_update(:seq_person_id,:seq_classp_id,:visitant_id,:person_id,:name_person,:rg_person,:cpf_person,:phonenumber,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id,:situation)", array(
+            $results = $sql->select("CALL prc_visitant_update(:seq_person_id,:seq_classp_id,:visitant_id,:person_id,:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id,:situation)", array(
                 ":seq_person_id"    => $this->getseq_person_id(),    
                 ":seq_classp_id"    => $this->getseq_classp_id(),    
                 ":visitant_id"      => $this->getvisitant_id(),    
@@ -95,6 +89,7 @@
                 ":rg_person"        => $this->getrg_person(),    
                 ":cpf_person"        => $this->getcpf_person(),    
                 ":phonenumber"      => $this->getphonenumber(),    
+                ":photo"            => $this->getphoto(),    
                 ":company"          => $this->getcompany(),    
                 ":reason"           => $this->getreason(),
                 ":badge"            => $this->getbadge(),
@@ -111,16 +106,17 @@
             return $results[0]["MESSAGE"];
         }
 
-        // public function delete()
-        // {
-        //     $sql = new Sql();
+        public function delete()
+        {
+            $sql = new Sql();
+           
+            $results = $sql->select("CALL prc_visitant_delete(:person_id)", array(
+                ":person_id"    =>(int)$this->getperson_id()
+            ));
             
-        //     $sql->query("CALL sp_acoes_delete(:idinvestiment, :idestoque, :qtdetotal)", array(
-        //         ":idinvestiment"    =>$this->getidinvestiment(),
-        //         ":idestoque"        =>$this->getidestoque(),
-        //         ":qtdetotal"        =>$this->getqtdetotal()
-        //     ));
-        // }
+            $this->setData($results);
+            return $results[0]["MESSAGE"];
+        }
         
         public function convertDateToView($object = array())
         {

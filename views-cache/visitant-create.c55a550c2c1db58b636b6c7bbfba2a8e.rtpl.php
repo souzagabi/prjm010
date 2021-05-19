@@ -19,13 +19,22 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div class="box box-primary" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+      <div id="<?php if( $msg["state"] == 'SUCCESS'  ){ ?>msg-success<?php } ?>" class="box box-success" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
         <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" id="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/create" method="post">
+        <form role="form" action="/visitant/create" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <div class="col col-md-4">
+              <div>
+                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
+              </div>
+            </div>
+            
+          </div>
+
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
@@ -67,6 +76,8 @@
             </div>
             
           </div>
+        </div>
+
           <div class="box-body">
             <div class="col col-md-1">
               <div class="form-group">

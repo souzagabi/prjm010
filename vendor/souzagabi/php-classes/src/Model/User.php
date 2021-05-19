@@ -12,7 +12,7 @@
         {
             $sql = new Sql();
 
-            $results = $sql->select("SELECT * FROM prjm010013 WHERE login = :LOGIN", array(
+            $results = $sql->select("SELECT * FROM PRJM010010 PRJM010 INNER JOIN prjm010013 PRJM013 WHERE PRJM013.login = :LOGIN", array(
                 ":LOGIN"=>$login
             ));
             
@@ -56,7 +56,7 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser;", array(
+            $results = $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM013.user_id = :iduser", array(
             ":iduser"=>$iduser
             ));
             

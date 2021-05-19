@@ -22,7 +22,20 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+        <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <div class="col col-md-4">
+              <div>
+                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
+              </div>
+            </div>
+            <div class="col col-md-4">
+              <div>
+                <label for="photo">Fotografia</label>
+                <img src="../../image/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" id="photo" name="photo" width="80"  alt="">
+              </div>
+            </div>
+          </div>
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">

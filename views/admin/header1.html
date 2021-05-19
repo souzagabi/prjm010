@@ -19,14 +19,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- jvectormap -->
   <link rel="stylesheet" href="../../config/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../config/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../../res/admin/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-  <link rel="stylesheet" href="../../config/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../../res/admin/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="../../config/css/index.css">
-
+  <link rel="shortcut icon" href="../../img/favicon.jpg" type="image/x-icon">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -61,7 +61,7 @@ desired effect
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="../../config/index2.html" class="logo">
+    <a href="../../res/admin/index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>I</b>AC</span>
       <!-- logo for regular state and mobile devices -->
@@ -177,18 +177,18 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img class="user-image">
+              <img class="user-image" src="../../image/{$_SESSION['User'].person_id}.jpg">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Gabriel Alves</span>
+              <span class="hidden-xs">{$_SESSION['User'].name_person}"</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               
               <li class="user-header">
-                <img class="img-circle">
+                <img class="img-circle" src="../../image/{$_SESSION['User'].person_id}.jpg">
 
                 <p>
-                  Gabriel Alves - Web Developer
+                  {$_SESSION['User'].name_person}" - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -234,10 +234,10 @@ desired effect
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="../../img/avatar.jpg" class="img-circle">
+        <img src="../../image/{$_SESSION['User'].person_id}.jpg" class="img-circle">
       </div>
       <div class="pull-left info">
-        <p>Gabriel Alves</p>
+        <p>/{$_SESSION['User'].name_person}"</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>

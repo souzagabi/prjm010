@@ -26,7 +26,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
   <link rel="stylesheet" href="../../config/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="../../config/css/index.css">
-
+  <link rel="shortcut icon" href="../../img/favicon.jpg" type="image/x-icon">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -177,18 +177,18 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img class="user-image">
+              <img class="user-image" src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
-              <span class="hidden-xs">Gabriel Alves</span>
+              <span class="hidden-xs"><?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               
               <li class="user-header">
-                <img class="img-circle">
+                <img class="img-circle" src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg">
 
                 <p>
-                  Gabriel Alves - Web Developer
+                  <?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
               </li>
@@ -234,10 +234,10 @@ desired effect
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="../../img/avatar.jpg" class="img-circle">
+        <img src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" class="img-circle">
       </div>
       <div class="pull-left info">
-        <p>Gabriel Alves</p>
+        <p><?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>

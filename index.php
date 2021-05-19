@@ -12,6 +12,8 @@
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Person;
 
+	include_once("./config/php/funcao.php");
+
 	date_default_timezone_set('America/Sao_Paulo');	
 	
 	$app = new Slim();
@@ -25,8 +27,7 @@
 		User::verifyLogin();
 		$company["name_person"]	= NULL;
 		$company["date_save"] 	= NULL;
-		$company["date_save"] 	= date('Y-m-d');
-		$company["date_fim"] 	= date('Y-m-d');
+		$company["date_fim"] 	= NULL;
 		$company["visitants"]	= "visitants";
 		$company["search"]		= NULL;
 
@@ -148,11 +149,21 @@
 			$_POST[$key] = $value;
 		}
 		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		
+		if ($_FILES['image']) {
+			$photo = $_FILES['image']['tmp_name'];
+			$tamanho = $_FILES['image']['size'];
+			$tipo = $_FILES['image']['type'];
+			$nome = $_FILES['image']['name'];
 
-		// echo '<pre>';
-		// print_r($_POST);
-		// echo '</pre>';
-		// exit;
+			$fp = fopen($photo, "rb");
+			$conteudo = fread($fp, $tamanho);
+			$_POST["photo"] = base64_encode($conteudo);
+
+			fclose($fp);
+		
+		}
+		
 		$visitant->setData($_POST);
 		$msg = $visitant->save();
 
@@ -160,14 +171,36 @@
 		exit;
 	});
 
-	$app->get('/visitant/:person_id', function($person_id) 
-	{
+	$app->get("/visitant/:person_id/delete", function ($person_id){
 		User::verifyLogin();
-		$classifications = Visitant::listClassification();
-
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
+		$msg = $visitant->delete();
+		
 
+		header("Location: /visitant?msg=".$msg);
+		exit;
+	});
+
+	$app->get('/visitant/:person_id', function($person_id) 
+	{
+		$dir = 'image';
+		User::verifyLogin();
+		$classifications = Visitant::listClassification();
+		
+		$visitant = new Visitant();
+		$visitant->getById($person_id);
+		if(!is_dir($dir))
+			mkdir($dir, 777);
+		
+		if ($visitant->getphoto()) {
+			$photo = $visitant->getphoto();
+			$person_id = $visitant->getperson_id();
+			
+			$bs64_code = 'data:image/jpg;base64,'.$photo;
+			converter_base64_para_imagem($bs64_code, $dir, $person_id);
+		}
+		
 		for ($i=0; $i < 200 ; $i++) 
 		{ 
 			$j[$i] = $i;
@@ -196,7 +229,19 @@
 			}
 			$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		}
-				
+		if ($_FILES['image']['name'] != '' || $_FILES['image']['name'] != NULL) {
+			$photo = $_FILES['image']['tmp_name'];
+			$tamanho = $_FILES['image']['size'];
+			$tipo = $_FILES['image']['type'];
+			$nome = $_FILES['image']['name'];
+
+			$fp = fopen($photo, "rb");
+			$conteudo = fread($fp, $tamanho);
+			$_POST["photo"] = base64_encode($conteudo);
+
+			fclose($fp);
+		}
+		
 		$visitant->setData($_POST);
 		$msg = $visitant->update();
 		
@@ -303,7 +348,7 @@
 		$acao->setData($_POST);
 
 		$acao->save();
-		//var_dump($acao);exit;
+		
 		$tipo = "compra";
 		
 		header("Location: /acoes/create?$tipo=$tipo");
@@ -361,11 +406,7 @@
 			$company["search"] 		= "Search";
 			
 			$action 	= Acao::selectRegister($company);
-			// echo '</pre>';
-            // print_r($action);
-            // echo '<pre>';
-            
-            // exit;
+			
 			if (isset($action) && $action != '') {
 				$page->setTpl("/notas", array(
 					"acoes"=>$action[0],
@@ -425,10 +466,7 @@
 		$acoes->getByBuy($idinvestiment);
 		$acoes->setData($_POST);
 		$msg = $acoes->update();
-		// echo '<pre>';
-		// print_r($act);
-		// echo '</pre>';
-		// exit;
+		
 		header("Location: /notas?sgcompany=".$_POST["sgcompany"]."&dtbuy=&dtsell=&search=Search&limit=10&msg=".$msg);
 		exit;
 	});

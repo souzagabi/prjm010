@@ -39,8 +39,8 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
-      <div class="msg"><input type="text" class="form-control {if="$msg.state == 'SUCCESS' "}alert-success{else}alert-danger{/if}" name="msg" id="msg" value="{if="$msg.state == 'SUCCESS' "}{$msg.msg}{/if}" ></div>
+    <div id="msg{if="$msg.state == 'SUCCESS' "}-success{/if}" class="box box-success" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
+      <div class="msg"><input type="text" class="form-control {if="$msg.state == 'SUCCESS' "}msg-success alert-success{else}alert-danger{/if}" name="msg" value="{if="$msg.state == 'SUCCESS' "}{$msg.msg}{/if}" ></div>
     </div>
     <div class="box box-primary">
       <div class="row">

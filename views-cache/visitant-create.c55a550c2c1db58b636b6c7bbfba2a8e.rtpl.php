@@ -76,7 +76,6 @@
             </div>
             
           </div>
-        </div>
 
           <div class="box-body">
             <div class="col col-md-1">

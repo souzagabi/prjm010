@@ -27,19 +27,19 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../config/index2.html"><b>Admin</b>LTE</a>
+    <a href="../../config/index2.html"><b>ADJ</b> - SISTEMAS</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Logar para comelar sua sessão</p>
+    <p class="login-box-msg">Logar para começar sua sessão</p>
 
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Login" name="login">
+        <input type="text" class="form-control" placeholder="Login" name="login" autofocus>
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password">
+        <input type="password" class="form-control" placeholder="Password" name="pass">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">

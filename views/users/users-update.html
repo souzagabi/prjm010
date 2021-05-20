@@ -12,40 +12,87 @@
 
   <div class="row">
   	<div class="col-md-12">
+  		<div id="msg-success" class="box box-success" style="display: none;">
+        <div>
+          <div id="msgSuccess" class="alert-success"></div>
+        </div>
+      </div>
+  		<div id="msgDanger" name="msgDanger"  class="box box-danger" style="display: none;">
+        <div>
+          <div id="msgError" name="msgError" class="alert-danger msgError"></div>
+        </div>
+      </div>
   		<div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Editar Usuário</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
+        
         <form role="form" action="/users/{$user.user_id}" method="post">
           <div class="box-body">
             <div class="box-body">
-              <div class="form-group">
-                <label for="name_person">Nome</label>
-                <input type="text" class="form-control" id="name_person" name="name_person" value="{$user.name_person}" placeholder="Digite o nome">
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label for="name_person">Nome</label>
+                  <input type="text" class="form-control" id="name_person" name="name_person" value="{$user.name_person}" placeholder="Digite o nome">
+                </div>
               </div>
-              <div class="form-group">
-                <label for="sgcompany">Sigla</label>
-                <input type="text" class="form-control" id="sgcompany" name="sgcompany" value="{$user.cpf_person}" placeholder="Digite o login">
+              <div class="col col-md-2">
+                <div class="form-group">
+                  <label for="rg_person">RG</label>
+                  <input type="text" class="form-control" id="rg_person" name="rg_person" value="{$user.rg_person}" placeholder="Digite o CPF">
+                </div>
               </div>
-              <div class="form-group">
-                <label for="cpf_person">CPF/CNPJ</label>
-                <input type="text" class="form-control" id="cpf_person" name="cpf_person" value="{$user.cpf_person}" placeholder="Digite o login">
+              <div class="col col-md-2">
+                <div class="form-group">
+                  <label for="cpf_person">CPF</label>
+                  <input type="text" class="form-control" id="cpf_person" name="cpf_person" value="{$user.cpf_person}" placeholder="Digite o CPF">
+                </div>
               </div>
-              <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" class="form-control" id="login" name="login" value="{$user.login}" placeholder="Digite o login">
+              <div class="col col-md-2">
+                <div class="form-group">
+                  <label for="phonenumber">Telefone</label>
+                  <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{$user.phonenumber}" placeholder="Digite o telefone">
+                </div>
               </div>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" name="inadmin" value="1" {if="$user.inadmin == 1"}checked{/if}> Acesso de Administrador
-                </label>
+              <div class="col col-md-2">
+                <div class="form-group">
+                  <label for="login">Login</label>
+                  <input type="text" class="form-control" id="login" name="login" value="{$user.login}" placeholder="Digite o login">
+                </div>
+              </div>
+            </div>
+            <div class="box-body">  
+              <div class="col col-md-3">
+                <div class="form-group">
+                  <label for="oldpassword">Senha Atual</label>
+                  <input type="password" class="form-control" id="oldpassword" placeholder="Digite a senha">
+                </div>
+              </div>
+              <div class="col col-md-3">
+                <div class="form-group">
+                  <label for="pass">Senha</label>
+                  <input type="password" class="form-control" id="pass" name="pass" placeholder="Digite a senha">
+                </div>
+              </div>
+              <div class="col col-md-3">
+                <div class="form-group">
+                  <label for="confpassword">Confirma a Senha</label>
+                  <input type="password" class="form-control" id="confpassword" onChange="verifyConfPassWord(pass,confpassword,msgDanger)" placeholder="Digite a senha novamente">
+                </div>
+              </div>
+              <div class="col col-md-2">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="inadmin" value="1" {if="$user.inadmin == 1"}checked{/if}> Acesso de Administrador
+                  </label>
+                </div>
               </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-              <button type="submit" class="btn btn-success">Cadastrar</button>
+              <button type="submit" id="btnSubmit" class="btn btn-success" style="display: none;">Atualizar</button>
               <a href="/users?limit=10" class="btn btn-warning">Voltar</a>
 
             </div>

@@ -20,10 +20,11 @@
                 throw new \Exception("Usuário inexistente ou senha inválida", 1);
             }
             $data = $results[0];
-
-            if (password_verify($password, $data["password"]) === true) {
+            
+            if (password_verify($password, $data["pass"]) === true) {
                 $user = new User;
                 $user->setData($data);
+
                 $_SESSION[User::SESSION] = $user->getValues();
                 
                 return $user;
@@ -52,30 +53,35 @@
             return $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) ORDER BY PRJM010.name_person");
         }
 
-        public function get($iduser) 
+        public function get($user_id) 
         {
             $sql = new Sql();
             
-            $results = $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM013.user_id = :iduser", array(
-            ":iduser"=>$iduser
+            $results = $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM013.user_id = :user_id", array(
+            ":user_id"=>$user_id
             ));
-            
             $data = $results[0];
             
             $this->setData($data);
+            
         }
 
         public function save()
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL sp_users_save(:desperson, :sgcompany, :descpfcnpj, :deslogin, :password, :inadmin)", array(
-                ":desperson"    =>  $this->getdesperson(),
-                ":sgcompany"    =>  $this->getsgcompany(),
-                ":descpfcnpj"   =>  $this->getdescpfcnpj(),
-                ":deslogin"     =>  $this->getdeslogin(),
-                ":password"  =>  $this->getpassword(),
-                ":inadmin"      =>  $this->getinadmin()
+            $results = $sql->select("CALL sp_users_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:classification_id,:daydate,:situation, :login, :password, :inadmin)", array(
+                ":name_person"          => $this->getname_person(),
+                ":phonenumber"          => $this->getphonenumber(),
+                ":photo"                => $this->getphoto(),
+                ":rg_person"            => $this->getrg_person(),
+                ":cpf_person"           => $this->getcpf_person(),
+                ":classification_id"    => $this->getclassification_id(),
+                ":daydate"              => $this->getdaydate(),
+                ":situation"            => $this->getsituation(),
+                ":login"                => $this->getlogin(),
+                ":password"             => $this->getpassword(),
+                ":inadmin"              => $this->getinadmin()
             ));
             $this->setData($results);
         }
@@ -83,35 +89,37 @@
         public function update()
         {
             $sql = new Sql();
-                       
-            $results = $sql->select("CALL sp_users_update_save(:iduser, :idperson, :desperson, :sgcompany, :descpfcnpj, :deslogin, :password, :inadmin)", array(
-                ":iduser"       =>  $this->getiduser(),
-                ":idperson"     =>  $this->getidperson(),
-                ":desperson"    =>  $this->getdesperson(),
-                ":descpfcnpj"   =>  $this->getdescpfcnpj(),
-                ":sgcompany"    =>  $this->getsgcompany(),
-                ":deslogin"     =>  $this->getdeslogin(),
-                ":password"  =>  $this->getpassword(),
-                ":inadmin"      =>  $this->getinadmin()
+            echo '<pre>';
+            print_r($this);
+            echo '</pre>';
+            $results = $sql->select("CALL prc_user_update(:user_id,:login, :password, :inadmin)", array(
+                ":user_id"              => $this->getuser_id(),
+                ":login"                => $this->getlogin(),   
+                ":password"             => $this->getpass(),   
+                ":inadmin"              => $this->getinadmin()
+                
             ));
+            
             $this->setData($results);
+            
+            return $results[0]["MESSAGE"];
         }
 
         public function delete()
         {
             $sql = new Sql();
             
-            $sql->query("CALL sp_users_delete(:iduser)", array(
-                ":iduser"=>$this->getiduser()
+            $sql->query("CALL sp_users_delete(:user_id)", array(
+                ":user_id"=>$this->getuser_id()
             ));
         }
         public static function getForgot($email)
         {
             $sql = new Sql();
             $results = $sql->select("
-                SELECT * FROM tb_persons a
-                INNER JOIN tb_users b USING(idperson)
-                WHERE a.desemail = :email",
+                SELECT * FROM PRJM010010 PRJM010
+                INNER JOIN PRJM010013 PRJM013 USING(person_id)
+                WHERE PRJM010.email = :email",
                  array(
                      ":email"=>$email
             ));
@@ -184,9 +192,9 @@
         public function setPassword($password)
         {
             $sql = new Sql();
-            $sql->query("UPDATE tb_users SET password = :password WHERE iduser = :iduser", array(
+            $sql->query("UPDATE PRJM010013 SET password = :password WHERE user_id = :user_id", array(
                 ":password" =>$password,
-                ":iduser"  =>1
+                ":user_id"  =>1
             ));
         }
     }

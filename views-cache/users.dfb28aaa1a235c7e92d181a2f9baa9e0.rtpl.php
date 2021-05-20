@@ -23,6 +23,9 @@
           </div>
         </div>
       </form>
+      <div id="msg<?php if( $msg["state"] == 'SUCCESS'  ){ ?>-success<?php } ?>" class="box box-success" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>msg-success alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
+      </div>
   		<div class="box box-primary">
         <div class="box-body no-padding">
           <table class="table table-striped">
@@ -30,6 +33,9 @@
               <tr>
                 <th style="width: 10px">#</th>
                 <th>Nome</th>
+                <th>RG</th>
+                <th>CPF</th>
+                <th>Telefone</th>
                 <th>Login</th>
                 <th style="width: 60px">Admin</th>
                 <th style="width: 140px">&nbsp;</th>
@@ -40,6 +46,9 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["rg_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["login"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td/>
                 <td><?php if( $value1["inadmin"] == 1 ){ ?>Sim<?php }else{ ?>Não<?php } ?></td>
                 <td>

@@ -546,7 +546,7 @@
 
 	$app->post('/admin/login', function() {
 		
-		User::login($_POST["login"], $_POST["password"]);
+		User::login($_POST["login"], $_POST["pass"]);
 		
 		header("Location: /");
 		exit;
@@ -612,9 +612,20 @@
 		
 		User::verifyLogin();
 		$users = User::listAll();
+		
+		$msg= '';
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		} else {
+			$msg = ["state"=>'', "msg"=> ''];
+		}
+
 		$page = new PageUser();
 		$page->setTpl("users", array(
-			"users"=> $users
+			"users"=> $users,
+			"msg"=>$msg
 		));
 	});
 
@@ -625,6 +636,24 @@
 		$page->setTpl("users-create");
 	});
 	
+	$app->post("/users/create", function (){
+		User::verifyLogin();
+
+		$user = new User();
+
+		$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
+
+		$_POST['password'] = password_hash($_POST["password"], PASSWORD_DEFAULT, [
+			"cost"=>12
+			]);
+
+		$user->setData($_POST);
+
+		$user->save();
+
+		header("Location: /users");
+			exit;
+	});
 	$app->get("/users/:iduser/delete", function ($iduser){
 		User::verifyLogin();
 		$user = new User();
@@ -640,50 +669,31 @@
 		$user = new User();
  
 		$user->get((int)$iduser);
-		
+			
 		$page = new PageUser();
 		
 		$page ->setTpl("users-update", array(
 			"user"=>$user->getValues()
 		));
 	});
-
-	$app->post("/users/create", function (){
-		User::verifyLogin();
-
-		$user = new User();
-
-		$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
-
-		$_POST['despassword'] = password_hash($_POST["despassword"], PASSWORD_DEFAULT, [
-			
-			"cost"=>12
-			
-			]);
-
-		$user->setData($_POST);
-
-		$user->save();
-
-		header("Location: /users");
-			exit;
-	});
 	
-	$app->post("/users/:iduser", function ($iduser){
+	$app->post("/users/:user_id", function ($user_id){
 		User::verifyLogin();
 		$user = new User();
 		$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
+		$_POST['pass'] = password_hash($_POST["pass"], PASSWORD_DEFAULT, [
+			"cost"=>12
+			]);
 		
-		$user->get((int)$iduser);
+		$user->get((int)$user_id);
 		$user->setData($_POST);
 		
-		$user->update();
+		$msg = $user->update();
 		
-		header("Location: /users");
+		header("Location: /users?msg=".$msg);
 		exit;
 		
 	});
-	
 	
 	$app->run();
 

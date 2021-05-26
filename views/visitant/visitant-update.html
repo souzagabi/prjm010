@@ -24,11 +24,11 @@
         
         <form role="form" action="/visitant/{$visitant.person_id}" method="post" enctype="multipart/form-data">
           <div class="box-body">
-            <div class="col col-md-4">
+            <!-- <div class="col col-md-5">
               <div>
                 <input type="file" id="image" name="image"class="btn btn-success" multiple/>
               </div>
-            </div>
+            </div> -->
             <div class="col col-md-4">
               <div>
                 <label for="photo">Fotografia</label>
@@ -90,6 +90,15 @@
               <div class="form-group">
                 <label for="reason">Motivo da Visita</label>
                 <input type="text" class="form-control" name="reason" id="reason" value="{$visitant.reason}" onkeyup="convertLowToUpper(reason)">
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="situation">Situação</label>
+                <select class="form-control" name="situation" id="situation">
+                  <option value="0"{if="$visitant.situation == 0"}selected{/if}>ATIVO</option>
+                  <option value="1"{if="$visitant.situation == 1"}selected{/if}>INATIVO</option>
+                </select>
               </div>
             </div>
             

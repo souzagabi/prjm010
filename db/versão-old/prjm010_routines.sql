@@ -227,28 +227,27 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_user_update`(
 	par_user_id int(11),
-    par_person_id int(11),
     par_login varchar(64),
     par_password varchar(200),
     par_inadmin tinyint(1)
 )
 BEGIN
-	DECLARE MESSAGE, MSG001, MSG010 varchar(1000);
+	DECLARE MESSAGE varchar(1000);
     DECLARE EX SMALLINT DEFAULT 0;
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET EX = 1;
     DECLARE EXIT HANDLER FOR 1062 SELECT  "ERROR: ERRO de duplicidade do ID." AS MSGID;
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
     START TRANSACTION;
     
-    UPDATE PRJM01013
-		SET 
-			login 		= par_login, 
-			pass 		= par_password, 
-			inadmin 	= par_inadmin
+    UPDATE PRJM010013
+	SET 
+		login 		= par_login, 
+		pass 		= par_password, 
+		inadmin 	= par_inadmin
 	WHERE user_id = par_user_id;
                 
     IF EX = 1 THEN
-		SET  MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010013");
+		SET  MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010013 "," - ",par_login," - ", par_password," - ",par_inadmin," - ", par_user_id);
 	END IF;
     
     IF EX = 1 THEN
@@ -572,4 +571,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-20 16:54:37
+-- Dump completed on 2021-05-20 17:16:09

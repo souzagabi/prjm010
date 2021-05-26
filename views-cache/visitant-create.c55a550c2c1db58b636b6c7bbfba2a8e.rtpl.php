@@ -26,14 +26,14 @@
         <!-- form start -->
         
         <form role="form" action="/visitant/create" method="post" enctype="multipart/form-data">
-          <div class="box-body">
-            <div class="col col-md-4">
+          <!-- <div class="box-body" hidden>
+            <div class="col col-md-5">
               <div>
                 <input type="file" id="image" name="image"class="btn btn-success" multiple/>
               </div>
             </div>
             
-          </div>
+          </div> -->
 
           <div class="box-body">
             <div class="col col-md-4">

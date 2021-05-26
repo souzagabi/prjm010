@@ -68,27 +68,32 @@ function verifyConfPassWord(element, elementCompare, elementMsg)
             document.getElementById("btnSubmit").style.display = "inline";
         }
     } 
-    if (msg != '') {
-        elementMsg.style.display = "block";
-        document.getElementById("msgError").innerHTML = msg;
-        elementCompare.focus();
-        removeMensagemError(elementMsg);
-    }
-
+    // if (msg != '') {
+    //     elementMsg.style.display = "block";
+    //     document.getElementById("msg-danger").innerHTML = msg;
+    //     elementCompare.focus();
+    //     removeMensagemError(elementMsg);
+    // }
 }
 
-function removeMensagemError(element){
-    if (element) {
-        setTimeout(function(){ 
-            element.style.display = "none";  
-            document.getElementById("msgError").innerHTML = "";
-        }, 3000);
-    }
-}
+// function removeMensagemError(element){
+//     if (element) {
+//         setTimeout(function(){ 
+//             element.style.display = "none";  
+//             document.getElementById("msg-danger").innerHTML = "";
+//         }, 3000);
+//     }
+// }
 function removeMensagem(){
     if (document.getElementById("msg-success")) {
         setTimeout(function(){ 
             var msg = document.getElementById("msg-success");
+            msg.parentNode.removeChild(msg);   
+        }, 3000);
+    }
+    if (document.getElementById("msg-danger")) {
+        setTimeout(function(){ 
+            var msg = document.getElementById("msg-danger");
             msg.parentNode.removeChild(msg);   
         }, 3000);
     }

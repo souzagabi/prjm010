@@ -2,11 +2,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Lista de Visitas
+      Lista de Resíduos
     </h1>
     <ol class="breadcrumb">
       <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active"><a href="/visitant">Visitas</a></li>
+      <li class="active"><a href="/residual">Resíduos</a></li>
     </ol>
   </section>
   <!-- Main content -->
@@ -15,13 +15,13 @@
       <div class="col form-control top">
         <div class="row">
           <div class="col col-md-4">
-            <form action="/visitant/create" method="get">
-              <input type="submit" name="visitant" class="btn btn-success" value="Cadastrar Visita">
-              <input type="text" name="visitant" value="visitant" hidden>
+            <form action="/residual/create" method="get">
+              <input type="submit" name="btnresidual" class="btn btn-success" value="Cadastrar Resíduos">
+              <input type="text" name="residual" value="residual" hidden>
             </form>
           </div>
           
-          <form action="/visitant" method="get" {if="!$visitants"}hidden{/if}>
+          <!-- <form action="/residual" method="get" {if="!$residuals"}hidden{/if}>
             <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
             <div class="col col-md-2"><label for="date_save">Data Inicio</label><input type="text" name="date_save" id="date_save" class="form-control" onChange="replaceSlash(date_save)"></div>
             <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
@@ -35,7 +35,7 @@
               </select>
             </div>
             <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
@@ -56,8 +56,7 @@
               </li>
               {$i = 1}
               {loop="$pgs"}
-              
-              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="residual?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">
@@ -69,38 +68,32 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" {if="!$visitants"}hidden{/if}>
+    <div class="box box-primary" {if="!$residuals"}hidden{/if}>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
             <tr class="alert-warning">
-              <th>Código</th>
-              <th>Nome</th>
-              <th>RG</th>
-              <th>CPF</th>
-              <th>Telefone</th>
-              <th>Empresa</th>
-              <th>Motivo</th>
-              <th>Data Visita</th>
-              <th>Hora Visita</th>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Material</th>
+              <th>Local</th>
+              <th>Depósito</th>
+              <th>Responsável</th>
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            {loop="$visitants"}
+            {loop="$residuals"}
             <tr>
-              <th>{$value.person_id}</th>
-              <td>{$value.name_person}</td>
-              <td>{$value.rg_person}</td>
-              <td>{$value.cpf_person}</td>
-              <td>{$value.phonenumber}</td>
-              <td>{$value.company}</td>
-              <td>{$value.reason}</td>
               <td>{$value.daydate}</td>
               <td>{$value.dayhour}</td>
+              <td>{$value.material}</td>
+              <td>{$value.location}</td>
+              <td>{$value.warehouse}</td>
+              <td>{$value.name_person}</td>
               <td>
-                <a href="/visitant/{$value.person_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                <a href="/visitant/{$value.person_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                <a href="/residual/{$value.residual_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                <a href="/residual/{$value.residual_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
             {/loop}
@@ -120,7 +113,7 @@
               </li>
               {$i = 1}
               {loop="$pgs"}
-              <li><a href="visitant?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.date_save"}&date_save={$pgs.list.date_save}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="residual?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">

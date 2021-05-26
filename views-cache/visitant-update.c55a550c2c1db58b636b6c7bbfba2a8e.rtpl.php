@@ -24,7 +24,7 @@
         
         <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
           <div class="box-body">
-            <div class="col col-md-4">
+            <div class="col col-md-5">
               <div>
                 <input type="file" id="image" name="image"class="btn btn-success" multiple/>
               </div>
@@ -90,6 +90,15 @@
               <div class="form-group">
                 <label for="reason">Motivo da Visita</label>
                 <input type="text" class="form-control" name="reason" id="reason" value="<?php echo htmlspecialchars( $visitant["reason"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="convertLowToUpper(reason)">
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="situation">Situação</label>
+                <select class="form-control" name="situation" id="situation">
+                  <option value="0"<?php if( $visitant["situation"] == 0 ){ ?>selected<?php } ?>>ATIVO</option>
+                  <option value="1"<?php if( $visitant["situation"] == 1 ){ ?>selected<?php } ?>>INATIVO</option>
+                </select>
               </div>
             </div>
             

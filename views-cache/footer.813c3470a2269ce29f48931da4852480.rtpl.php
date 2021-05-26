@@ -94,6 +94,8 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="../../config/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="../config/js/popper.min.js.map"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="../../config/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->

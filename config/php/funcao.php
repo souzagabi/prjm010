@@ -23,8 +23,10 @@
             // Decodifica a imagem
             $imagem_decodificada = base64_decode( $array_string[1] );
             
-            // Salva a imagem no diretório
-            file_put_contents( $diretorio, $imagem_decodificada );
+            if(!file_exists($diretorio)){
+                // Salva a imagem no diretório
+                file_put_contents( $diretorio, $imagem_decodificada );
+             }
 
         endif;
     

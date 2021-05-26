@@ -63,9 +63,9 @@ desired effect
     <!-- Logo -->
     <a href="../../config/index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>I</b>AC</span>
+      <span class="logo-mini"><b>M</b>NT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Investimento</b>AC</span>
+      <span class="logo-lg"><b>Manutenção</b>MNT</span>
     </a>
 
     <!-- Header Navbar -->
@@ -177,7 +177,7 @@ desired effect
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img class="user-image" src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg">
+              <img class="user-image" src="../../image/<?php if( $_SESSION['User']["photo"] == 0 ){ ?>admin.jpg<?php }else{ ?><?php echo htmlspecialchars( $_SESSION['User']["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg<?php } ?>">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               
               <span class="hidden-xs"><?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></span>
@@ -187,9 +187,8 @@ desired effect
               <!-- The user image in the menu -->
               
               <li class="user-header">
-                <img class="img-circle" src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg">
-
-                <p>
+                <img class="user-image" src="../../image/<?php if( $_SESSION['User']["photo"] == 0 ){ ?>admin.jpg<?php }else{ ?><?php echo htmlspecialchars( $_SESSION['User']["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg<?php } ?>">
+              <p>
                   <?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?> - Web Developer
                   <small>Member since Nov. 2012</small>
                 </p>
@@ -236,7 +235,7 @@ desired effect
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" class="img-circle">
+        <img class="user-image" src="../../image/<?php if( $_SESSION['User']["photo"] == 0 ){ ?>admin.jpg<?php }else{ ?><?php echo htmlspecialchars( $_SESSION['User']["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg<?php } ?>">
       </div>
       <div class="pull-left info">
         <p><?php echo htmlspecialchars( $_SESSION['User']["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
@@ -261,13 +260,14 @@ desired effect
     <ul class="sidebar-menu">
       <li class="header">HEADER</li>
       <!-- Optionally, you can add icons to the links -->
-      <li><a href="/admin"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
-      <li><a href="/users"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
+      <!-- <li><a href="/admin?pg=1"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
+      <li><a href="/users?pg=1"><i class="fa fa-users"></i> <span>Usuários</span></a></li> -->
       <li><a href="/visitant?pg=1"><i class="fa fa-user"></i> <span>Visitas</span></a></li>
+      <li><a href="/residual?pg=1"><i class="fa fa-user"></i> <span>Resíduos</span></a></li>
       <!-- <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
       <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
       <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->
-      <li class="treeview">
+      <!-- <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -277,7 +277,7 @@ desired effect
           <li><a href="#">Link in level 2</a></li>
           <li><a href="#">Link in level 2</a></li>
         </ul>
-      </li>
+      </li> -->
     </ul>
     <!-- /.sidebar-menu -->
   </section>

@@ -7,10 +7,12 @@
 	use \PRJM010\PageAdmin;
 	use \PRJM010\PageUser;
 	use \PRJM010\PageVisitant;
-	use \PRJM010\PagePerson;
+	use \PRJM010\PageResidual;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
-	use \PRJM010\Model\Person;
+	use \PRJM010\Model\Residual;
+	//use \PRJM010\PagePerson;
+	//use \PRJM010\Model\Person;
 
 	include_once("./config/php/funcao.php");
 
@@ -21,7 +23,7 @@
 	$app->config('debug', true);
 
 /*======================================================================================*/
-/*										Rotas do Visitants								*/
+/*										Rotas dos Visitants								*/
 /*======================================================================================*/
 	$app->get('/', function() {
 		User::verifyLogin();
@@ -31,19 +33,19 @@
 		$company["visitants"]	= "visitants";
 		$company["search"]		= NULL;
 
-		$msg= '';
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		} else {
-			$msg = ["state"=>'', "msg"=> ''];
-		}
-		
+		} 
+
 		$visitants = Visitant::selectRegister($company);
 		
+		// var_dump($visitants);exit;
+		//var_dump($msg);exit;
 		$page = new PageVisitant();
-			
+		
 		$page->setTpl("visitant", array(
 			"visitants"	=> $visitants[0],
 			"pgs"		=> $visitants[1],
@@ -54,7 +56,7 @@
 
 	$app->get('/visitant', function() 
 	{
-			
+		
 		User::verifyLogin();
 
 		$company["name_person"]	= NULL;
@@ -63,15 +65,13 @@
 		$company["date_fim"] 	= NULL;
 		$company["date_save"] 	= NULL;
 		
-		$msg= '';
-		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		} else {
-			$msg = ["state"=>'', "msg"=> ''];
-		}
+			$_GET["msg"] = '';
+		} 
 
 		if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
 			$gget = Visitant::convertDateToDataBase(["date_save"=>$_GET["date_save"]]);
@@ -93,7 +93,7 @@
 			$company[$key] = $value;
 		}
 		$company["visitants"]	= "visitants";
-		$visitants 	= Visitant::selectRegister($company);
+		$visitants = Visitant::selectRegister($company);
 		
 		$page = new PageVisitant();
 		$page->setTpl("visitant", array(
@@ -108,15 +108,13 @@
 		User::verifyLogin();
 		$classification = Visitant::listClassification();
 		
-		$msg= '';
-		
-		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+				
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		} else {
-			$msg = ["state"=>'', "msg"=> ''];
-		}
+			$_GET["msg"] = '';
+		} 
 		
 		for ($i=0; $i < 200 ; $i++) 
 		{ 
@@ -137,6 +135,7 @@
 			"msg" =>$msg,
 		));
 	});
+	
 	$app->post('/visitant/create', function() 
 	{
 		User::verifyLogin();
@@ -150,7 +149,7 @@
 		}
 		$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		
-		if ($_FILES['image']) {
+		if (isset($_FILES['image']) && $_FILES['image'] != '') {
 			$photo = $_FILES['image']['tmp_name'];
 			$tamanho = $_FILES['image']['size'];
 			$tipo = $_FILES['image']['type'];
@@ -162,11 +161,13 @@
 
 			fclose($fp);
 		
+		} else {
+			$_POST["photo"] = '';
 		}
 		
 		$visitant->setData($_POST);
 		$msg = $visitant->save();
-
+				
 		header("Location: /visitant/create?msg=".$msg);
 		exit;
 	});
@@ -176,8 +177,7 @@
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
 		$msg = $visitant->delete();
-		
-
+	
 		header("Location: /visitant?msg=".$msg);
 		exit;
 	});
@@ -249,272 +249,135 @@
 		exit;
 	});
 /*======================================================================================*/
-/*										Rotas das Ações									*/
+/*										Rotas dos Resíduos								*/
 /*======================================================================================*/
 	
 
-	$app->get('/acoes-estoque', function() {
+	$app->get('/residual', function() {
 		User::verifyLogin();
-		//$param = "";
-		$company["sgcompany"]	= NULL;
+		
+		$company["residual"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
 		$company["dtbuy"] 		= NULL;
 		$company["dtsell"] 		= NULL;
-		$company["listestoque"]	= NULL;
-
-		if ((isset($_GET["dtbuy"]) && $_GET["dtbuy"] != '') || (isset($_GET["dtsell"]) && $_GET["dtsell"] != '')) {
-			$_GET = Acao::convertDateToDataBase($_GET);
-		}
-		foreach ($_GET as $key => $value) {
-			$company[$key] = $value;
-		}
-		
-		$company["listestoque"]	= "listestoque";
-		$action	= Acao::selectRegister($company);
-		
-		$page = new PageAcoes([
-			"acoes"=> $action[0]
-		]);
-		$page->setTpl("acoes-estoque", array(
-			"acoes"=> $action[0],
-			"pgs"=> $action[1],
-		));
-		
-	});
-	
-	$app->get('/acoes', function() {
-		User::verifyLogin();
-		$company["sgcompany"]	= NULL;
-		$company["dtbuy"] 		= NULL;
-		$company["dtsell"] 		= NULL;
-		$company["listacoes"]	= NULL;
-		$company["search"]		= NULL;
-
-		if ((isset($_GET["dtbuy"]) && $_GET["dtbuy"] != '') || (isset($_GET["dtsell"]) && $_GET["dtsell"] != '')) {
-			$_GET = Acao::convertDateToDataBase($_GET);
-		}
-		foreach ($_GET as $key => $value) {
-			$company[$key] = $value;
-		}
-		
-		$company["listacoes"] 	= "listacoes";
-		
-		$action 	= Acao::selectRegister($company);
-	
-		$page = new PageAcoes();
-		$page->setTpl("acoes", array(
-			"acoes"	=> $action[0],
-			"pgs"	=> $action[1]
-		));
-		
-	});
-	
-	$app->get('/acoes/create', function() {
-		User::verifyLogin();
-		
-		$voltar = ["voltar"=>"acoes"];
-		if (isset($_GET["acoes"])) {
-			$voltar = ["voltar"=>"acoes"];
-		}
-		if (isset($_GET["notas"])) {
-			$voltar = ["voltar"=>"notas"];
-		}
-		$page = new PageAcoes();
-
-		if (isset($_GET["compra"])) {
-			$page->setTpl("acoes-create", array(
-				"voltar"=>$voltar
-			));
-		}
-		
-		
-	});
-
-	$app->post("/acoes/create", function (){
-		User::verifyLogin();
-		
-		$acao = new Acao();
-		if (isset($_POST["tax"])) {
-			$tax = explode(" ",$_POST["tax"]);
-			$_POST["tax"] = $tax[0];
-		}
-
-		$_POST = Acao::convertDateToDataBase($_POST);
-
-		$_POST["iduser"] = $_SESSION["User"]["iduser"];
-		
-   		$_POST["tptransaction"] = "C";
-
-
-		$acao->setData($_POST);
-
-		$acao->save();
-		
-		$tipo = "compra";
-		
-		header("Location: /acoes/create?$tipo=$tipo");
-		exit;
-	});
-	
-	$app->get("/acoes/:idinvestiment/delete", function ($idinvestiment){
-		User::verifyLogin();
-		$acao = new Acao();
-		$acao->getByBuy($idinvestiment);
-		$array = (array) $acao;
-
-		foreach ($array as $key => $value) {
-			$company = $value["sgcompany"];
-		}
-		$acao->delete();
-		header("Location: /acoes?sgcompany=".$company."&dtbuy=&dtsell=&search=Search");
-		exit;
-	});
-
-	$app->get("/acoes/:idinvestiment", function($idinvestiment) {
-		User::verifyLogin();
-		$acoes = new Acao();
-		$acoes->getByBuy($idinvestiment);
-		
-		$acoes = Acao::convertDateToView($acoes);
-
-		$page = new PageAcoes();
-		
-		$page ->setTpl("acoes-update", array(
-			"acoes"=>$acoes->getValues()
-		));
-	});
-
-/*======================================================================================*/
-/*										Rotas das Notas									*/
-/*======================================================================================*/
-	
-	$app->get('/notas', function() {
-		User::verifyLogin();
-		$company["sgcompany"]	= NULL;
-		$company["dtbuy"] 		= NULL;
-		$company["dtsell"] 		= NULL;
+		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
-		if ((isset($_GET["dtbuy"]) && $_GET["dtbuy"] != '') || (isset($_GET["dtsell"]) && $_GET["dtsell"] != '')) {
-			$_GET = Acao::convertDateToDataBase($_GET);
-		}
-		foreach ($_GET as $key => $value) {
-			$company[$key] = $value;
-		}
-		
-		$page = new PageAcoes();
-		if (isset($_GET["search"])) {
-			$company["search"] 		= "Search";
-			
-			$action 	= Acao::selectRegister($company);
-			
-			if (isset($action) && $action != '') {
-				$page->setTpl("/notas", array(
-					"acoes"=>$action[0],
-					"pgs"=>$action[1]
-				));
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Visitant::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
 			}
-
-		} else // Fim do Search
+		} 
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
 		{
-			$company["notas"]	= "notas";
-			$action 	= Acao::selectRegister($company);
-			
-			$page->setTpl("notas", array(
-				"acoes"=> $action[0],
-				"pgs"=> $action[1]
-			));
+			$gget = Visitant::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
 		}
 		
+		$residual	= Residual::selectRegister($company);
+		
+		$page = new PageResidual();
+		$page->setTpl("residual", array(
+			"residuals"=>$residual[0],
+			"pgs"=>$residual[1],
+			"msg"=>$msg
+		));
+		
+	});
+
+	$app->get('/residual/create', function() {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		$dt1["hour"]	= $date[1];
+		$responsable["name_person"] = $_SESSION["User"]["name_person"];
+
+		$page = new PageResidual();
+
+		$page->setTpl("residual-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"hour"=>$dt1,
+			"residual"=>$responsable
+		));
+		
+	});
+
+	$app->post("/residual/create", function (){
+		User::verifyLogin();
+		
+		$residual = new Residual();
+		
+		$ppost = Residual::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		$_POST["person_id"] = $_SESSION["User"]["person_id"];
+		
+		$residual->setData($_POST);
+		
+		$msg = $residual->save();
+		
+		header("Location: /residual/create");
+		exit;
 	});
 	
-	$app->get("/notas/:idinvestiment", function($idinvestiment) {
+	$app->get("/residual/:residual_id/delete", function ($residual_id){
 		User::verifyLogin();
-		$acoes = new Acao();
-		$acoes->getByBuy($idinvestiment);
+		$residual = new Residual();
+		$residual->getById($residual_id);
+
+		$msg = $residual->delete();
 		
-		$page = new PageAcoes();
+		header("Location: /residual?msg=".$msg."&daydate=&date_fim=&search=Search");
+		exit;
+	});
+
+	$app->get("/residual/:residual_id", function($residual_id) {
+		User::verifyLogin();
+		$residual = new Residual();
+		$residual->getById($residual_id);
 		
-		$page ->setTpl("acoes-update", array(
-			"acoes"=>$acoes->getValues()
+		$page = new PageResidual();
+		
+		$page ->setTpl("residual-update", array(
+			"residual"=>$residual->getValues()
 		));
 	});
-	
-	$app->post("/notas/:idinvestiment", function ($idinvestiment){
+	$app->post("/residual/:residual_id", function($residual_id) {
 		User::verifyLogin();
-		$acoes = new Acao();
-		// $act = new Acao();
-		// $action 	= Acao::listAllIds();
-		
-		// for ($i=0; $i < COUNT($action); $i++) { 
-		// 	$act->getByBuy($action[$i]['idinvestiment']);
-		// 	$act->update();
-		// }
-		// echo '</pre>';
-		// print_r($act);
-		// echo '<pre>';
-		
-		// exit;
-		if (isset($_POST["tax"])) {
-			$tax = explode(" ",$_POST["tax"]);
-			$_POST["tax"] = $tax[0];
-		}
+		$residual = new Residual();
+		$residual->getById($residual_id);
 		if (isset($_POST)) {
-			$_POST = Acao::convertDateToDataBase($_POST);
-			$_POST["iduser"] = $_SESSION["User"]["iduser"];
+			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		}
-		
-		$acoes->getByBuy($idinvestiment);
-		$acoes->setData($_POST);
-		$msg = $acoes->update();
-		
-		header("Location: /notas?sgcompany=".$_POST["sgcompany"]."&dtbuy=&dtsell=&search=Search&limit=10&msg=".$msg);
-		exit;
-	});
-	
-/*======================================================================================*/
-/*										Rotas do Person									*/
-/*======================================================================================*/
 
-	$app->get('/persons', function() {
-
-		User::verifyLogin();
-		$persons = Person::listAll();
-		$page = new PagePerson();
-		$page->setTpl("index", array(
-			"persons"=> $persons
-		));
-	});
-
-	$app->get("/persons/:idperson/delete", function ($idperson){
-		User::verifyLogin();
-		$person = new Person();
-		$person->get((int)$idperson);
-		$person->delete();
-		header("Location: /persons");
-		exit;
-	});
-
-	$app->get("/persons/:idperson", function($idperson) {
-		User::verifyLogin();
-		$persons = new Person();
- 
-		$persons->get((int)$idperson);
-		$page = new PagePerson();
+		$residual->setData($_POST);
 		
-		$page ->setTpl("person-update", array(
-			"persons"=>$persons->getValues()
-		));
-	});
-
-	$app->post("/persons/:idperson", function ($idperson){
-		User::verifyLogin();
-		$persons = new Person();
+		$msg = $residual->update();
 		
-		$persons->get((int)$idperson);
-		$persons->setData($_POST);
-		
-		$persons->update();
-		header("Location: /persons");
+		header("Location: /residual?msg=".$msg);
 		exit;
 	});
 

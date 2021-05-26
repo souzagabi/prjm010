@@ -12,7 +12,7 @@
         {
             $sql = new Sql();
 
-            $results = $sql->select("SELECT * FROM PRJM010010 PRJM010 INNER JOIN prjm010013 PRJM013 WHERE PRJM013.login = :LOGIN", array(
+            $results = $sql->select("SELECT * FROM PRJM010010 PRJM010 INNER JOIN PRJM010013 PRJM013 ON PRJM013.person_id = PRJM010.person_id WHERE PRJM013.login = :LOGIN", array(
                 ":LOGIN"=>$login
             ));
             
@@ -23,6 +23,10 @@
             
             if (password_verify($password, $data["pass"]) === true) {
                 $user = new User;
+                
+                if (!$data["photo"] && $data["photo"] == '') {
+                    $data["photo"] = 0;
+                }
                 $user->setData($data);
 
                 $_SESSION[User::SESSION] = $user->getValues();

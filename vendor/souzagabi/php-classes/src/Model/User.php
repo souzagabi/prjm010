@@ -21,7 +21,12 @@
             }
             $data = $results[0];
             
-            if (password_verify($password, $data["pass"]) === true) {
+            User::passwordVerity($password, $data );
+            
+        }
+        public static function passwordVerity($passUser, $data = array() )
+        {
+            if (password_verify($passUser, $data["pass"]) === true) {
                 $user = new User;
                 
                 if (!$data["photo"] && $data["photo"] == '') {
@@ -35,7 +40,6 @@
             } else{
                 throw new \Exception("Usuário inexistente ou senha inválida", 1);
             }
-            
         }
 
         public static function verifyLogin($inadmin = true)
@@ -57,13 +61,14 @@
             return $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) ORDER BY PRJM010.name_person");
         }
 
-        public function get($user_id) 
+        public function get($person_id) 
         {
             $sql = new Sql();
             
-            $results = $sql->select("SELECT * FROM PRJM010013 PRJM013 INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM013.user_id = :user_id", array(
-            ":user_id"=>$user_id
+            $results = $sql->select("SELECT * FROM PRJM010001 PRJM001 INNER JOIN PRJM010012 PRJM012 USING(person_id) INNER JOIN PRJM010013 PRJM013 USING(person_id) INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM001.person_id = :person_id", array(
+            ":person_id"=>$person_id
             ));
+            
             $data = $results[0];
             
             $this->setData($data);
@@ -73,8 +78,7 @@
         public function save()
         {
             $sql = new Sql();
-            
-            $results = $sql->select("CALL sp_users_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:classification_id,:daydate,:situation, :login, :password, :inadmin)", array(
+            $results = $sql->select("CALL prc_person_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:classification_id,:daydate,:situation, :login, :pass, :inadmin)", array(
                 ":name_person"          => $this->getname_person(),
                 ":phonenumber"          => $this->getphonenumber(),
                 ":photo"                => $this->getphoto(),
@@ -84,10 +88,11 @@
                 ":daydate"              => $this->getdaydate(),
                 ":situation"            => $this->getsituation(),
                 ":login"                => $this->getlogin(),
-                ":password"             => $this->getpassword(),
+                ":pass"                 => $this->getpass(),
                 ":inadmin"              => $this->getinadmin()
             ));
             $this->setData($results);
+            return $results[0]["MESSAGE"];
         }
         
         public function update()
@@ -96,14 +101,25 @@
             echo '<pre>';
             print_r($this);
             echo '</pre>';
-            $results = $sql->select("CALL prc_user_update(:user_id,:login, :password, :inadmin)", array(
-                ":user_id"              => $this->getuser_id(),
-                ":login"                => $this->getlogin(),   
-                ":password"             => $this->getpass(),   
-                ":inadmin"              => $this->getinadmin()
-                
-            ));
             
+            $results = $sql->select("CALL prc_person_update(:seq_person_id,:seq_classp_id,:person_id,:user_id,:name_person,:phonenumber,:photo,:rg_person,:cpf_person,:classification_id,:daydate,:situation,:login,:pass,:inadmin)", array(
+                ":seq_person_id"     => $this->getseq_person_id(),
+                ":seq_classp_id"     => $this->getseq_classp_id(),
+                ":person_id"         => $this->getperson_id(),
+                ":user_id"           => $this->getuser_id(),
+                ":name_person"       => $this->getname_person(),
+                ":phonenumber"       => $this->getphonenumber(),
+                ":photo"             => $this->getphoto(),
+                ":rg_person"         => $this->getrg_person(),
+                ":cpf_person"        => $this->getcpf_person(),
+                ":classification_id" => $this->getclassification_id(),
+                ":daydate"           => $this->getdt_save(),
+                ":situation"         => $this->getsituation(),
+                ":login"             => $this->getlogin(),
+                ":pass"              => $this->getpass(),
+                ":inadmin"           => $this->getinadmin()
+            ));
+           
             $this->setData($results);
             
             return $results[0]["MESSAGE"];
@@ -112,10 +128,12 @@
         public function delete()
         {
             $sql = new Sql();
-            
-            $sql->query("CALL sp_users_delete(:user_id)", array(
-                ":user_id"=>$this->getuser_id()
+            $results = $sql->select("CALL prc_person_delete(:person_id)", array(
+                ":person_id"=>(int)$this->getperson_id()
             ));
+           
+            $this->setData($results);
+            return $results[0]["MESSAGE"];
         }
         public static function getForgot($email)
         {

@@ -14,7 +14,11 @@
 
 <!-- Main content -->
 <section class="content">
-
+  <div id="msgDanger" name="msgDanger"  class="alert-danger box box-danger" style="display: none;">
+    <div>
+      <div id="msgError" name="msgError" class="msgError"></div>
+    </div>
+  </div>
   <div class="row">
   	<div class="col-md-12">
   		<div class="box box-success">
@@ -53,14 +57,20 @@
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="deslogin">Login</label>
-                <input type="text" class="form-control" id="deslogin" name="deslogin" placeholder="Digite o login">
+                <label for="login">Login</label>
+                <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login">
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-3">
               <div class="form-group">
-                <label for="despassword">Senha</label>
-                <input type="password" class="form-control" id="despassword" name="despassword" placeholder="Digite a senha">
+                <label for="pass">Senha</label>
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="Digite a senha">
+              </div>
+            </div>
+            <div class="col col-md-3">
+              <div class="form-group">
+                <label for="confpassword">Confirma a Senha</label>
+                <input type="password" class="form-control" id="confpassword" onChange="verifyConfPassWord(pass,confpassword,msgDanger)" placeholder="Digite a senha novamente">
               </div>
             </div>
             <div class="col col-md-2">
@@ -75,7 +85,7 @@
          
           <!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-success">Cadastrar</button>
+            <button type="submit" id="btnSubmit" class="btn btn-success"  style="display: none;">Cadastrar</button>
             <a href="/users?limit=10" class="btn btn-warning">Voltar</a>
 
           </div>

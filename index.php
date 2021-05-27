@@ -172,12 +172,12 @@
 		exit;
 	});
 
-	$app->get("/visitant/:person_id/delete", function ($person_id){
+	$app->get("/visitant/:visitant_id/delete", function ($visitant_id){
 		User::verifyLogin();
 		$visitant = new Visitant();
-		$visitant->getById($person_id);
+		$visitant->getById($visitant_id);
 		$msg = $visitant->delete();
-	
+		
 		header("Location: /visitant?msg=".$msg);
 		exit;
 	});
@@ -229,7 +229,7 @@
 			}
 			$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		}
-		if ($_FILES['image']['name'] != '' || $_FILES['image']['name'] != NULL) {
+		if (isset($_FILES['image']) && $_FILES['image'] != '') {
 			$photo = $_FILES['image']['tmp_name'];
 			$tamanho = $_FILES['image']['size'];
 			$tipo = $_FILES['image']['type'];
@@ -301,6 +301,13 @@
 	$app->get('/residual/create', function() {
 		User::verifyLogin();
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
 		$date = explode(" ",date('d-m-Y H:i'));
 		$dt["date"]		= $date[0];
 		$dt1["hour"]	= $date[1];
@@ -335,7 +342,7 @@
 		
 		$msg = $residual->save();
 		
-		header("Location: /residual/create");
+		header("Location: /residual/create?msg=$msg");
 		exit;
 	});
 	
@@ -389,9 +396,20 @@
 
 		User::verifyLogin();
 		$users = User::listAll();
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
 		$page = new PageUser();
+		
 		$page->setTpl("users", array(
-			"users"=> $users
+			"users"=> $users,
+			"msg"=>$msg
 		));
 	});
 
@@ -504,34 +522,47 @@
 
 		$user = new User();
 
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["daydate"] = $date[0];
+		$dt1["hour"] =$date[1];
+		$ppost = Visitant::convertDateToDataBase(["daydate"=>$date[0]]);
+
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+
 		$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
 
-		$_POST['password'] = password_hash($_POST["password"], PASSWORD_DEFAULT, [
+		$_POST["situation"] = '0';
+		$_POST["photo"] = '';
+		$_POST["classification_id"] = '4';
+	
+		$_POST['pass'] = password_hash($_POST["pass"], PASSWORD_DEFAULT, [
 			"cost"=>12
 			]);
 
 		$user->setData($_POST);
 
-		$user->save();
+		$msg = $user->save();
 
-		header("Location: /users");
+		header("Location: /users?msg=$msg");
 			exit;
 	});
-	$app->get("/users/:iduser/delete", function ($iduser){
+	$app->get("/users/:person_id/delete", function ($person_id){
 		User::verifyLogin();
 		$user = new User();
-		$user->get((int)$iduser);
+		$user->get((int)$person_id);
 
-		$user->delete();
-		header("Location: /users");
+		$msg = $user->delete();
+		header("Location: /users?msg=$msg");
 		exit;
 	});
 
-	$app->get("/users/:iduser", function($iduser) {
+	$app->get("/users/:person_id", function($person_id) {
 		User::verifyLogin();
 		$user = new User();
  
-		$user->get((int)$iduser);
+		$user->get((int)$person_id);
 			
 		$page = new PageUser();
 		
@@ -540,17 +571,15 @@
 		));
 	});
 	
-	$app->post("/users/:user_id", function ($user_id){
+	$app->post("/users/:person_id", function ($person_id){
 		User::verifyLogin();
 		$user = new User();
 		$_POST["inadmin"] = (isset($_POST["inadmin"])) ? 1 : 0;
 		$_POST['pass'] = password_hash($_POST["pass"], PASSWORD_DEFAULT, [
 			"cost"=>12
 			]);
-		
-		$user->get((int)$user_id);
+		$user->get((int)$person_id);
 		$user->setData($_POST);
-		
 		$msg = $user->update();
 		
 		header("Location: /users?msg=".$msg);

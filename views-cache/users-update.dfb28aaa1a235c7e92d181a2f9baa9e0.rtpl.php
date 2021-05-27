@@ -17,9 +17,9 @@
           <div id="msgSuccess" class="alert-success"></div>
         </div>
       </div>
-  		<div id="msgDanger" name="msgDanger"  class="box box-danger" style="display: none;">
+  		<div id="msgDanger" name="msgDanger"  class="alert-danger box box-danger" style="display: none;">
         <div>
-          <div id="msgError" name="msgError" class="alert-danger msgError"></div>
+          <div id="msgError" name="msgError" class="msgError"></div>
         </div>
       </div>
   		<div class="box box-primary">
@@ -29,7 +29,7 @@
         <!-- /.box-header -->
         <!-- form start -->
         
-        <form role="form" action="/users/<?php echo htmlspecialchars( $user["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+        <form role="form" action="/users/<?php echo htmlspecialchars( $user["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
           <div class="box-body">
             <div class="box-body">
               <div class="col col-md-4">
@@ -64,12 +64,12 @@
               </div>
             </div>
             <div class="box-body">  
-              <div class="col col-md-3">
+              <!-- <div class="col col-md-3">
                 <div class="form-group">
                   <label for="oldpassword">Senha Atual</label>
-                  <input type="password" class="form-control" id="oldpassword" placeholder="Digite a senha">
+                  <input type="password" class="form-control" id="oldpassword" placeholder="Digite a senha" onCahnge="passwordVerity(oldpassword)">
                 </div>
-              </div>
+              </div> -->
               <div class="col col-md-3">
                 <div class="form-group">
                   <label for="pass">Senha</label>
@@ -87,6 +87,17 @@
                   <label>
                     <input type="checkbox" name="inadmin" value="1" <?php if( $user["inadmin"] == 1 ){ ?>checked<?php } ?>> Acesso de Administrador
                   </label>
+                </div>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="col col-md-2">
+                <div class="form-group">
+                  <label for="situation">Situação</label>
+                  <select class="form-control" name="situation" id="situation">
+                    <option value="0"<?php if( $user["situation"] == 0 ){ ?>selected<?php } ?>>ATIVO</option>
+                    <option value="1"<?php if( $user["situation"] == 1 ){ ?>selected<?php } ?>>INATIVO</option>
+                  </select>
                 </div>
               </div>
             </div>

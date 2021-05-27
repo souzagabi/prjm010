@@ -60,6 +60,7 @@ function verifyConfPassWord(element, elementCompare, elementMsg)
     var msg = '';
     if (element.value != elementCompare.value) {
         msg = "Senha não confere! Digite-a novamente.";
+       
     } else if (element.value == elementCompare.value) {
         if (element.value.length < 6) {
             msg = "A senha tem que ser pelo menos 6 caracteres!!";
@@ -68,34 +69,34 @@ function verifyConfPassWord(element, elementCompare, elementMsg)
             document.getElementById("btnSubmit").style.display = "inline";
         }
     } 
-    // if (msg != '') {
-    //     elementMsg.style.display = "block";
-    //     document.getElementById("msg-danger").innerHTML = msg;
-    //     elementCompare.focus();
-    //     removeMensagemError(elementMsg);
-    // }
+    if (msg != '') {
+        elementMsg.style.display = "block";
+        document.getElementById("msgDanger").innerHTML = msg;
+        elementCompare.focus();
+        removeMensagemError(elementMsg);
+    }
 }
 
-// function removeMensagemError(element){
-//     if (element) {
-//         setTimeout(function(){ 
-//             element.style.display = "none";  
-//             document.getElementById("msg-danger").innerHTML = "";
-//         }, 3000);
-//     }
-// }
+function removeMensagemError(element){
+    if (element) {
+        setTimeout(function(){ 
+            element.style.display = "none";  
+            document.getElementById("msgError").innerHTML = "";
+        }, 2000);
+    }
+}
 function removeMensagem(){
     if (document.getElementById("msg-success")) {
         setTimeout(function(){ 
             var msg = document.getElementById("msg-success");
             msg.parentNode.removeChild(msg);   
-        }, 3000);
+        }, 2000);
     }
     if (document.getElementById("msg-danger")) {
         setTimeout(function(){ 
             var msg = document.getElementById("msg-danger");
             msg.parentNode.removeChild(msg);   
-        }, 3000);
+        }, 2000);
     }
 }
 document.onreadystatechange = () => {

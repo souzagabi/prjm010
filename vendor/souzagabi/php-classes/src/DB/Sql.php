@@ -7,6 +7,7 @@
 		const HOSTNAME = "127.0.0.1";
 		const USERNAME = "root";
 		const PASSWORD = "@Prjm!!2021";
+		//const PASSWORD = "@V1s@r3!!2021";
 		const DBNAME = "PRJM010";
 		//const USERNAME = "PRJM010";
 		//const PASSWORD = "prjm010";

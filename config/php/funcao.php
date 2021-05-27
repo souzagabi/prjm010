@@ -31,5 +31,15 @@
         endif;
     
     }
+    function passwordVerity($passUser)
+    {
+        alert("teste");
+        if (password_verify($passUser, $data["pass"]) === true) {
+                       
+            return true;
+        } else{
+            return false;
+        }
+    }
 
 ?>

@@ -52,8 +52,8 @@
                 <td>{$value.login}</td/>
                 <td>{if="$value.inadmin == 1"}Sim{else}Não{/if}</td>
                 <td>
-                  <a href="/users/{$value.user_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                  <a href="/users/{$value.user_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                  <a href="/users/{$value.person_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                  <a href="/users/{$value.person_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
               {/loop}

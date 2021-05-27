@@ -78,15 +78,17 @@ CREATE TABLE `prjm010015` (
   `person_id` int NOT NULL,
   `daydate` date NOT NULL,
   `dayhour` time NOT NULL,
+  `name_person` varchar(100) DEFAULT NULL,
   `material` varchar(100) DEFAULT NULL,
   `location` varchar(100) DEFAULT NULL,
   `warehouse` varchar(100) DEFAULT NULL,
   `user_id_deleted` int DEFAULT NULL,
   `dt_deleted` timestamp NULL DEFAULT NULL,
+  `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`residual_id`),
   KEY `FK_prjm010015_PRJM010001_idx` (`person_id`),
   KEY `FK_prjm010015_PRJM010013_idx` (`user_id`),
   CONSTRAINT `fk_prjm010015_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_prjm010015_PRJM010013` FOREIGN KEY (`user_id`) REFERENCES `prjm010013` (`user_id`) ON DELETE CASCADE
-) ENGINE=InnoDB  AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;

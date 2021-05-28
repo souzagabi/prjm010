@@ -44,10 +44,14 @@
 
         public static function verifyLogin($inadmin = true)
         {
-            if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["user_id"] > 0 || (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin) {
+            if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["user_id"] > 0  ) {
+                
+                // (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin
+                
                 header("Location: /admin/login");
                 exit;
             } 
+            
         }
 
         public static function logout()

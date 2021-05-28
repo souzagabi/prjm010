@@ -92,3 +92,25 @@ CREATE TABLE `prjm010015` (
   CONSTRAINT `fk_prjm010015_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_prjm010015_PRJM010013` FOREIGN KEY (`user_id`) REFERENCES `prjm010013` (`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `prjm010016` (
+  `material_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `person_id` int NOT NULL,
+  `daydate` date NOT NULL,
+  `dayhour` time NOT NULL,
+  `material` varchar(100) DEFAULT NULL,
+  `qtde` decimal(10,2) DEFAULT NULL,
+  `packing` char(1) DEFAULT NULL,
+  `receiver` varchar(100) DEFAULT NULL,
+  `deliveryman` varchar(100) DEFAULT NULL,
+  `user_id_deleted` int DEFAULT NULL,
+  `dt_deleted` timestamp NULL DEFAULT NULL,
+  `situation` char(1) DEFAULT '0',
+  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`material_id`),
+  KEY `FK_prjm010016_PRJM010001_idx` (`person_id`),
+  KEY `FK_prjm010016_PRJM010013_idx` (`user_id`),
+  CONSTRAINT `fk_prjm010016_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_prjm010016_PRJM010013` FOREIGN KEY (`user_id`) REFERENCES `prjm010013` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
+

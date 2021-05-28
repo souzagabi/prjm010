@@ -262,9 +262,13 @@ desired effect
       <!-- Optionally, you can add icons to the links -->
       <!-- <li><a href="/admin?pg=1"><i class="fa fa-user"></i> <span>Administrador</span></a></li>
       <li><a href="/users?pg=1"><i class="fa fa-users"></i> <span>Usuários</span></a></li> -->
-      <li><a href="/visitant?pg=1"><i class="fa fa-user"></i> <span>Controle Visitas</span></a></li>
-      <li><a href="/residual?pg=1"><i class="fa fa-user"></i> <span>Controle Resíduos</span></a></li>
-      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="/material?pg=1"><i class="fa fa-user"></i> <span>Controle Materiais</span></a></li>
+      <li><a href="{if="$_SESSION['User'].inadmin"}/visitant?pg=1{/if}"><i class="fa fa-users"></i> <span>Controle Visitas</span></a></li>
+      <li><a href="{if="$_SESSION['User'].inadmin"}/residual?pg=1{/if}"><i class="fa fa-trash"></i> <span>Controle Resíduos</span></a></li>
+      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/material?pg=1{/if}"><i class="fa fa-newspaper-o"></i> <span>Controle Materiais</span></a></li>
+      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if} hidden><a href="{if="$_SESSION['User'].inadmin == 1"}/nobreak?pg=1{/if}"><i class="fa fa-bolt"></i> <span>Controle NoBreak</span></a></li>
+      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if} hidden><a href="{if="$_SESSION['User'].inadmin == 1"}/ar-condicionado?pg=1{/if}"><i class="fa fa-sun-o"></i> <span>Controle Ar Condicionado</span></a></li>
+      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if} hidden><a href="{if="$_SESSION['User'].inadmin == 1"}/hidrante?pg=1{/if}"><i class="fa fa-fire"></i> <span>Controle Hidrante</span></a></li>
+      <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if} hidden><a href="{if="$_SESSION['User'].inadmin == 1"}/extintor?pg=1{/if}"><i class="fa fa-fire-extinguisher"></i> <span>Controle Extintor</span></a></li>
       <!-- <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
       <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
       <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->

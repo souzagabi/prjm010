@@ -4,13 +4,13 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro de Resíduos
+      Cadastro de Materiais
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/residual">Visitas</a></li>
-    <li class="active"><a href="/residual/create">Cadastrar</a></li>
+    <li><a href="/material">Visitas</a></li>
+    <li class="active"><a href="/material/create">Cadastrar</a></li>
   </ol>
 </section>
 
@@ -25,7 +25,7 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/residual/create" method="post" enctype="multipart/form-data">
+        <form role="form" action="/material/create" method="post" enctype="multipart/form-data">
          
           <div class="box-body">
             <div class="col col-md-2">
@@ -51,33 +51,46 @@
                 <input type="text" class="form-control" name="material" id="material" onKeyUp="convertLowToUpper(material)" autofocus="autofocus" required>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
-                <label for="location">Local</label>
-                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" required>
+                <label for="qtde">Quantidade</label>
+                <input type="number" class="form-control" name="qtde" id="qtde" required>
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="packing">Embalagem</label>
+                <select class="form-control" name="packing" id="packing">
+                  <option value="0" selected>UN</option>
+                  <option value="1">CX</option>
+                  <option value="2">KG</option>
+                  <option value="3">L</option>
+                  <option value="4">ML</option>
+                  <option value="5">PC</option>
+                </select>
               </div>
             </div>
           </div>
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="warehouse">Depósito</label>
-                <input type="text" class="form-control" name="warehouse" id="warehouse" onKeyUp="convertLowToUpper(warehouse)" required>
+                <label for="receiver">Responsável Recebimento</label>
+                <input type="text" class="form-control" name="receiver" id="receiver" onKeyUp="convertLowToUpper(receiver)" required>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="name_person">Responsável</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" value="{$residual.name_person}" required readonly>
+                <label for="deliveryman">Entregador</label>
+                <input type="text" class="form-control" name="deliveryman" id="deliveryman" onKeyUp="convertLowToUpper(deliveryman)" required>
               </div>
             </div>
            
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <input type="submit" id="residual" class="btn btn-success" value="Cadastrar Resíduo">
+            <input type="submit" id="material" class="btn btn-success" value="Cadastrar Material">
             
-            <a href="/residual?limit=10" class="btn btn-warning">Voltar</a>
+            <a href="/material?limit=10" class="btn btn-warning">Voltar</a>
             
           </div>
         </form>

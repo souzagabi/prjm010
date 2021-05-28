@@ -8,9 +8,12 @@
 	use \PRJM010\PageUser;
 	use \PRJM010\PageVisitant;
 	use \PRJM010\PageResidual;
+	use \PRJM010\PageMaterial;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Residual;
+	use \PRJM010\Model\Material;
+	use \PRJM010\Model\Metodo;
 	//use \PRJM010\PagePerson;
 	//use \PRJM010\Model\Person;
 
@@ -40,7 +43,7 @@
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
 		} 
 
-		$visitants = Visitant::selectRegister($company);
+		$visitants = Metodo::selectRegister($company, "Visitant");
 		
 		// var_dump($visitants);exit;
 		//var_dump($msg);exit;
@@ -74,7 +77,7 @@
 		} 
 
 		if ((isset($_GET["date_save"]) && $_GET["date_save"] != '')) {
-			$gget = Visitant::convertDateToDataBase(["date_save"=>$_GET["date_save"]]);
+			$gget = Metodo::convertDateToDataBase(["date_save"=>$_GET["date_save"]]);
 
 			foreach ($gget as $key => $value) {
 				$_GET[$key] = $value;
@@ -82,7 +85,7 @@
 		} 
 		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
 		{
-			$gget = Visitant::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
 
 			foreach ($gget as $key => $value) {
 				$_GET[$key] = $value;
@@ -93,7 +96,7 @@
 			$company[$key] = $value;
 		}
 		$company["visitants"]	= "visitants";
-		$visitants = Visitant::selectRegister($company);
+		$visitants = Metodo::selectRegister($company, "Visitant");
 		
 		$page = new PageVisitant();
 		$page->setTpl("visitant", array(
@@ -106,7 +109,7 @@
 	$app->get('/visitant/create', function() 
 	{
 		User::verifyLogin();
-		$classification = Visitant::listClassification();
+		$classification = Metodo::listClassification();
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 				
@@ -142,7 +145,7 @@
 		
 		$visitant = new Visitant();
 
-		$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -186,7 +189,7 @@
 	{
 		$dir = 'image';
 		User::verifyLogin();
-		$classifications = Visitant::listClassification();
+		$classifications = Metodo::listClassification();
 		
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
@@ -223,7 +226,7 @@
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
 		if (isset($_POST)) {
-			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"], "dt_save"=>$_POST["dt_save"]]);
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "dt_save"=>$_POST["dt_save"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -259,8 +262,6 @@
 		$company["residual"]	= NULL;
 		$company["daydate"]	    = NULL;
 		$company["date_fim"]    = NULL;
-		$company["dtbuy"] 		= NULL;
-		$company["dtsell"] 		= NULL;
 		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
@@ -272,7 +273,7 @@
 		} 
 
 		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Visitant::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
 
 			foreach ($gget as $key => $value) {
 				$_GET[$key] = $value;
@@ -280,14 +281,14 @@
 		} 
 		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
 		{
-			$gget = Visitant::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
 
 			foreach ($gget as $key => $value) {
 				$_GET[$key] = $value;
 			}
 		}
 		
-		$residual	= Residual::selectRegister($company);
+		$residual	= Metodo::selectRegister($company, "Residual");
 		
 		$page = new PageResidual();
 		$page->setTpl("residual", array(
@@ -329,7 +330,7 @@
 		
 		$residual = new Residual();
 		
-		$ppost = Residual::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -368,12 +369,14 @@
 			"residual"=>$residual->getValues()
 		));
 	});
+
 	$app->post("/residual/:residual_id", function($residual_id) {
 		User::verifyLogin();
 		$residual = new Residual();
 		$residual->getById($residual_id);
+		
 		if (isset($_POST)) {
-			$ppost = Visitant::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -388,6 +391,143 @@
 		exit;
 	});
 
+
+/*======================================================================================*/
+/*										Rotas dos Material								*/
+/*======================================================================================*/
+
+$app->get('/material', function() {
+	User::verifyLogin();
+	
+	$company["material"]	= NULL;
+	$company["daydate"]	    = NULL;
+	$company["date_fim"]    = NULL;
+	$company["receiver"] 	= NULL;
+	$company["search"] 		= NULL;
+	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+	
+	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+		$mess = explode(':', $_GET["msg"]);
+		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		$_GET["msg"] = '';
+	} 
+
+	if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+		$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+		foreach ($gget as $key => $value) {
+			$_GET[$key] = $value;
+		}
+	} 
+	if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+	{
+		$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+		foreach ($gget as $key => $value) {
+			$_GET[$key] = $value;
+		}
+	}
+	
+	$material	= Metodo::selectRegister($company, "Material");
+	// echo '<pre>';
+	// print_r($material);
+	// echo '</pre>';
+	// exit;
+	$page = new PageMaterial();
+	$page->setTpl("material", array(
+		"materials"=>$material[0],
+		"pgs"=>$material[1],
+		"msg"=>$msg
+	));
+	
+});
+
+$app->get('/material/create', function() {
+	User::verifyLogin();
+	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+	
+	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+		$mess = explode(':', $_GET["msg"]);
+		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		$_GET["msg"] = '';
+	} 
+
+	$date = explode(" ",date('d-m-Y H:i'));
+	$dt["date"]		= $date[0];
+	$dt1["hour"]	= $date[1];
+
+	$page = new PageMaterial();
+
+	$page->setTpl("material-create",array(
+		"msg"=>$msg,
+		"date"=>$dt,
+		"hour"=>$dt1
+	));
+	
+});
+
+$app->post("/material/create", function (){
+	User::verifyLogin();
+	
+	$material = new Material();
+	$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+	
+	foreach ($ppost as $key => $value) {
+		$_POST[$key] = $value;
+	}
+	
+	$_POST["user_id"] = $_SESSION["User"]["user_id"];
+	$_POST["person_id"] = $_SESSION["User"]["person_id"];
+	
+	$material->setData($_POST);
+	
+	$msg = $material->save();
+	
+	header("Location: /material/create?msg=$msg");
+	exit;
+});
+
+$app->get("/material/:material_id/delete", function ($material_id){
+	User::verifyLogin();
+	$material = new Material();
+	$material->getById($material_id);
+
+	$msg = $material->delete();
+	
+	header("Location: /material?msg=".$msg."&daydate=&date_fim=&search=Search");
+	exit;
+});
+
+$app->get("/material/:material_id", function($material_id) {
+	User::verifyLogin();
+	$material = new Material();
+	$material->getById($material_id);
+	
+	$page = new PageMaterial();
+	
+	$page ->setTpl("material-update", array(
+		"material"=>$material->getValues()
+	));
+});
+$app->post("/material/:material_id", function($material_id) {
+	User::verifyLogin();
+	$material = new Material();
+	$material->getById($material_id);
+	if (isset($_POST)) {
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+	}
+
+	$material->setData($_POST);
+	
+	$msg = $material->update();
+	
+	header("Location: /material?msg=".$msg);
+	exit;
+});	
 /*======================================================================================*/
 /*										Rotas do Admin									*/
 /*======================================================================================*/
@@ -395,22 +535,27 @@
 	$app->get('/admin', function() {
 
 		User::verifyLogin();
-		$users = User::listAll();
-
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		} 
-
-		$page = new PageUser();
-		
-		$page->setTpl("users", array(
-			"users"=> $users,
-			"msg"=>$msg
-		));
+		if ($_SESSION["User"]["inadmin"] == '1') {
+			$users = User::listAll();
+	
+			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+			
+			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+				$mess = explode(':', $_GET["msg"]);
+				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+				$_GET["msg"] = '';
+			} 
+	
+			$page = new PageUser();
+			
+			$page->setTpl("users", array(
+				"users"=> $users,
+				"msg"=>$msg
+			));
+		} else {
+			header("Location: /visitant?pg=1&limit=10");
+			exit;
+		}
 	});
 
 	$app->get('/admin/login', function() {
@@ -492,29 +637,39 @@
 	$app->get('/users', function() {
 		
 		User::verifyLogin();
-		$users = User::listAll();
-		
-		$msg= '';
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		} else {
-			$msg = ["state"=>'', "msg"=> ''];
-		}
+		if ($_SESSION["User"]["inadmin"] == '1') {
+			$users = User::listAll();
+			
+			$msg= '';
+			
+			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+				$mess = explode(':', $_GET["msg"]);
+				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			} else {
+				$msg = ["state"=>'', "msg"=> ''];
+			}
 
-		$page = new PageUser();
-		$page->setTpl("users", array(
-			"users"=> $users,
-			"msg"=>$msg
-		));
+			$page = new PageUser();
+			$page->setTpl("users", array(
+				"users"=> $users,
+				"msg"=>$msg
+			));
+		} else {
+			header("Location: /visitant?pg=1&limit=10");
+			exit;
+		}
 	});
 
 	$app->get('/users/create', function() {
 		
 		User::verifyLogin();
-		$page = new PageUser();
-		$page->setTpl("users-create");
+		if ($_SESSION["User"]["inadmin"] == '1') {
+			$page = new PageUser();
+			$page->setTpl("users-create");
+		} else {
+			header("Location: /visitant?pg=1&limit=10");
+			exit;
+		}
 	});
 	
 	$app->post("/users/create", function (){
@@ -525,7 +680,7 @@
 		$date = explode(" ",date('d-m-Y H:i'));
 		$dt["daydate"] = $date[0];
 		$dt1["hour"] =$date[1];
-		$ppost = Visitant::convertDateToDataBase(["daydate"=>$date[0]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$date[0]]);
 
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -550,12 +705,17 @@
 	});
 	$app->get("/users/:person_id/delete", function ($person_id){
 		User::verifyLogin();
-		$user = new User();
-		$user->get((int)$person_id);
+		if ($_SESSION["User"]["inadmin"] == '1') {
+			$user = new User();
+			$user->get((int)$person_id);
 
-		$msg = $user->delete();
-		header("Location: /users?msg=$msg");
-		exit;
+			$msg = $user->delete();
+			header("Location: /users?msg=$msg");
+			exit;
+		} else {
+			header("Location: /visitant?pg=1&limit=10");
+			exit;
+		}
 	});
 
 	$app->get("/users/:person_id", function($person_id) {

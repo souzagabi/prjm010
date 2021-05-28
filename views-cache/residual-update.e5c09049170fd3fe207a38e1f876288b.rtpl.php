@@ -4,7 +4,7 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Edição de Visita
+      Edição de Resíduos
     </h4>
   </div>
   <ol class="breadcrumb">
@@ -22,19 +22,19 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/residual/<?php echo htmlspecialchars( $residual["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+        <form role="form" action="/residual/<?php echo htmlspecialchars( $residual["residual_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
           
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
-                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $residual["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly>
+                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $residual["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="dayhour">Hora do Dia</label>
-                <input type="text" class="form-control" id="dayhour" name="dayhour" value="<?php echo htmlspecialchars( $residual["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly>
+                <input type="text" class="form-control" id="dayhour" name="dayhour" value="<?php echo htmlspecialchars( $residual["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               </div>
             </div>
             <div class="col col-md-4">
@@ -66,7 +66,7 @@
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
-            <input type="submit" id="compra" class="btn btn-success" value="Atualizar Visita">
+            <input type="submit" id="compra" class="btn btn-success" value="Atualizar Resíduo">
             
             <a href="/residual?limit=10" class="btn btn-warning">Voltar</a>
             

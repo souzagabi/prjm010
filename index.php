@@ -9,11 +9,13 @@
 	use \PRJM010\PageVisitant;
 	use \PRJM010\PageResidual;
 	use \PRJM010\PageMaterial;
+	use \PRJM010\PageNobreak;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Residual;
 	use \PRJM010\Model\Material;
 	use \PRJM010\Model\Metodo;
+	use \PRJM010\Model\Nobreak;
 	//use \PRJM010\PagePerson;
 	//use \PRJM010\Model\Person;
 
@@ -528,6 +530,146 @@ $app->post("/material/:material_id", function($material_id) {
 	header("Location: /material?msg=".$msg);
 	exit;
 });	
+
+/*======================================================================================*/
+/*										Rotas dos Nobreak								*/
+/*======================================================================================*/
+
+$app->get('/nobreak', function() {
+	User::verifyLogin();
+	
+	$company["nobreak"]	= NULL;
+	$company["daydate"]	    = NULL;
+	$company["date_fim"]    = NULL;
+	$company["name_person"] = NULL;
+	$company["search"] 		= NULL;
+	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+	
+	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+		$mess = explode(':', $_GET["msg"]);
+		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		$_GET["msg"] = '';
+	} 
+
+	if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+		$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+		foreach ($gget as $key => $value) {
+			$_GET[$key] = $value;
+		}
+	} 
+	if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+	{
+		$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+		foreach ($gget as $key => $value) {
+			$_GET[$key] = $value;
+		}
+	}
+	
+	$nobreak	= Metodo::selectRegister($company, "Nobreak");
+	
+	$page = new PageNobreak();
+	$page->setTpl("nobreak", array(
+		"nobreaks"=>$nobreak[0],
+		"pgs"=>$nobreak[1],
+		"msg"=>$msg
+	));
+	
+});
+
+$app->get('/nobreak/create', function() {
+	User::verifyLogin();
+	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+	
+	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+		$mess = explode(':', $_GET["msg"]);
+		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		$_GET["msg"] = '';
+	} 
+
+	$date = explode(" ",date('d-m-Y H:i'));
+	$dt["date"]		= $date[0];
+	$dt1["hour"]	= $date[1];
+	$responsable["name_person"] = $_SESSION["User"]["name_person"];
+
+	$page = new PageNobreak();
+
+	$page->setTpl("nobreak-create",array(
+		"msg"=>$msg,
+		"date"=>$dt,
+		"hour"=>$dt1,
+		"nobreak"=>$responsable
+	));
+	
+});
+
+$app->post("/nobreak/create", function (){
+	User::verifyLogin();
+	
+	$nobreak = new Nobreak();
+	
+	$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+	
+	foreach ($ppost as $key => $value) {
+		$_POST[$key] = $value;
+	}
+	
+	$_POST["user_id"] = $_SESSION["User"]["user_id"];
+	$_POST["person_id"] = $_SESSION["User"]["person_id"];
+	
+	$nobreak->setData($_POST);
+	
+	$msg = $nobreak->save();
+	
+	header("Location: /nobreak/create?msg=$msg");
+	exit;
+});
+
+$app->get("/nobreak/:nobreak_id/delete", function ($nobreak_id){
+	User::verifyLogin();
+	$nobreak = new Nobreak();
+	$nobreak->getById($nobreak_id);
+
+	$msg = $nobreak->delete();
+	
+	header("Location: /nobreak?msg=".$msg."&daydate=&date_fim=&search=Search");
+	exit;
+});
+
+$app->get("/nobreak/:nobreak_id", function($nobreak_id) {
+	User::verifyLogin();
+	$nobreak = new Nobreak();
+	$nobreak->getById($nobreak_id);
+	
+	$page = new PageNobreak();
+	
+	$page ->setTpl("nobreak-update", array(
+		"nobreak"=>$nobreak->getValues()
+	));
+});
+
+$app->post("/nobreak/:nobreak_id", function($nobreak_id) {
+	User::verifyLogin();
+	$nobreak = new Nobreak();
+	$nobreak->getById($nobreak_id);
+	
+	if (isset($_POST)) {
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+	}
+
+	$nobreak->setData($_POST);
+	
+	$msg = $nobreak->update();
+	
+	header("Location: /nobreak?msg=".$msg);
+	exit;
+});
+
 /*======================================================================================*/
 /*										Rotas do Admin									*/
 /*======================================================================================*/

@@ -19,17 +19,15 @@
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            if ($list["start"] == 1) {
-                $list["start"] = 0;
-            }
-            
-            return  $sql->select("CALL prc_nobreak_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
+            $results =  $sql->select("CALL prc_nobreak_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
                 ":name_person"  => $list["name_person"],   
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
+            
+            return $results;
         }
 
         public function getById($nobreak_id) 
@@ -48,16 +46,18 @@
         public function save()
         {
             $sql = new Sql();
-          
-            $results = $sql->select("CALL prc_nobreak_save(:user_id,:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse)", array(
+            
+            $results = $sql->select("CALL prc_nobreak_save(:user_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":user_id"          => $this->getuser_id(),
                 ":person_id"        => $this->getperson_id(),    
+                ":name_person"      => $this->getname_person(),
                 ":daydate"          => $this->getdaydate(),
-                ":dayhour"          => $this->getdayhour(),
-                ":name_person"      => $this->getname_person(),    
-                ":material"         => $this->getmaterial(),   
-                ":location"         => $this->getlocation(),    
-                ":warehouse"        => $this->getwarehouse()
+                ":dayhour"          => $this->getdayhour(),    
+                ":location"         => $this->getlocation(),   
+                ":nobreakmodel"     => $this->getnobreakmodel(),    
+                ":resulttest"       => $this->getresulttest(),
+                ":observation"      => $this->getobservation(),
+                ":serialnumber"     => $this->getserialnumber()
             ));
             
             $this->setData($results);
@@ -70,17 +70,18 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:user_id,:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse,:situation)", array(
+            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:user_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":nobreak_id"   => $this->getnobreak_id(),    
-                ":user_id"      => $this->getuser_id(),    
-                ":person_id"    => $this->getperson_id(),    
-                ":daydate"      => $this->getdaydate(),    
-                ":dayhour"      => $this->getdayhour(),    
-                ":name_person"  => $this->getname_person(),    
-                ":material"     => $this->getmaterial(),    
-                ":location"     => $this->getlocation(),    
-                ":warehouse"    => $this->getwarehouse(),    
-                ":situation"    => $this->getsituation()
+                ":user_id"          => $this->getuser_id(),
+                ":person_id"        => $this->getperson_id(),    
+                ":name_person"      => $this->getname_person(),
+                ":daydate"          => $this->getdaydate(),
+                ":dayhour"          => $this->getdayhour(),    
+                ":location"         => $this->getlocation(),   
+                ":nobreakmodel"     => $this->getnobreakmodel(),    
+                ":resulttest"       => $this->getresulttest(),
+                ":observation"      => $this->getobservation(),
+                ":serialnumber"     => $this->getserialnumber()
             ));
 
             $this->setData($results);

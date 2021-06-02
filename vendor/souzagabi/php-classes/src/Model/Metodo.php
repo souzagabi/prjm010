@@ -4,29 +4,36 @@
     use \PRJM010\Model\Residual;
     use \PRJM010\Model\Material;
     use \PRJM010\Model\Visistant;
+    use \PRJM010\Model\FireExting;
 
     class Metodo extends Model {
         
         public function convertDateToView($object = array())
         {
             $i = 0;
+            // echo '<pre>';
+            // print_r($object);
+            // echo '</pre>';
+            // exit;
             if (isset($object["daydate"]) && $object["daydate"] != '') {
                 foreach ($object as $key => $value) {
-                    if ($key == "daydate" || $key == "dt_save") {
+                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate")) {
                         $object[$key] =  Metodo::convertDateView($value);
                     }
                     $i++;
                 }
             } else 
             {
-                foreach ($object as $key => $values) {
-                    foreach ($values as $key => $value) {
-                        if ($key == "daydate" || $key == "dt_save") {
-                            $values[$key] =  Metodo::convertDateView($value);
+                if (isset($object)) {
+                    foreach ($object as $key => $values) {
+                        foreach ($values as $key => $value) {
+                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate")) {
+                                $values[$key] =  Metodo::convertDateView($value);
+                            }
                         }
+                        $object[$i] = $values;
+                        $i++;
                     }
-                    $object[$i] = $values;
-                    $i++;
                 }
             }
         
@@ -92,6 +99,15 @@
             }
             if ($model == "Visitant") {
                 $classModel = Visitant::listAll($act);
+            }
+            if ($model == "Nobreak") {
+                $classModel = Nobreak::listAll($act);
+            }
+            if ($model == "FireExting") {
+                $classModel = FireExting::listAll($act);
+            }
+            if ($model == "FireExtingH") {
+                $classModel = FireExting::listHistoric($act);
             }
             $classModel = Metodo::convertDateToView($classModel);
             $classModel = Metodo::convertToInt($classModel);

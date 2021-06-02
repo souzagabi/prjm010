@@ -10,14 +10,14 @@
 	use \PRJM010\PageResidual;
 	use \PRJM010\PageMaterial;
 	use \PRJM010\PageNobreak;
+	use \PRJM010\PageFireExting;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Residual;
 	use \PRJM010\Model\Material;
 	use \PRJM010\Model\Metodo;
 	use \PRJM010\Model\Nobreak;
-	//use \PRJM010\PagePerson;
-	//use \PRJM010\Model\Person;
+	use \PRJM010\Model\FireExting;
 
 	include_once("./config/php/funcao.php");
 
@@ -253,6 +253,7 @@
 		header("Location: /visitant?msg=".$msg);
 		exit;
 	});
+
 /*======================================================================================*/
 /*										Rotas dos Resíduos								*/
 /*======================================================================================*/
@@ -393,282 +394,584 @@
 		exit;
 	});
 
-
 /*======================================================================================*/
 /*										Rotas dos Material								*/
 /*======================================================================================*/
 
-$app->get('/material', function() {
-	User::verifyLogin();
-	
-	$company["material"]	= NULL;
-	$company["daydate"]	    = NULL;
-	$company["date_fim"]    = NULL;
-	$company["receiver"] 	= NULL;
-	$company["search"] 		= NULL;
-	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-	
-	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-		$mess = explode(':', $_GET["msg"]);
-		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		$_GET["msg"] = '';
-	} 
+	$app->get('/material', function() {
+		User::verifyLogin();
+		
+		$company["material"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["receiver"] 	= NULL;
+		$company["search"] 		= NULL;
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
 
-	if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-		$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
 
-		foreach ($gget as $key => $value) {
-			$_GET[$key] = $value;
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
 		}
-	} 
-	if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-	{
-		$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+		
+		$material	= Metodo::selectRegister($company, "Material");
+		// echo '<pre>';
+		// print_r($material);
+		// echo '</pre>';
+		// exit;
+		$page = new PageMaterial();
+		$page->setTpl("material", array(
+			"materials"=>$material[0],
+			"pgs"=>$material[1],
+			"msg"=>$msg
+		));
+		
+	});
 
-		foreach ($gget as $key => $value) {
-			$_GET[$key] = $value;
-		}
-	}
-	
-	$material	= Metodo::selectRegister($company, "Material");
-	// echo '<pre>';
-	// print_r($material);
-	// echo '</pre>';
-	// exit;
-	$page = new PageMaterial();
-	$page->setTpl("material", array(
-		"materials"=>$material[0],
-		"pgs"=>$material[1],
-		"msg"=>$msg
-	));
-	
-});
+	$app->get('/material/create', function() {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
 
-$app->get('/material/create', function() {
-	User::verifyLogin();
-	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-	
-	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-		$mess = explode(':', $_GET["msg"]);
-		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		$_GET["msg"] = '';
-	} 
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		$dt1["hour"]	= $date[1];
 
-	$date = explode(" ",date('d-m-Y H:i'));
-	$dt["date"]		= $date[0];
-	$dt1["hour"]	= $date[1];
+		$page = new PageMaterial();
 
-	$page = new PageMaterial();
+		$page->setTpl("material-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"hour"=>$dt1
+		));
+		
+	});
 
-	$page->setTpl("material-create",array(
-		"msg"=>$msg,
-		"date"=>$dt,
-		"hour"=>$dt1
-	));
-	
-});
-
-$app->post("/material/create", function (){
-	User::verifyLogin();
-	
-	$material = new Material();
-	$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
-	
-	foreach ($ppost as $key => $value) {
-		$_POST[$key] = $value;
-	}
-	
-	$_POST["user_id"] = $_SESSION["User"]["user_id"];
-	$_POST["person_id"] = $_SESSION["User"]["person_id"];
-	
-	$material->setData($_POST);
-	
-	$msg = $material->save();
-	
-	header("Location: /material/create?msg=$msg");
-	exit;
-});
-
-$app->get("/material/:material_id/delete", function ($material_id){
-	User::verifyLogin();
-	$material = new Material();
-	$material->getById($material_id);
-
-	$msg = $material->delete();
-	
-	header("Location: /material?msg=".$msg."&daydate=&date_fim=&search=Search");
-	exit;
-});
-
-$app->get("/material/:material_id", function($material_id) {
-	User::verifyLogin();
-	$material = new Material();
-	$material->getById($material_id);
-	
-	$page = new PageMaterial();
-	
-	$page ->setTpl("material-update", array(
-		"material"=>$material->getValues()
-	));
-});
-$app->post("/material/:material_id", function($material_id) {
-	User::verifyLogin();
-	$material = new Material();
-	$material->getById($material_id);
-	if (isset($_POST)) {
+	$app->post("/material/create", function (){
+		User::verifyLogin();
+		
+		$material = new Material();
 		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
 		}
+		
 		$_POST["user_id"] = $_SESSION["User"]["user_id"];
-	}
+		$_POST["person_id"] = $_SESSION["User"]["person_id"];
+		
+		$material->setData($_POST);
+		
+		$msg = $material->save();
+		
+		header("Location: /material/create?msg=$msg");
+		exit;
+	});
 
-	$material->setData($_POST);
-	
-	$msg = $material->update();
-	
-	header("Location: /material?msg=".$msg);
-	exit;
-});	
+	$app->get("/material/:material_id/delete", function ($material_id){
+		User::verifyLogin();
+		$material = new Material();
+		$material->getById($material_id);
+
+		$msg = $material->delete();
+		
+		header("Location: /material?msg=".$msg."&daydate=&date_fim=&search=Search");
+		exit;
+	});
+
+	$app->get("/material/:material_id", function($material_id) {
+		User::verifyLogin();
+		$material = new Material();
+		$material->getById($material_id);
+		
+		$page = new PageMaterial();
+		
+		$page ->setTpl("material-update", array(
+			"material"=>$material->getValues()
+		));
+	});
+
+	$app->post("/material/:material_id", function($material_id) {
+		User::verifyLogin();
+		$material = new Material();
+		$material->getById($material_id);
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$material->setData($_POST);
+		
+		$msg = $material->update();
+		
+		header("Location: /material?msg=".$msg);
+		exit;
+	});	
 
 /*======================================================================================*/
 /*										Rotas dos Nobreak								*/
 /*======================================================================================*/
 
-$app->get('/nobreak', function() {
-	User::verifyLogin();
-	
-	$company["nobreak"]	= NULL;
-	$company["daydate"]	    = NULL;
-	$company["date_fim"]    = NULL;
-	$company["name_person"] = NULL;
-	$company["search"] 		= NULL;
-	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-	
-	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-		$mess = explode(':', $_GET["msg"]);
-		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		$_GET["msg"] = '';
-	} 
+	$app->get('/nobreak', function() {
+		User::verifyLogin();
+		
+		$company["nobreak"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["name_person"] = NULL;
+		$company["search"] 		= NULL;
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
 
-	if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-		$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
 
-		foreach ($gget as $key => $value) {
-			$_GET[$key] = $value;
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
 		}
-	} 
-	if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-	{
-		$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+		
+		$nobreak	= Metodo::selectRegister($company, "Nobreak");
+		
+		$page = new PageNobreak();
+		$page->setTpl("nobreak", array(
+			"nobreaks"=>$nobreak[0],
+			"pgs"=>$nobreak[1],
+			"msg"=>$msg
+		));
+		
+	});
 
-		foreach ($gget as $key => $value) {
-			$_GET[$key] = $value;
-		}
-	}
-	
-	$nobreak	= Metodo::selectRegister($company, "Nobreak");
-	
-	$page = new PageNobreak();
-	$page->setTpl("nobreak", array(
-		"nobreaks"=>$nobreak[0],
-		"pgs"=>$nobreak[1],
-		"msg"=>$msg
-	));
-	
-});
+	$app->get('/nobreak/create', function() {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
 
-$app->get('/nobreak/create', function() {
-	User::verifyLogin();
-	$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-	
-	if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-		$mess = explode(':', $_GET["msg"]);
-		$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		$_GET["msg"] = '';
-	} 
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		$dt1["hour"]	= $date[1];
+		$responsable["name_person"] = $_SESSION["User"]["name_person"];
 
-	$date = explode(" ",date('d-m-Y H:i'));
-	$dt["date"]		= $date[0];
-	$dt1["hour"]	= $date[1];
-	$responsable["name_person"] = $_SESSION["User"]["name_person"];
+		$page = new PageNobreak();
 
-	$page = new PageNobreak();
+		$page->setTpl("nobreak-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"hour"=>$dt1,
+			"nobreak"=>$responsable
+		));
+		
+	});
 
-	$page->setTpl("nobreak-create",array(
-		"msg"=>$msg,
-		"date"=>$dt,
-		"hour"=>$dt1,
-		"nobreak"=>$responsable
-	));
-	
-});
-
-$app->post("/nobreak/create", function (){
-	User::verifyLogin();
-	
-	$nobreak = new Nobreak();
-	
-	$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
-	
-	foreach ($ppost as $key => $value) {
-		$_POST[$key] = $value;
-	}
-	
-	$_POST["user_id"] = $_SESSION["User"]["user_id"];
-	$_POST["person_id"] = $_SESSION["User"]["person_id"];
-	
-	$nobreak->setData($_POST);
-	
-	$msg = $nobreak->save();
-	
-	header("Location: /nobreak/create?msg=$msg");
-	exit;
-});
-
-$app->get("/nobreak/:nobreak_id/delete", function ($nobreak_id){
-	User::verifyLogin();
-	$nobreak = new Nobreak();
-	$nobreak->getById($nobreak_id);
-
-	$msg = $nobreak->delete();
-	
-	header("Location: /nobreak?msg=".$msg."&daydate=&date_fim=&search=Search");
-	exit;
-});
-
-$app->get("/nobreak/:nobreak_id", function($nobreak_id) {
-	User::verifyLogin();
-	$nobreak = new Nobreak();
-	$nobreak->getById($nobreak_id);
-	
-	$page = new PageNobreak();
-	
-	$page ->setTpl("nobreak-update", array(
-		"nobreak"=>$nobreak->getValues()
-	));
-});
-
-$app->post("/nobreak/:nobreak_id", function($nobreak_id) {
-	User::verifyLogin();
-	$nobreak = new Nobreak();
-	$nobreak->getById($nobreak_id);
-	
-	if (isset($_POST)) {
+	$app->post("/nobreak/create", function (){
+		User::verifyLogin();
+		
+		$nobreak = new Nobreak();
+		
 		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
 		}
+		
 		$_POST["user_id"] = $_SESSION["User"]["user_id"];
-	}
+		$_POST["person_id"] = $_SESSION["User"]["person_id"];
+		
+		$nobreak->setData($_POST);
+		
+		$msg = $nobreak->save();
+		
+		header("Location: /nobreak/create?msg=$msg");
+		exit;
+	});
 
-	$nobreak->setData($_POST);
+	$app->get("/nobreak/:nobreak_id/delete", function ($nobreak_id){
+		User::verifyLogin();
+		$nobreak = new Nobreak();
+		$nobreak->getById($nobreak_id);
+
+		$msg = $nobreak->delete();
+		
+		header("Location: /nobreak?msg=".$msg."&daydate=&date_fim=&search=Search");
+		exit;
+	});
+
+	$app->get("/nobreak/:nobreak_id", function($nobreak_id) {
+		User::verifyLogin();
+		$nobreak = new Nobreak();
+		$nobreak->getById($nobreak_id);
+		
+		$page = new PageNobreak();
+		
+		$page ->setTpl("nobreak-update", array(
+			"nobreak"=>$nobreak->getValues()
+		));
+	});
+
+	$app->post("/nobreak/:nobreak_id", function($nobreak_id) {
+		User::verifyLogin();
+		$nobreak = new Nobreak();
+		$nobreak->getById($nobreak_id);
+		
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$nobreak->setData($_POST);
+		
+		$msg = $nobreak->update();
+		
+		header("Location: /nobreak?msg=".$msg);
+		exit;
+	});
+
 	
-	$msg = $nobreak->update();
+/*======================================================================================*/
+/*										Rotas do Extintor								*/
+/*======================================================================================*/
+
+	$app->get('/fireexting', function() {
+		User::verifyLogin();
+		
+		$company["fireexting"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["search"] 		= NULL;
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		}
+		
+		$fireexting	= Metodo::selectRegister($company, "FireExting");
+		
+		$page = new PageFireExting();
+		$page->setTpl("list_fireexting", array(
+			"fireextings"=>$fireexting[0],
+			"pgs"=>$fireexting[1],
+			"msg"=>$msg
+		));
+	});
+
+	$app->get('/fireextingH/create', function() {
+		User::verifyLogin();
+		$fireexting_id = '1';
+		if (isset($_GET["fireexting_id"])) {
+			$fireexting_id = $_GET["fireexting_id"];
+		}
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		// echo 'IL734';
+		// var_dump($_GET);exit;
+		$page = new PageFireExting();
+
+		$page->setTpl("hist_fireexting-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"fireexting_id"=>$fireexting_id
+		));
+		
+	});
+
+	$app->post('/fireextingH/create', function() {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		
+		$fireexting = new FireExting();
+		
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		
+		$fireexting->setData($_POST);
+		
+		$msg = $fireexting->saveH();
+		
+		header("Location: /fireextingH/create?msg=$msg");
+		exit;
+		
+	});
 	
-	header("Location: /nobreak?msg=".$msg);
-	exit;
-});
+	$app->get('/fireextingH/:fireexting_id', function($fireexting_id) {
+		User::verifyLogin();
+		
+		$company["fireextingH"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
+		$company["search"] 			= NULL;
+		$company["fireexting_id"]	= $fireexting_id;
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		}
+		
+		$fireexting	= Metodo::selectRegister($company, "FireExtingH");
+		
+		$page = new PageFireExting();
+		$page->setTpl("hist_fireexting", array(
+			"fireextings"=>$fireexting[0],
+			"pgs"=>$fireexting[1],
+			"msg"=>$msg
+		));
+		
+	});
+
+	
+
+	$app->get('/fireextingU/:historic_id', function($historic_id) {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$historic = new FireExting();
+		$historic->getByIdH($historic_id);
+		
+		$page = new PageFireExting();
+		
+		$page ->setTpl("hist_fireexting-update", array(
+			"historic"=>$historic->getValues(),
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/fireextingU/:historic_id', function($historic_id) {
+		User::verifyLogin();
+		$historic = new FireExting();
+		$historic->getByIdH($historic_id);
+		
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"],"rechargedate"=>$_POST["rechargedate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$historic->setData($_POST);
+		$sql = new Sql();
+            echo '<pre>';
+            print_r($historic);
+            echo '</pre>';//exit;
+		$msg = $historic->updateH();
+		
+		header("Location: /fireextingH?pg=1&msg=".$msg);
+		exit;
+	});
+
+	$app->get('/fireexting/create', function() {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		$dt1["hour"]	= $date[1];
+		
+		$page = new PageFireExting();
+		//var_dump($msg);exit;
+
+		$page->setTpl("fireexting-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"hour"=>$dt1
+		));
+		
+	});
+
+	$app->post('/fireexting/create', function() {
+		User::verifyLogin();
+		
+		$fireexting = new FireExting();
+		
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "rechargedate"=>$_POST["rechargedate"]]);
+		
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		$_POST["person_id"] = $_SESSION["User"]["person_id"];
+		
+		$fireexting->setData($_POST);
+		$sql = new Sql();
+		
+		$msg = $fireexting->save();
+		
+		header("Location: /fireexting/create?msg=$msg");
+		exit;
+		
+	});
+
+	$app->get("/fireexting/:fireexting_id/delete", function ($fireexting_id){
+		User::verifyLogin();
+		$fireexting = new FireExting();
+		$fireexting->getById($fireexting_id);
+
+		$msg = $fireexting->delete();
+		
+		header("Location: /fireexting?msg=".$msg."&daydate=&date_fim=&search=Search");
+		exit;
+	});
+
+	$app->get('/fireexting/:fireexting_id', function($fireexting_id) {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$fireexting = new FireExting();
+		$fireexting->getById($fireexting_id);
+		// echo '<pre>';
+		// print_r($fireexting);
+		// echo '</pre>';
+		//exit;
+		$page = new PageFireExting();
+		
+		$page ->setTpl("fireexting-update", array(
+			"fireexting"=>$fireexting->getValues(),
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/fireexting/:fireexting_id', function($fireexting_id) {
+		User::verifyLogin();
+		$fireexting = new FireExting();
+		$fireexting->getById($fireexting_id);
+		
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"],"rechargedate"=>$_POST["rechargedate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$fireexting->setData($_POST);
+		
+		$msg = $fireexting->update();
+		
+		header("Location: /fireexting?msg=".$msg);
+		exit;
+	});
 
 /*======================================================================================*/
 /*										Rotas do Admin									*/

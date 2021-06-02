@@ -28,7 +28,7 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
-                <input type="text" class="form-control" id="daydate" name="daydate" value="{$nobreak.daydate}">
+                <input type="text" class="form-control" id="daydate" name="daydate" value="{$nobreak.daydate}" onChange="replaceSlash(daydate)" >
               </div>
             </div>
             <div class="col col-md-2">
@@ -37,30 +37,46 @@
                 <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$nobreak.dayhour}">
               </div>
             </div>
+            
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="material">Material</label>
-                <input type="text" class="form-control" name="material" id="material" value="{$nobreak.material}" onKeyUp="convertLowToUpper(material)" autofocus>
+                <label for="location">Localização</label>
+                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" value="{$nobreak.location}"required>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="location">Local</label>
-                <input type="text" class="form-control" name="location" id="location" value="{$nobreak.location}" onKeyUp="convertLowToUpper(location)">
+                <label for="nobreakmodel">Modelo do NoBreak</label>
+                <input type="text" class="form-control" name="nobreakmodel" id="nobreakmodel" onKeyUp="convertLowToUpper(nobreakmodel)" value="{$nobreak.nobreakmodel}" required>
               </div>
             </div>
           </div>
           <div class="box-body">
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
-                <label for="warehouse">Depósito</label>
-                <input type="text" class="form-control" name="warehouse" id="warehouse" value="{$nobreak.warehouse}" onKeyUp="convertLowToUpper(warehouse)">
+                <label for="resulttest">Resultado Teste</label>
+                <select class="form-control" name="resulttest" id="resulttest">
+                  <option value="0" {if="$nobreak.resulttest == 0"}selected{/if}>OK</option>
+                  <option value="1" {if="$nobreak.resulttest == 1"}selected{/if}>NÃO OK</option>
+                </select>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="name_person">Nome</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" value="{$nobreak.name_person}" required>
+                <label for="observation">Observação</label>
+                <input type="text" class="form-control" name="observation" id="observation" value="{$nobreak.observation}" required >
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="serialnumber">Número de Série</label>
+                <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$nobreak.serialnumber}" required >
+              </div>
+            </div>
+            <div class="col col-md-4">
+              <div class="form-group">
+                <label for="name_person">Responsável</label>
+                <input type="text" class="form-control" name="name_person" id="name_person" value="{$nobreak.name_person}" required readonly>
               </div>
             </div>
           </div>

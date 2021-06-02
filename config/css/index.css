@@ -46,3 +46,15 @@ img{
     font-size: 20px;
     font-weight: bold;
 }
+.alert-primary{
+    background-color: #d5ddf8 !important;
+    color: #173f7e !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+.alert-warning{
+    background-color: #f8ebd5 !important;
+    color: #7e5117 !important;
+    font-size: 20px;
+    font-weight: bold;
+}

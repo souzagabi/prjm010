@@ -1,4 +1,4 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -19,8 +19,8 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div id="{if="$msg.state == 'SUCCESS' "}msg-success{/if}" class="box box-success" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
-        <div class="msg"><input type="text" class="form-control {if="$msg.state == 'SUCCESS' "}alert-success{else}alert-danger{/if}" name="msg" id="msg" value="{if="$msg.state == 'SUCCESS' "}{$msg.msg}{/if}" ></div>
+      <div id="<?php if( $msg["state"] == 'SUCCESS'  ){ ?>msg-success<?php } ?>" class="box box-success" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" id="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
@@ -31,17 +31,17 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
-                {loop="$date"}
-                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}" onChange="replaceSlash(daydate)" >
-                {/loop}
+                <?php $counter1=-1;  if( isset($date) && ( is_array($date) || $date instanceof Traversable ) && sizeof($date) ) foreach( $date as $key1 => $value1 ){ $counter1++; ?>
+                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $date["date"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                <?php } ?>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="dayhour">Hora do Dia</label>
-                {loop="$hour"}
-                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}">
-                {/loop}
+                <?php $counter1=-1;  if( isset($hour) && ( is_array($hour) || $hour instanceof Traversable ) && sizeof($hour) ) foreach( $hour as $key1 => $value1 ){ $counter1++; ?>
+                <input type="text" class="form-control" id="dayhour" name="dayhour" value="<?php echo htmlspecialchars( $hour["hour"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                <?php } ?>
               </div>
             </div>
             
@@ -83,7 +83,7 @@
             <div class="col col-md-4">
               <div class="form-group">
                 <label for="name_person">Responsável</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" value="{$nobreak.name_person}" required readonly>
+                <input type="text" class="form-control" name="name_person" id="name_person" value="<?php echo htmlspecialchars( $nobreak["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required readonly>
               </div>
             </div>
            

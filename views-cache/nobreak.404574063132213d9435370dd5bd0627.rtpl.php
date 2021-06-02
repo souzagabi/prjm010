@@ -2,11 +2,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Lista de Material
+      Lista de Nobreak
     </h1>
     <ol class="breadcrumb">
       <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active"><a href="/material">Material</a></li>
+      <li class="active"><a href="/nobreak">Nobreak</a></li>
     </ol>
   </section>
   <!-- Main content -->
@@ -15,13 +15,13 @@
       <div class="col form-control top">
         <div class="row">
           <div class="col col-md-4">
-            <form action="/material/create" method="get">
-              <input type="submit" name="btnmaterial" class="btn btn-success" value="Cadastrar Material">
-              <input type="text" name="material" value="material" hidden>
+            <form action="/nobreak/create" method="get">
+              <input type="submit" name="btnnobreak" class="btn btn-success" value="Cadastrar Nobreak">
+              <input type="text" name="nobreak" value="nobreak" hidden>
             </form>
           </div>
           
-          <!-- <form action="/material" method="get" <?php if( !$materials ){ ?>hidden<?php } ?>>
+          <!-- <form action="/nobreak" method="get" <?php if( !$nobreaks ){ ?>hidden<?php } ?>>
             <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
             <div class="col col-md-2"><label for="date_save">Data Inicio</label><input type="text" name="date_save" id="date_save" class="form-control" onChange="replaceSlash(date_save)"></div>
             <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
@@ -56,7 +56,7 @@
               </li>
               <?php $i = 1; ?>
               <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-              <li><a href="material?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+              <li><a href="nobreak?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["name_person"] ){ ?>&name_person=<?php echo htmlspecialchars( $pgs["list"]["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
               <?php } ?>
               <li>
                 <a href="#" aria-label="Next">
@@ -68,32 +68,34 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" <?php if( !$materials ){ ?>hidden<?php } ?>>
+    <div class="box box-primary" <?php if( !$nobreaks ){ ?>hidden<?php } ?>>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
             <tr class="alert-warning">
               <th>Data</th>
               <th>Hora</th>
-              <th>Material</th>
-              <th>Quantidade</th>
-              <th>receiver</th>
-              <th>deliveryman</th>
+              <th>Localização</th>
+              <th>Modelo do NoBreak</th>
+              <th>Número de Série</th>
+              <th>Resultado do Teste</th>
+              <th>Responsável</th>
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            <?php $counter1=-1;  if( isset($materials) && ( is_array($materials) || $materials instanceof Traversable ) && sizeof($materials) ) foreach( $materials as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($nobreaks) && ( is_array($nobreaks) || $nobreaks instanceof Traversable ) && sizeof($nobreaks) ) foreach( $nobreaks as $key1 => $value1 ){ $counter1++; ?>
             <tr>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["material"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["qtde"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["receiver"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["deliveryman"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["nobreakmodel"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php if( $value1["resulttest"] == 0 ){ ?>OK<?php }else{ ?>NÃO OK<?php } ?></td>
+              <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td>
-                <a href="/material/<?php echo htmlspecialchars( $value1["material_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                <a href="/material/<?php echo htmlspecialchars( $value1["material_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                <a href="/nobreak/<?php echo htmlspecialchars( $value1["nobreak_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                <a href="/nobreak/<?php echo htmlspecialchars( $value1["nobreak_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
             <?php } ?>
@@ -113,7 +115,7 @@
               </li>
               <?php $i = 1; ?>
               <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-              <li><a href="material?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+              <li><a href="nobreak?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["name_person"] ){ ?>&name_person=<?php echo htmlspecialchars( $pgs["list"]["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
               <?php } ?>
               <li>
                 <a href="#" aria-label="Next">

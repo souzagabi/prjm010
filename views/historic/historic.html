@@ -15,9 +15,10 @@
         <div class="col form-control top">
           <div class="row">
             <div class="col col-md-4">
-              <form action="/fireextingH/create" method="get">
+              <form action="/historic/create" method="get">
                 <input type="submit" name="btnfireexting" class="btn btn-success" value="Cadastrar Histórico">
-                <input type="text" name="fireexting_id" value="{$fireextings[0]['fireexting_id']}" hidden>
+                <a href="/fireexting?pg=1" class="btn btn-warning">Voltar</a>
+                <input type="text" name="fireexting_id" value="{if="$fireextings != NULL"}{$fireextings[0]['fireexting_id']}{/if}" hidden>
               </form>
             </div>
          
@@ -29,7 +30,7 @@
             {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
         <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
       </div>
-      <div class="box box-primary" {if="!$fireextings[0]['historic_id']"}hidden{/if}>
+      <div class="box box-primary" {if="$fireextings[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="row">
           <div class="col col-md-12">
             <nav aria-label="Page navigation">
@@ -53,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary" {if="!$fireextings[0]['historic_id']"}hidden{/if}>
+      <div class="box box-primary" {if="$fireextings[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -66,6 +67,7 @@
               </tr>
             </thead>
             <tbody>
+              {if="$fireextings[0]['historic_id'] != NULL"}
               <tr>
                 <td>{$fireextings[0]['location']}</td>
                 <td>{$fireextings[0]['tipe']}</td>
@@ -73,11 +75,12 @@
                 <td>{$fireextings[0]['capacity']}</td>
                 <td>{$fireextings[0]['rechargedate']}</td>
               </tr>
+              {/if}
             </tbody>
           </table>
         </div>
       </div>
-      <div class="box box-primary" {if="!$fireextings[0]['historic_id']"}hidden{/if}>
+      <div class="box box-primary" {if="$fireextings[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -93,26 +96,27 @@
               </tr>
             </thead>
             <tbody>
+              {if="$fireextings[0]['historic_id'] != NULL"}
               {loop="$fireextings"}
               <tr>
                 <td>{$value.daydate}</td>
-                <td>{$value.htrigger}</td>
-                <td>{$value.hose}</td>
-                <td>{$value.diffuser}</td>
-                <td>{$value.painting}</td>
-                <td>{$value.hydrostatic}</td>
+                <td>{if="$value.htrigger == 0"}OK{else}NÃO OK{/if}</td>
+                <td>{if="$value.hose == 0"}OK{else}NÃO OK{/if}</td>
+                <td>{if="$value.diffuser == 0"}OK{else}NÃO OK{/if}</td>
+                <td>{if="$value.painting == 0"}OK{else}NÃO OK{/if}</td>
+                <td>{if="$value.hydrostatic == 0"}OK{else}NÃO OK{/if}</td>
                 <td>{$value.hothers}</td>
                 <td>
-                  <a href="/fireextingU/{$value.historic_id}" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
-                  <a href="/fireextingH/{$value.historic_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>
+                  <a href="/historic/{if="$fireextings[0]['historic_id']"}{$value.historic_id}{/if}" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
+                  <a href="/historic/{if="$fireextings[0]['historic_id']"}{$value.historic_id}{/if}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
-              {/loop}
+              {/loop}{/if}
             </tbody>
           </table>
         </div>
       </div>
-      <div class="box box-primary" {if="!$fireextings[0]['historic_id']"}hidden{/if}>
+      <div class="box box-primary" {if="$fireextings[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="row">
           <div class="col col-md-12">
             <nav aria-label="Page navigation">
@@ -137,5 +141,5 @@
         </div>
       </div>
     </section>
-  </div>
+</div>
   

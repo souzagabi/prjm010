@@ -151,6 +151,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET EX = 1;
     DECLARE EXIT HANDLER FOR 1062 SELECT  "ERROR: ERRO de duplicidade do ID." AS MSGID;
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
+    
     START TRANSACTION;
     #set MESSAGE = msg;
     
@@ -385,9 +386,9 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_sel`(
 	par_name_person varchar(200),
@@ -409,33 +410,39 @@ BEGIN
 		SELECT daydate into par_daydate FROM PRJM010014 LIMIT 1;
 	END IF;
     
-    SET @sql = CONCAT('SELECT *, (SELECT count(person_id) FROM PRJM010010) / ', par_limit, ' AS pgs');
+	SET @sql = CONCAT('SELECT *, (SELECT count(person_id) FROM PRJM010010) / ', par_limit, ' AS pgs');
 	SET @sql = CONCAT(@sql, ' FROM (SELECT * FROM PRJM010010 PRJM010 LIMIT ', par_start, ', ', par_limit, ' ) AS PRJM010 ');
 	SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010014 PRJM014 USING(person_id) ');
-    SET @sql = CONCAT(@sql, ' WHERE PRJM014.daydate >= "', par_daydate, '"');
+	SET @sql = CONCAT(@sql, ' WHERE PRJM014.situation = 0 ');
 	
-    IF par_date_fim IS NOT NULL AND par_date_fim != '' THEN
-    BEGIN
+	IF par_daydate IS NOT NULL AND par_daydate != '' THEN
+		SET @sql = CONCAT(@sql, ' AND PRJM014.daydate >= "', par_daydate, '"');
+	END IF;
+	
+	IF par_date_fim IS NOT NULL AND par_date_fim != '' THEN
 		SET @sql = CONCAT(@sql, ' AND PRJM014.daydate <= "',par_date_fim, '"');
-    END;
-    END IF;
-    
-    IF par_name_person IS NOT NULL AND par_name_person != '' THEN
-    BEGIN
+	END IF;
+	
+	IF par_name_person IS NOT NULL AND par_name_person != '' THEN
+	BEGIN
 		SET @sql = CONCAT(@sql, ' AND PRJM010.name_person LIKE "%', par_name_person, '%"' );
-    END;
-    END IF;
-    
-    PREPARE STMT FROM @sql;
-    EXECUTE STMT;
-    
-    IF EX = 1 THEN
-		SELECT MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010010";
+	END;
+	END IF;
+	
+	#SELECT @sql;
+	PREPARE STMT FROM @sql;
+	EXECUTE STMT;
+	
+	IF EX = 1 THEN
+		SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010010";
+		SELECT MESSAGE;
 		ROLLBACK;
 	ELSE
-		SELECT "SUCCESS: Dados salvo com sucesso!!" MESSAGE;
+		SET MESSAGE = "SUCCESS: Dados salvo com sucesso!!" ;
+		SELECT MESSAGE;
 		COMMIT;
 	END IF; #Fim do if EX = 1 THEN
+	
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -528,24 +535,27 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'Erro no código SQL.' AS MSGSQL;
     START TRANSACTION;
     
-	CALL prc_person_update(par_seq_person_id,par_seq_classp_id,par_name_person,par_phonenumber,par_photo,par_rg_person,par_cpf_person,par_classification_id,par_daydate,par_situation,'','','0');
+	CALL prc_person_update(par_seq_person_id,par_seq_classp_id,par_person_id,par_name_person,par_phonenumber,par_photo,par_rg_person,par_cpf_person,par_classification_id,par_daydate,par_situation,'','','0');
      
     IF EX = 1 THEN
 		SET MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na procedure prc_person_update");
-	END IF;
+	ELSE
+		UPDATE PRJM010014
+		SET
+			company		= par_company,
+			reason		= par_reason,
+			badge		= par_badge,
+			auth		= par_auth,
+			sign		= par_sign
+		WHERE visitant_id 	= par_visitant_id;
+		
+		IF EX = 1 THEN
+			SET MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010014 ");
+		END IF;
+    END IF;
   
-    UPDATE PRJM010014
-	SET
-		company		= par_company,
-		reason		= par_reason,
-		badge		= par_badge,
-		auth		= par_auth,
-		sign		= par_sign
-    WHERE visitant_id 	= par_visitant_id;
+	
     
-    IF EX = 1 THEN
-		SET MESSAGE = CONCAT("ERROR: Erro ao atualizar registro na tabela PRJM010014 ");
-	END IF;
     
     IF EX = 1 THEN
 		SELECT MESSAGE;
@@ -571,4 +581,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-20 17:16:09
+-- Dump completed on 2021-05-24 17:29:42

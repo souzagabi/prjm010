@@ -93,7 +93,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img class="img-circle" src="../../image/<?php echo htmlspecialchars( $_SESSION['User']["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg">
+                        <img class="img-circle" src="../../image/<?php if( $_SESSION['User']["photo"] == 0 ){ ?>admin.jpg<?php }else{ ?><?php echo htmlspecialchars( $_SESSION['User']["user_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg<?php } ?>">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>

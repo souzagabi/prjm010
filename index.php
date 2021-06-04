@@ -11,6 +11,7 @@
 	use \PRJM010\PageMaterial;
 	use \PRJM010\PageNobreak;
 	use \PRJM010\PageFireExting;
+	use \PRJM010\PageHistoricE;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Residual;
@@ -18,6 +19,7 @@
 	use \PRJM010\Model\Metodo;
 	use \PRJM010\Model\Nobreak;
 	use \PRJM010\Model\FireExting;
+	use \PRJM010\Model\HistoricE;
 
 	include_once("./config/php/funcao.php");
 
@@ -713,162 +715,14 @@
 		$fireexting	= Metodo::selectRegister($company, "FireExting");
 		
 		$page = new PageFireExting();
-		$page->setTpl("list_fireexting", array(
+		$page->setTpl("fireexting", array(
 			"fireextings"=>$fireexting[0],
 			"pgs"=>$fireexting[1],
 			"msg"=>$msg
 		));
 	});
 
-	$app->get('/fireextingH/create', function() {
-		User::verifyLogin();
-		$fireexting_id = '1';
-		if (isset($_GET["fireexting_id"])) {
-			$fireexting_id = $_GET["fireexting_id"];
-		}
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		} 
-		
-		$date = explode(" ",date('d-m-Y H:i'));
-		$dt["date"]		= $date[0];
-		// echo 'IL734';
-		// var_dump($_GET);exit;
-		$page = new PageFireExting();
-
-		$page->setTpl("hist_fireexting-create",array(
-			"msg"=>$msg,
-			"date"=>$dt,
-			"fireexting_id"=>$fireexting_id
-		));
-		
-	});
-
-	$app->post('/fireextingH/create', function() {
-		User::verifyLogin();
-		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		} 
-		
-		
-		$fireexting = new FireExting();
-		
-		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
-		
-		foreach ($ppost as $key => $value) {
-			$_POST[$key] = $value;
-		}
-		
-		$_POST["user_id"] = $_SESSION["User"]["user_id"];
-		
-		$fireexting->setData($_POST);
-		
-		$msg = $fireexting->saveH();
-		
-		header("Location: /fireextingH/create?msg=$msg");
-		exit;
-		
-	});
 	
-	$app->get('/fireextingH/:fireexting_id', function($fireexting_id) {
-		User::verifyLogin();
-		
-		$company["fireextingH"]		= NULL;
-		$company["daydate"]	    	= NULL;
-		$company["date_fim"]    	= NULL;
-		$company["search"] 			= NULL;
-		$company["fireexting_id"]	= $fireexting_id;
-
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		} 
-		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
-		} 
-		
-		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-		{
-			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
-		}
-		
-		$fireexting	= Metodo::selectRegister($company, "FireExtingH");
-		
-		$page = new PageFireExting();
-		$page->setTpl("hist_fireexting", array(
-			"fireextings"=>$fireexting[0],
-			"pgs"=>$fireexting[1],
-			"msg"=>$msg
-		));
-		
-	});
-
-	
-
-	$app->get('/fireextingU/:historic_id', function($historic_id) {
-		User::verifyLogin();
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
-		$historic = new FireExting();
-		$historic->getByIdH($historic_id);
-		
-		$page = new PageFireExting();
-		
-		$page ->setTpl("hist_fireexting-update", array(
-			"historic"=>$historic->getValues(),
-			"msg"=>$msg
-		));
-	});
-
-	$app->post('/fireextingU/:historic_id', function($historic_id) {
-		User::verifyLogin();
-		$historic = new FireExting();
-		$historic->getByIdH($historic_id);
-		
-		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"],"rechargedate"=>$_POST["rechargedate"]]);
-			foreach ($ppost as $key => $value) {
-				$_POST[$key] = $value;
-			}
-			$_POST["user_id"] = $_SESSION["User"]["user_id"];
-		}
-
-		$historic->setData($_POST);
-		$sql = new Sql();
-            echo '<pre>';
-            print_r($historic);
-            echo '</pre>';//exit;
-		$msg = $historic->updateH();
-		
-		header("Location: /fireextingH?pg=1&msg=".$msg);
-		exit;
-	});
-
 	$app->get('/fireexting/create', function() {
 		User::verifyLogin();
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
@@ -972,6 +826,173 @@
 		header("Location: /fireexting?msg=".$msg);
 		exit;
 	});
+
+/*======================================================================================*/
+/*							Rotas do Histórico do Extintor								*/
+/*======================================================================================*/
+		
+	$app->get('/historic', function() {
+		User::verifyLogin();
+		
+		$company["historic"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
+		$company["search"] 			= NULL;
+		$company["fireexting_id"]	= $_GET["fireexting_id"];
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		}
+		
+		$historic	= Metodo::selectRegister($company, "HistoricE");
+		if ($historic[0] == NULL) {
+			$historic[0][0] = ["fireexting_id"=>$_GET["fireexting_id"],"historic_id"=> NULL ];
+		}
+	
+		$page = new PageHistoricE();
+		
+		$page->setTpl("historic", array(
+			"fireextings"=>$historic[0],
+			"pgs"=>$historic[1],
+			"msg"=>$msg
+		));
+		
+	});
+
+	$app->get('/historic/create', function() {
+		User::verifyLogin();
+		if (isset($_GET["fireexting_id"])) {
+			$fireexting_id = $_GET["fireexting_id"];
+		}
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		// echo 'IL734';
+		// var_dump($_GET);exit;
+		$page = new PageHistoricE();
+
+		$page->setTpl("historic-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"fireexting"=>$fireexting_id
+		));
+		
+	});
+
+	$app->post('/historic/create', function() {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		$fireexting = new HistoricE();
+		
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		$fireexting_id = $_POST["fireexting_id"];
+		$fireexting->setData($_POST);
+		
+		$msg = $fireexting->save();
+		
+		header("Location: /historic/create?msg=$msg&fireexting_id=$fireexting_id");
+		exit;
+		
+	});
+	
+	
+	$app->get('/historic/:historic_id/delete', function($historic_id) {
+		User::verifyLogin();
+		$historic = new HistoricE();
+		$historic->getById($historic_id);
+
+		$fireexting_id = $historic->getfireexting_id();
+
+		$msg = $historic->delete();
+		
+		header("Location: /historic?msg=$msg&fireexting_id=$fireexting_id");
+		exit;
+		
+	});
+	
+	$app->get('/historic/:historic_id', function($historic_id) {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$historic = new HistoricE();
+		$historic->getbyid($historic_id);
+		
+		$page = new PageHistoricE();
+		
+		$page ->setTpl("historic-update", array(
+			"historic"=>$historic->getValues(),
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/historic/:historic_id', function($historic_id) {
+		User::verifyLogin();
+		$historic = new HistoricE();
+		$historic->getbyid($historic_id);
+		$fireexting_id = $_POST['fireexting_id'];
+
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$historic->setData($_POST);
+		
+		$msg = $historic->update();
+		
+		header("Location: /historic?pg=1&msg=$msg&fireexting_id=$fireexting_id");
+		exit;
+	});
+
 
 /*======================================================================================*/
 /*										Rotas do Admin									*/

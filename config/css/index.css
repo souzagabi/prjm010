@@ -1,4 +1,6 @@
-
+body{
+    padding: 0 !important;
+}
 .col {
     height: 50px;
 }

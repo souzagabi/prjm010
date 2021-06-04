@@ -93,7 +93,7 @@ desired effect
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img class="img-circle" src="../../image/{$_SESSION['User'].person_id}.jpg">
+                        <img class="img-circle" src="../../image/{if="$_SESSION['User'].photo == 0"}admin.jpg{else}{$_SESSION['User'].user_id}.jpg{/if}">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>

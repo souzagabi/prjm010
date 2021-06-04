@@ -5,6 +5,7 @@
     use \PRJM010\Model\Material;
     use \PRJM010\Model\Visistant;
     use \PRJM010\Model\FireExting;
+    use \PRJM010\Model\HistoricE;
 
     class Metodo extends Model {
         
@@ -106,15 +107,16 @@
             if ($model == "FireExting") {
                 $classModel = FireExting::listAll($act);
             }
-            if ($model == "FireExtingH") {
-                $classModel = FireExting::listHistoric($act);
+            
+            if ($model == "HistoricE") {
+                $classModel = HistoricE::listAll($act);
             }
             $classModel = Metodo::convertDateToView($classModel);
             $classModel = Metodo::convertToInt($classModel);
             if (isset($classModel[0]["pgs"]) && count($classModel) > 0 && $classModel != '') {
                 $pgs 	= Metodo::countRegister($classModel[0]["pgs"], $act);
             }
-                              
+                   
             return [$classModel, $pgs];
         }
     }

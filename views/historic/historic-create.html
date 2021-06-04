@@ -9,8 +9,8 @@
       </div>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/fireextingH/{$fireexting_id}">Extintores</a></li>
-        <li class="active"><a href="/fireextingH/create">Cadastrar</a></li>
+        <li><a href="/historic/{$fireexting}">Histórico</a></li>
+        <li class="active"><a href="/historic/create">Cadastrar</a></li>
       </ol>
     </section>
     
@@ -27,8 +27,8 @@
             <div class="box box-success">
             <!-- form start -->
             
-            <form role="form" action="/fireextingH/create" method="post" enctype="multipart/form-data">
-              <input type="text" name="fireexting_id" value="{$fireexting_id}" hidden>
+            <form role="form" action="/historic/create?{if="$fireexting != NULL"}{$fireexting}{/if}" method="post" enctype="multipart/form-data">
+              <input type="text" name="fireexting_id" value="{$fireexting}" hidden>
               <div class="box-body">
                 <div class="col col-md-2">
                   <div class="form-group">
@@ -97,7 +97,7 @@
               <div class="box-footer">
                 <input type="submit" id="fireexting" class="btn btn-success" value="Cadastrar Histórico">
                 
-                <a href="/fireextingH/{$fireexting_id}?limit=10" class="btn btn-warning">Voltar</a>
+                <a href="/historic?fireexting_id={$fireexting}&limit=10" class="btn btn-warning">Voltar</a>
                 
               </div>
             </form>

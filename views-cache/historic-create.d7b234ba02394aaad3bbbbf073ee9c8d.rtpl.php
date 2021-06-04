@@ -1,16 +1,16 @@
-<!-- Content Wrapper. Contains page content -->
+<?php if(!class_exists('Rain\Tpl')){exit;}?><!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="box box-success title" style="background-color: #d5f8da;">
         <h4>
-          Edição de Histórico de Extintor
+          Cadastro de Histórico de Extintor
         </h4>
       </div>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="/fireextingH/{$historic.fireexting_id}">Histórico</a></li>
-        <li class="active"><a href="/fireextingU/{$historic.historic_id}">Edição</a></li>
+        <li><a href="/historic/<?php echo htmlspecialchars( $fireexting, ENT_COMPAT, 'UTF-8', FALSE ); ?>">Histórico</a></li>
+        <li class="active"><a href="/historic/create">Cadastrar</a></li>
       </ol>
     </section>
     
@@ -19,29 +19,31 @@
     
       <div class="row">
           <div class="col-md-12">
-            <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-                    class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-                    {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-                <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+            <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+                    class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                    <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+                <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
             </div>
             <div class="box box-success">
             <!-- form start -->
             
-            <form role="form" action="/fireextingU/{$historic.historic_id}" method="post" enctype="multipart/form-data"></form>
-              <input type="text" name="fireexting_id" value="{$historic.fireexting_id}" hidden>
+            <form role="form" action="/historic/create?<?php if( $fireexting != NULL ){ ?><?php echo htmlspecialchars( $fireexting, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" method="post" enctype="multipart/form-data">
+              <input type="text" name="fireexting_id" value="<?php echo htmlspecialchars( $fireexting, ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
               <div class="box-body">
                 <div class="col col-md-2">
                   <div class="form-group">
                     <label for="daydate">Data do Dia</label>
-                    <input type="text" class="form-control" id="daydate" name="daydate" value="{$historic.daydate}" onChange="replaceSlash(daydate)" >
+                    <?php $counter1=-1;  if( isset($date) && ( is_array($date) || $date instanceof Traversable ) && sizeof($date) ) foreach( $date as $key1 => $value1 ){ $counter1++; ?>
+                    <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $date["date"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                    <?php } ?>
                   </div>
                 </div>
                 <div class="col col-md-2">
                   <div class="form-group">
                     <label for="htrigger">Gatilho</label>
                     <select class="form-control" name="htrigger" id="htrigger">
-                      <option value="0" {if="$historic.htrigger"} selected{/if}>OK</option>
-                      <option value="1" {if="$historic.htrigger"} selected{/if}>NÃO OK</option>
+                      <option value="0" selected>OK</option>
+                      <option value="1">NÃO OK</option>
                     </select>
                   </div>
                 </div>
@@ -50,16 +52,16 @@
                   <div class="form-group">
                     <label for="hose">Mangote</label>
                     <select class="form-control" name="hose" id="hose">
-                      <option value="0" {if="$historic.hose"} selected{/if}>OK</option>
-                      <option value="1" {if="$historic.hose"} selected{/if}>NÃO OK</option>
+                      <option value="0" selected>OK</option>
+                      <option value="1">NÃO OK</option>
                     </select>
                   </div>
                 </div>
                 <div class="col col-md-2">
                   <label for="diffuser">Difusor</label>
                     <select class="form-control" name="diffuser" id="diffuser">
-                      <option value="0" {if="$historic.diffuser"} selected{/if}>OK</option>
-                      <option value="1" {if="$historic.diffuser"} selected{/if}>NÃO OK</option>
+                      <option value="0" selected>OK</option>
+                      <option value="1">NÃO OK</option>
                     </select>
                 </div>
               
@@ -67,8 +69,8 @@
                   <div class="form-group">
                     <label for="painting">Pintura</label>
                     <select class="form-control" name="painting" id="painting">
-                      <option value="0" {if="$historic.painting"} selected{/if}>OK</option>
-                      <option value="1" {if="$historic.painting"} selected{/if}>NÃO OK</option>
+                      <option value="0" selected>OK</option>
+                      <option value="1">NÃO OK</option>
                     </select>
                   </div>
                 </div>
@@ -76,8 +78,8 @@
                   <div class="form-group">
                     <label for="hydrostatic">Teste Hidrostático</label>
                     <select class="form-control" name="hydrostatic" id="hydrostatic">
-                      <option value="0" {if="$historic.hydrostatic"} selected{/if}>OK</option>
-                      <option value="1" {if="$historic.hydrostatic"} selected{/if}>NÃO OK</option>
+                      <option value="0" selected>OK</option>
+                      <option value="1">NÃO OK</option>
                     </select>
                   </div>
                 </div>
@@ -86,15 +88,17 @@
                 <div class="col col-md-4">
                   <div class="form-group">
                     <label for="hothers">Outros</label>
-                    <input type="text" class="form-control" name="hothers" id="hothers" value="{$historic.hothers}" onKeyUp="convertLowToUpper(hothers)" required>
+                    <input type="text" class="form-control" name="hothers" id="hothers" onKeyUp="convertLowToUpper(hothers)" required>
                   </div>
                 </div>
                                
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <input type="submit" id="fireexting" class="btn btn-success" value="Aualizar Histórico">
-                <a href="/fireextingH/{$historic.fireexting_id}?limit=10" class="btn btn-warning">Voltar</a>
+                <input type="submit" id="fireexting" class="btn btn-success" value="Cadastrar Histórico">
+                
+                <a href="/historic?fireexting_id=<?php echo htmlspecialchars( $fireexting, ENT_COMPAT, 'UTF-8', FALSE ); ?>&limit=10" class="btn btn-warning">Voltar</a>
+                
               </div>
             </form>
           </div>

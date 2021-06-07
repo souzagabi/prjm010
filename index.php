@@ -12,6 +12,7 @@
 	use \PRJM010\PageNobreak;
 	use \PRJM010\PageFireExting;
 	use \PRJM010\PageHistoricE;
+	use \PRJM010\PagePurifier;
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Visitant;
 	use \PRJM010\Model\Residual;
@@ -20,6 +21,7 @@
 	use \PRJM010\Model\Nobreak;
 	use \PRJM010\Model\FireExting;
 	use \PRJM010\Model\HistoricE;
+	use \PRJM010\Model\Purifier;
 
 	include_once("./config/php/funcao.php");
 
@@ -775,9 +777,8 @@
 		User::verifyLogin();
 		$fireexting = new FireExting();
 		$fireexting->getById($fireexting_id);
-
 		$msg = $fireexting->delete();
-		
+	
 		header("Location: /fireexting?msg=".$msg."&daydate=&date_fim=&search=Search");
 		exit;
 	});
@@ -993,7 +994,143 @@
 		exit;
 	});
 
+/*======================================================================================*/
+/*										Rotas do Purificado								*/
+/*======================================================================================*/
+	$app->get('/purifier', function() {
+		User::verifyLogin();
+		
+		$company["purifier"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
+		$company["search"] 			= NULL;
 
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+		
+		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		} 
+		
+		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		{
+			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+
+			foreach ($gget as $key => $value) {
+				$_GET[$key] = $value;
+			}
+		}
+		
+		$purifiers	= Metodo::selectRegister($company, "Purifier");
+		
+		$page = new PagePurifier();
+		
+		$page->setTpl("purifier", array(
+			"purifiers"=>$purifiers[0],
+			"pgs"=>$purifiers[1],
+			"msg"=>$msg
+		));
+		
+	});
+
+	$app->get('/purifier/create', function() {
+		User::verifyLogin();
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
+		$date = explode(" ",date('d-m-Y H:i'));
+		$dt["date"]		= $date[0];
+		$responsable["name_person"] = $_SESSION["User"]["name_person"];
+
+		$page = new PagePurifier();
+
+		$page->setTpl("purifier-create",array(
+			"msg"=>$msg,
+			"date"=>$dt,
+			"purifier"=>$responsable
+		));
+		
+	});
+
+	$app->post("/purifier/create", function (){
+		User::verifyLogin();
+		
+		$purifier = new Purifier();
+		
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
+		
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}
+		
+		$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		$_POST["person_id"] = $_SESSION["User"]["person_id"];
+		
+		$purifier->setData($_POST);
+		
+		$msg = $purifier->save();
+		
+		header("Location: /purifier/create?msg=$msg");
+		exit;
+	});
+
+	$app->get("/purifier/:purifier_id/delete", function ($purifier_id){
+		User::verifyLogin();
+		$purifier = new Purifier();
+		$purifier->getById($purifier_id);
+
+		$msg = $purifier->delete();
+		
+		header("Location: /purifier?msg=".$msg."&daydate=&date_fim=&search=Search");
+		exit;
+	});
+
+	$app->get("/purifier/:purifier_id", function($purifier_id) {
+		User::verifyLogin();
+		$purifier = new Purifier();
+		$purifier->getById($purifier_id);
+		
+		$page = new PagePurifier();
+		
+		$page ->setTpl("purifier-update", array(
+			"purifier"=>$purifier->getValues()
+		));
+	});
+
+	$app->post("/purifier/:purifier_id", function($purifier_id) {
+		User::verifyLogin();
+		$purifier = new Purifier();
+		$purifier->getById($purifier_id);
+		
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$purifier->setData($_POST);
+		
+		$msg = $purifier->update();
+		
+		header("Location: /purifier?msg=".$msg);
+		exit;
+	});
 /*======================================================================================*/
 /*										Rotas do Admin									*/
 /*======================================================================================*/
@@ -1003,7 +1140,7 @@
 		User::verifyLogin();
 		if ($_SESSION["User"]["inadmin"] == '1') {
 			$users = User::listAll();
-	
+
 			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 			
 			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -1011,7 +1148,7 @@
 				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
 				$_GET["msg"] = '';
 			} 
-	
+
 			$page = new PageUser();
 			
 			$page->setTpl("users", array(
@@ -1026,13 +1163,21 @@
 
 	$app->get('/admin/login', function() {
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		}
+
 		$page = new PageAdmin([
 			"header"=> false,
 			"footer"=> false
 
 		]);
-		
-		$page->setTpl("login");
+		$page->setTpl("login", array(
+			"msg"=>$msg
+		));
 		
 	});
 
@@ -1216,3 +1361,4 @@
 	$app->run();
 
 ?>
+	

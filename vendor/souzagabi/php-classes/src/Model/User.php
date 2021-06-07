@@ -17,7 +17,9 @@
             ));
             
             if (count($results) === 0) {
-                throw new \Exception("Usuário inexistente ou senha inválida", 1);
+                $msg = "ERROR: Usuário ou senha inválida!";
+                header("Location: /admin/login?msg=$msg");
+			    exit;
             }
             $data = $results[0];
             
@@ -38,7 +40,9 @@
                 
                 return $user;
             } else{
-                throw new \Exception("Usuário inexistente ou senha inválida", 1);
+                $msg = "ERROR: Usuário ou senha inválida!";
+                header("Location: /admin/login?msg=$msg");
+			    exit;
             }
         }
 
@@ -46,10 +50,9 @@
         {
             if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["user_id"] > 0  ) {
                 
-                // (bool)$_SESSION[User::SESSION]["inadmin"] !== $inadmin
-                
-                header("Location: /admin/login");
-                exit;
+                $msg = "ERROR: É necessário fazer login!";
+                header("Location: /admin/login?msg=$msg");
+			    exit;
             } 
             
         }

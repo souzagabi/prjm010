@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../../config/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../../config/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="../../config/css/index.css">
   <link rel="shortcut icon" href="../../img/favicon.jpg" type="image/x-icon">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -32,7 +33,12 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Logar para começar sua sessão</p>
+    <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+          class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+          <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+      <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+    </div>
+	<p class="login-box-msg">Logar para começar sua sessão</p>
 
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
@@ -82,6 +88,7 @@
 <script src="../../config/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../config/plugins/iCheck/icheck.min.js"></script>
+<script src="../../config/js/funcao.js"></script>
 <script>
   $(function () {
     $('input').iCheck({

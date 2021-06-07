@@ -89,12 +89,16 @@
         public function delete()
         {
             $sql = new Sql();
-          
+            echo '<pre>';
+            print_r($this);
+            echo '</pre>';
             $results = $sql->select("CALL prc_fireexting_delete(:fireexting_id, :user_id)", array(
-                ":fireexting_id"  =>(int)$this->getfireexting_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+                ":fireexting_id"  => $this->getfireexting_id(),
+                ":user_id"        => $this->getuser_id()
             ));
-        
+            echo '<pre>';
+            print_r($results);
+            echo '</pre>';//exit;
             $this->setData($results);
             return $results[0]["MESSAGE"];
         }

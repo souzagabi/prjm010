@@ -6,19 +6,17 @@
     use \PRJM010\Model\Visistant;
     use \PRJM010\Model\FireExting;
     use \PRJM010\Model\HistoricE;
+    use \PRJM010\Model\Purifier;
 
     class Metodo extends Model {
         
         public function convertDateToView($object = array())
         {
             $i = 0;
-            // echo '<pre>';
-            // print_r($object);
-            // echo '</pre>';
-            // exit;
+      
             if (isset($object["daydate"]) && $object["daydate"] != '') {
                 foreach ($object as $key => $value) {
-                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate")) {
+                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager")) {
                         $object[$key] =  Metodo::convertDateView($value);
                     }
                     $i++;
@@ -28,7 +26,7 @@
                 if (isset($object)) {
                     foreach ($object as $key => $values) {
                         foreach ($values as $key => $value) {
-                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate")) {
+                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager")) {
                                 $values[$key] =  Metodo::convertDateView($value);
                             }
                         }
@@ -110,6 +108,9 @@
             
             if ($model == "HistoricE") {
                 $classModel = HistoricE::listAll($act);
+            }
+            if ($model == "Purifier") {
+                $classModel = Purifier::listAll($act);
             }
             $classModel = Metodo::convertDateToView($classModel);
             $classModel = Metodo::convertToInt($classModel);

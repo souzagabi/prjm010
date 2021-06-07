@@ -6,7 +6,7 @@
     </div>
     <!-- Default to the left -->
     <div class="footer-copyright text-center py-3">
-      <strong>© Copyright &copy; 2021 <a href="#">Souteramoto.com</a>.</strong> All rights reserved.
+      <strong>&copy; Copyright  2021 <a href="#">ADJ-SIG - adjsistemas.com.br</a>.</strong> All rights reserved.
     </div>
     
   </footer>

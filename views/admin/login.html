@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../../config/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../../config/plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="../../config/css/index.css">
   <link rel="shortcut icon" href="../../img/favicon.jpg" type="image/x-icon">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -32,7 +33,12 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Logar para começar sua sessão</p>
+    <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+          class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+          {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+      <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+    </div>
+	<p class="login-box-msg">Logar para começar sua sessão</p>
 
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
@@ -82,6 +88,7 @@
 <script src="../../config/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="../../config/plugins/iCheck/icheck.min.js"></script>
+<script src="../../config/js/funcao.js"></script>
 <script>
   $(function () {
     $('input').iCheck({

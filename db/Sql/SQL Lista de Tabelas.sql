@@ -178,3 +178,22 @@ CREATE TABLE `prjm010019` (
   CONSTRAINT `fk_prjm010019_PRJM010018` FOREIGN KEY (`fireexting_id`) REFERENCES `prjm010018` (`fireexting_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
 
+CREATE TABLE `prjm010020` (
+  `purifier_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `person_id` int NOT NULL,
+  `daydate` date NOT NULL,
+  `location` varchar(100) DEFAULT NULL,
+  `nextmanager` date DEFAULT NULL,
+  `user_id_deleted` int DEFAULT NULL,
+  `dt_deleted` timestamp NULL DEFAULT NULL,
+  `situation` char(1) DEFAULT '0',
+  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`purifier_id`),
+  KEY `FK_prjm010020_PRJM010001_idx` (`person_id`),
+  KEY `FK_prjm010020_PRJM010013_idx` (`user_id`),
+  CONSTRAINT `fk_prjm010020_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_prjm010020_PRJM010013` FOREIGN KEY (`user_id`) REFERENCES `prjm010013` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
+
+

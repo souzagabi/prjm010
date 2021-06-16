@@ -18,7 +18,7 @@
     <section class="content">
     
         <div class="row">
-             <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="box box-success">
             <!-- form start -->
             
@@ -26,29 +26,34 @@
                 
                         <div class="box-body">
                             <div class="col col-md-2">
-                            <div class="form-group">
-                                <label for="daydate">Data do Dia</label>
-                                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $purifier["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
-                            </div>
-                            </div>
-                            
-                            <div class="col col-md-4">
-                            <div class="form-group">
-                                <label for="location">Local</label>
-                                <input type="text" class="form-control" name="location" id="location" value="<?php echo htmlspecialchars( $purifier["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
-                            </div>
+                                <div class="form-group">
+                                    <label for="daydate">Data do Dia</label>
+                                    <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $purifier["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                                </div>
                             </div>
                             <div class="col col-md-2">
-                            <div class="form-group">
-                                <label for="nextmanager">Data de Recarga</label>
-                                <input type="text" class="form-control" name="nextmanager" id="nextmanager" value="<?php echo htmlspecialchars( $purifier["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(nextmanager)" required>
+                                <div class="form-group">
+                                  <label for="serialnumber">Nº Sério</label>
+                                  <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $purifier["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" autofocus="autofocus" required>
+                                </div>
+                              </div>
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="location">Local</label>
+                                    <input type="text" class="form-control" name="location" id="location" value="<?php echo htmlspecialchars( $purifier["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
+                                </div>
                             </div>
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="nextmanager">Data de Recarga</label>
+                                    <input type="text" class="form-control" name="nextmanager" id="nextmanager" value="<?php echo htmlspecialchars( $purifier["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(nextmanager)" required>
+                                </div>
                             </div>
                             <div class="col col-md-4">
-                            <div class="form-group">
-                                <label for="responsable">Responsável</label>
-                                <input type="text" class="form-control" name="responsable" id="responsable" value="<?php echo htmlspecialchars( $purifier["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(responsable)" required readonly>
-                            </div>
+                                <div class="form-group">
+                                    <label for="responsable">Responsável</label>
+                                    <input type="text" class="form-control" name="responsable" id="responsable" value="<?php echo htmlspecialchars( $purifier["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(responsable)" required readonly>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

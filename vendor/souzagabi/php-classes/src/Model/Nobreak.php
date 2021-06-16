@@ -47,8 +47,7 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_nobreak_save(:user_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
-                ":user_id"          => $this->getuser_id(),
+            $results = $sql->select("CALL prc_nobreak_save(:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":name_person"      => $this->getname_person(),
                 ":daydate"          => $this->getdaydate(),
@@ -70,9 +69,8 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:user_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
+            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":nobreak_id"   => $this->getnobreak_id(),    
-                ":user_id"          => $this->getuser_id(),
                 ":person_id"        => $this->getperson_id(),    
                 ":name_person"      => $this->getname_person(),
                 ":daydate"          => $this->getdaydate(),

@@ -31,6 +31,40 @@
 
     return total;
 }*/
+function insertcolor(element)
+{
+    /*if (element.value >= 0) {
+        alert(element.value);
+    } else {
+        console.log(element);
+    }*/
+    if (element.value != '') {
+        
+        //element.classList.remove("programado");
+        //element.classList.remove("efetuado");
+        //element.classList.remove("atradado");
+        
+        var viewdate = element.value.split('-');
+        
+        var d1 = new Date(viewdate[1]+'/'+viewdate[0]+'/'+viewdate[2]);
+        var dataAtual = new Date();
+        
+        var dtv = (d1.getDate()+'/'+((d1.getMonth()+1))+'/'+d1.getFullYear());
+        var dta = (dataAtual.getDate()+'/'+((dataAtual.getMonth()+1))+'/'+dataAtual.getFullYear());
+        
+        if (dtv >  dta) {
+            element.classList.add("programado");
+        } else if (dtv == dta) {
+            element.classList.add("efetuado");
+        } else
+        {
+            element.classList.add("atrasado");
+        }
+        
+        
+        
+    }
+}
 
 function replaceComa(element)
 {
@@ -58,22 +92,28 @@ function convertLowToUpper(element)
 function verifyConfPassWord(element, elementCompare, elementMsg)
 {
     var msg = '';
-    if (element.value != elementCompare.value) {
-        msg = "Senha não confere! Digite-a novamente.";
-       
-    } else if (element.value == elementCompare.value) {
-        if (element.value.length < 6) {
-            msg = "A senha tem que ser pelo menos 6 caracteres!!";
-        } else {
-            console.log(document.getElementById("btnSubmit"));
-            document.getElementById("btnSubmit").style.display = "inline";
+    if (element.value != '' && elementCompare.value != '') {
+        
+        if (element.value != elementCompare.value) {
+            msg = "Senha não confere! Digite-a novamente.";
+           
+        } else if (element.value == elementCompare.value) {
+            if (element.value.length < 6) {
+                msg = "A senha tem que ser pelo menos 6 caracteres!!";
+            } else {
+                console.log(document.getElementById("btnSubmit"));
+                document.getElementById("btnSubmit").style.display = "inline";
+            }
+        } 
+        if (msg != '') {
+            elementMsg.style.display = "block";
+            document.getElementById("btnSubmit").style.display = "none";
+            document.getElementById("msgDanger").innerHTML = msg;
+            elementCompare.focus();
+            removeMensagemError(elementMsg);
         }
-    } 
-    if (msg != '') {
-        elementMsg.style.display = "block";
-        document.getElementById("msgDanger").innerHTML = msg;
-        elementCompare.focus();
-        removeMensagemError(elementMsg);
+    } else {
+       document.getElementById("btnSubmit").style.display = "none";
     }
 }
 

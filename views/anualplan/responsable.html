@@ -1,0 +1,109 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Lista de Responsáveis da Manutenção
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Responsável Manutenção</li>
+      </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-primary">
+        <div class="col form-control top">
+          <div class="row">
+            <div class="col col-md-4">
+              <form action="/responsable/create" method="get">
+                <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastrar Responsável">
+                <a href="/anualplan?limit=10" class="btn btn-warning">Voltar</a>
+                <input type="text" name="responsable" value="responsable" hidden>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+      </div>
+      <div class="box box-primary" {if="!$pgs"}hidden{/if}>
+        <div class="row">
+          <div class="col col-md-12">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {$i = 1}
+                {loop="$pgs"}
+                <li><a href="responsable?pg={$i}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                {/loop}
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="box box-primary" {if="!$responsables"}hidden{/if}>
+        <div class="box-body no-padding">
+          <table class="table table-straped">
+            <thead class="thead-dark">
+              <tr class="alert-warning">
+                <th>Responsável</th>
+                <th>RG</th>
+                <th>CPF</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loop="$responsables"}
+              <tr>
+                <td>{$value.responsable}</td>
+                <td>{$value.rg_person}</td>
+                <td>{$value.cpf_person}</td>
+                <td>
+                  <a href="/responsable/{$value.person_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                  <a href="/responsable/{$value.person_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+              {/loop}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="box box-primary" {if="!$pgs"}hidden{/if}>
+        <div class="row">
+          <div class="col col-md-12">
+            <nav aria-label="Page navigation">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {$i = 1}
+                {loop="$pgs"}
+                <li><a href="responsable?pg={$i}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                {/loop}
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  

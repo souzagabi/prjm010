@@ -59,6 +59,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Data</th>
+                <th>Nº de Séria</th>
                 <th>Local</th>
                 <th>Responsável</th>
                 <th>Próxima Manutenção</th>
@@ -69,12 +70,13 @@
               <?php $counter1=-1;  if( isset($purifiers) && ( is_array($purifiers) || $purifiers instanceof Traversable ) && sizeof($purifiers) ) foreach( $purifiers as $key1 => $value1 ){ $counter1++; ?>
               <tr>
                 <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/purifier/<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs" title="Editar Purificador"><i class="fa fa-edit"></i></a>
-                  <a href="/historic?purifier_id=<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
+                  <a href="/historicP?purifier_id=<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
                   <a href="/purifier/<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Purificador"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>

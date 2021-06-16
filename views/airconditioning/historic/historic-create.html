@@ -1,0 +1,62 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="box box-success title" style="background-color: #d5f8da;">
+        <h4>
+          Cadastro de Histórico de Extintor
+        </h4>
+      </div>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/historicA/{$airconditioning}">Histórico</a></li>
+        <li class="active"><a href="/historicA/create">Cadastrar</a></li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+    
+      <div class="row">
+          <div class="col-md-12">
+            <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+                    class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+                    {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+                <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+            </div>
+            <div class="box box-success">
+            <!-- form start -->
+            
+            <form role="form" action="/historicA/create?{if="$airconditioning != NULL"}{$airconditioning}{/if}" method="post" enctype="multipart/form-data">
+              <input type="text" name="airconditioning_id" value="{$airconditioning}" hidden>
+              <div class="box-body">
+                <div class="col col-md-2">
+                  <div class="form-group">
+                    <label for="inmonth">Mês</label>
+                    <input type="text" class="form-control" id="inmonth" name="inmonth" value="{$month}" onKeyUp="convertLowToUpper(inmonth)" >
+                  </div>
+                </div>
+                <div class="col col-md-2">
+                  <div class="form-group">
+                    <label for="daydate">Data do Dia</label>
+                    <input type="text" class="form-control" id="daydate" name="daydate" onChange="replaceSlash(daydate)" >
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <input type="submit" id="airconditioning" class="btn btn-success" value="Cadastrar Histórico">
+                
+                <a href="/historicA?airconditioning_id={$airconditioning}&limit=10" class="btn btn-warning">Voltar</a>
+                
+              </div>
+            </form>
+          </div>
+          </div>
+      </div>
+    
+    </section>
+    <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    

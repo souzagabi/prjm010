@@ -39,10 +39,16 @@
                   </div>
                 </div>
                 
-                <div class="col col-md-4">
+                <div class="col col-md-2">
+                  <div class="form-group">
+                    <label for="serialnumber">Nº Sério</label>
+                    <input type="text" class="form-control" name="serialnumber" id="serialnumber" onKeyUp="convertLowToUpper(serialnumber)" autofocus="autofocus" required>
+                  </div>
+                </div>
+                <div class="col col-md-2">
                   <div class="form-group">
                     <label for="location">Local</label>
-                    <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
+                    <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" required>
                   </div>
                 </div>
                 <div class="col col-md-2">

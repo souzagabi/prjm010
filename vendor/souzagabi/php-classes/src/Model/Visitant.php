@@ -53,7 +53,7 @@
         {
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id)", array(
+            $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:classification_id)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    
                 ":cpf_person"       => $this->getcpf_person(),    
@@ -66,7 +66,6 @@
                 ":sign"             => $this->getsign(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
-                ":user_id"          => $this->getuser_id(),
                 ":classification_id"=> $this->getclassification_id()
             ));
             
@@ -80,7 +79,7 @@
             
             $sql = new Sql();
                             
-            $results = $sql->select("CALL prc_visitant_update(:seq_person_id,:seq_classp_id,:visitant_id,:person_id,:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:user_id,:classification_id,:situation)", array(
+            $results = $sql->select("CALL prc_visitant_update(:seq_person_id,:seq_classp_id,:visitant_id,:person_id,:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:classification_id,:situation)", array(
                 ":seq_person_id"    => $this->getseq_person_id(),    
                 ":seq_classp_id"    => $this->getseq_classp_id(),    
                 ":visitant_id"      => $this->getvisitant_id(),    
@@ -97,7 +96,6 @@
                 ":sign"             => $this->getsign(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
-                ":user_id"          => $this->getuser_id(),
                 ":classification_id"=> $this->getclassification_id(),
                 ":situation"        => $this->getsituation()
             ));

@@ -14,7 +14,7 @@
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             $list["start"] = ($pg - 1) * $list["limit"];
             
-            $results =  $sql->select("CALL prc_historic_sel(:fireexting_id,:daydate, :date_fim, :start, :limit)", array(
+            $results =  $sql->select("CALL prc_historicE_sel(:fireexting_id,:daydate, :date_fim, :start, :limit)", array(
                 ":fireexting_id"    => $list["fireexting_id"],
                 ":daydate"          => $list["daydate"],
                 ":date_fim"         => $list["date_fim"],
@@ -28,7 +28,7 @@
         public function getById($historic_id) 
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_historic_sel_byid(:historic_id)", array(
+            $results = $sql->select("CALL prc_historicE_sel_byid(:historic_id)", array(
                 ":historic_id"=>(int)$historic_id
             ));
            
@@ -40,11 +40,8 @@
         public function save()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';exit;
-            $results = $sql->select("CALL prc_historic_save(:user_id,:fireexting_id,:daydate,:htrigger,:hose,:diffuser,:painting,:hydrostatic,:hothers)", array(
-                ":user_id"       => $this->getuser_id(),
+           
+            $results = $sql->select("CALL prc_historicE_save(:fireexting_id,:daydate,:htrigger,:hose,:diffuser,:painting,:hydrostatic,:hothers)", array(
                 ":fireexting_id" => $this->getfireexting_id(),
                 ":daydate"       => $this->getdaydate(),
                 ":htrigger"      => $this->gethtrigger(),
@@ -64,14 +61,10 @@
         {
             
             $sql = new Sql();
-            // echo '<pre>';
-            // print_r($this);
-            // echo '</pre>';//exit;
-            
-            $results = $sql->select("CALL prc_historic_update(:historic_id,:fireexting_id,:user_id,:daydate,:htrigger,:hose,:diffuser,:painting,:hydrostatic,:hothers)", array(
+                        
+            $results = $sql->select("CALL prc_historicE_update(:historic_id,:fireexting_id,:daydate,:htrigger,:hose,:diffuser,:painting,:hydrostatic,:hothers)", array(
                 ":historic_id"    => $this->gethistoric_id(),
                 ":fireexting_id"  => $this->getfireexting_id(),
-                ":user_id"        => $this->getuser_id(),
                 ":daydate"        => $this->getdaydate(),
                 ":htrigger"       => $this->gethtrigger(),
                 ":hose"           => $this->gethose(),
@@ -91,7 +84,7 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_historic_delete(:historic_id, :user_id)", array(
+            $results = $sql->select("CALL prc_historicE_delete(:historic_id, :user_id)", array(
                 ":historic_id"  =>(int)$this->gethistoric_id(),
                 ":user_id"      =>(int)$this->getuser_id()
             ));

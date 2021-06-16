@@ -41,8 +41,7 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_fireexting_save(:user_id,:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
-                ":user_id"          => $this->getuser_id(),
+            $results = $sql->select("CALL prc_fireexting_save(:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
@@ -67,9 +66,8 @@
             echo '</pre>';//exit;
             
 
-            $results = $sql->select("CALL prc_fireexting_update(:fireexting_id,:user_id,:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
+            $results = $sql->select("CALL prc_fireexting_update(:fireexting_id,:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
                 ":fireexting_id"    => $this->getfireexting_id(),
-                ":user_id"          => $this->getuser_id(),
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),

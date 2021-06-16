@@ -59,6 +59,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Data</th>
+                <th>Nº de Séria</th>
                 <th>Local</th>
                 <th>Responsável</th>
                 <th>Próxima Manutenção</th>
@@ -69,12 +70,13 @@
               {loop="$purifiers"}
               <tr>
                 <td>{$value.daydate}</td>
+                <td>{$value.serialnumber}</td>
                 <td>{$value.location}</td>
                 <td>{$value.responsable}</td>
                 <td>{$value.nextmanager}</td>
                 <td>
                   <a href="/purifier/{$value.purifier_id}" class="btn btn-primary btn-xs" title="Editar Purificador"><i class="fa fa-edit"></i></a>
-                  <a href="/historic?purifier_id={$value.purifier_id}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
+                  <a href="/historicP?purifier_id={$value.purifier_id}_{$value.serialnumber}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
                   <a href="/purifier/{$value.purifier_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Purificador"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>

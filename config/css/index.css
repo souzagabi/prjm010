@@ -60,3 +60,15 @@ img{
     font-size: 20px;
     font-weight: bold;
 }
+.teste{
+    background-color: #f0e768;
+}
+.programado{
+    background-color: #f0e768;
+}
+.efetuado{
+    background-color: #68f091;
+}
+.atrasado{
+    background-color: #f06868;
+}

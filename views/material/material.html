@@ -20,29 +20,14 @@
               <input type="text" name="material" value="material" hidden>
             </form>
           </div>
-          
-          <!-- <form action="/material" method="get" {if="!$materials"}hidden{/if}>
-            <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
-            <div class="col col-md-2"><label for="date_save">Data Inicio</label><input type="text" name="date_save" id="date_save" class="form-control" onChange="replaceSlash(date_save)"></div>
-            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
-            <div class="col col-md-1"><label for="limit">Qtde</label>
-              <select name="limit" id="limit" class="form-control">
-                <option value="10" selected>10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="30">30</option>
-              </select>
-            </div>
-            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
-          </form> -->
+  
         </div>
       </div>
     </div>
     <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-          class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-          {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-      <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
     </div>
     <div class="box box-primary" {if="!$pgs"}hidden{/if}>
       <div class="row">
@@ -68,7 +53,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" {if="!$materials"}hidden{/if}>
+    <div class="box box-primary" {if="!$material"}hidden{/if}>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -77,13 +62,13 @@
               <th>Hora</th>
               <th>Material</th>
               <th>Quantidade</th>
-              <th>receiver</th>
-              <th>deliveryman</th>
+              <th>Recebedor</th>
+              <th>Entregador</th>
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            {loop="$materials"}
+            {loop="$material"}
             <tr>
               <td>{$value.daydate}</td>
               <td>{$value.dayhour}</td>

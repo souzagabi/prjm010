@@ -48,7 +48,7 @@
 
         public static function verifyLogin($inadmin = true)
         {
-            if (!isset($_SESSION[User::SESSION]) || !$_SESSION[User::SESSION] || !(int)$_SESSION[User::SESSION]["user_id"] > 0  ) {
+            if (!isset($_SESSION[User::SESSION]) || !(int)$_SESSION[User::SESSION]["user_id"] > 0  ) {
                 
                 $msg = "ERROR: É necessário fazer login!";
                 header("Location: /admin/login?msg=$msg");
@@ -85,6 +85,7 @@
         public function save()
         {
             $sql = new Sql();
+           
             $results = $sql->select("CALL prc_person_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:classification_id,:daydate,:situation, :login, :pass, :inadmin)", array(
                 ":name_person"          => $this->getname_person(),
                 ":phonenumber"          => $this->getphonenumber(),

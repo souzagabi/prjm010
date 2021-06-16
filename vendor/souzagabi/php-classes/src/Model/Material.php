@@ -47,14 +47,12 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_material_save(:user_id,:person_id,:daydate,:dayhour,:material,:qtde,:packing,:receiver,:deliveryman)", array(
-                ":user_id"          => $this->getuser_id(),
+            $results = $sql->select("CALL prc_material_save(:person_id,:daydate,:dayhour,:material,:qtde,:receiver,:deliveryman)", array(
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
                 ":material"         => $this->getmaterial(),
                 ":qtde"             => $this->getqtde(),
-                ":packing"          => $this->getpacking(),
                 ":receiver"         => $this->getreceiver(),
                 ":deliveryman"      => $this->getdeliveryman()
             ));
@@ -70,15 +68,13 @@
             $sql = new Sql();
             
             
-            $results = $sql->select("CALL prc_material_update(:material_id,:user_id,:person_id,:daydate,:dayhour,:material,:qtde,:packing,:receiver,:deliveryman,:situation)", array(
+            $results = $sql->select("CALL prc_material_update(:material_id,:person_id,:daydate,:dayhour,:material,:qtde,:receiver,:deliveryman,:situation)", array(
                 ":material_id"      => $this->getmaterial_id(),
-                ":user_id"          => $this->getuser_id(),
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
                 ":material"         => $this->getmaterial(),
                 ":qtde"             => $this->getqtde(),
-                ":packing"          => $this->getpacking(),
                 ":receiver"         => $this->getreceiver(),
                 ":deliveryman"      => $this->getdeliveryman(),
                 ":situation"        => $this->getsituation()

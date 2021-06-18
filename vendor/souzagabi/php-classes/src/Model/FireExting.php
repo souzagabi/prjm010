@@ -61,11 +61,7 @@
         {
             
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';//exit;
-            
-
+           
             $results = $sql->select("CALL prc_fireexting_update(:fireexting_id,:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
                 ":fireexting_id"    => $this->getfireexting_id(),
                 ":person_id"        => $this->getperson_id(),
@@ -87,16 +83,12 @@
         public function delete()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';
+           
             $results = $sql->select("CALL prc_fireexting_delete(:fireexting_id, :user_id)", array(
                 ":fireexting_id"  => $this->getfireexting_id(),
                 ":user_id"        => $this->getuser_id()
             ));
-            echo '<pre>';
-            print_r($results);
-            echo '</pre>';//exit;
+           
             $this->setData($results);
             return $results[0]["MESSAGE"];
         }

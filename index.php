@@ -200,6 +200,10 @@
 		User::verifyLogin();
 		$visitant = new Visitant();
 		$visitant->getById($visitant_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$visitant->setdata($user_id);
+		
 		$msg = $visitant->delete();
 		
 		header("Location: /visitant?msg=".$msg);
@@ -210,7 +214,7 @@
 	{
 		$dir = 'image';
 		User::verifyLogin();
-		$classifications = Metodo::listClassification();
+		$classifications = Visitant::listClassification();
 		
 		$visitant = new Visitant();
 		$visitant->getById($person_id);
@@ -374,6 +378,9 @@
 		$residual = new Residual();
 		$residual->getById($residual_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$residual->setdata($user_id);
+		
 		$msg = $residual->delete();
 		
 		header("Location: /residual?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -510,6 +517,9 @@
 		$goods = new Goods();
 		$goods->getById($goods_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$goods->setdata($user_id);
+		
 		$msg = $goods->delete();
 		
 		header("Location: /goods?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -649,6 +659,9 @@
 		$nobreak = new Nobreak();
 		$nobreak->getById($nobreak_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$nobreak->setdata($user_id);
+		
 		$msg = $nobreak->delete();
 		
 		header("Location: /nobreak?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -735,11 +748,11 @@
 			"msg"=>$msg
 		));
 	});
-
 	
 	$app->get('/fireexting/create', function() {
 		User::verifyLogin();
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
@@ -751,8 +764,7 @@
 		$dt1["hour"]	= $date[1];
 		
 		$page = new PageFireExting();
-		//var_dump($msg);exit;
-
+	
 		$page->setTpl("fireexting-create",array(
 			"msg"=>$msg,
 			"date"=>$dt,
@@ -776,7 +788,6 @@
 		$_POST["person_id"] = $_SESSION["User"]["person_id"];
 		
 		$fireexting->setData($_POST);
-		$sql = new Sql();
 		
 		$msg = $fireexting->save();
 		
@@ -789,6 +800,10 @@
 		User::verifyLogin();
 		$fireexting = new FireExting();
 		$fireexting->getById($fireexting_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$fireexting->setdata($user_id);
+		
 		$msg = $fireexting->delete();
 	
 		header("Location: /fireexting?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -807,10 +822,7 @@
 
 		$fireexting = new FireExting();
 		$fireexting->getById($fireexting_id);
-		// echo '<pre>';
-		// print_r($fireexting);
-		// echo '</pre>';
-		//exit;
+		
 		$page = new PageFireExting();
 		
 		$page ->setTpl("fireexting-update", array(
@@ -908,8 +920,7 @@
 		
 		$date = explode(" ",date('d-m-Y H:i'));
 		$dt["date"]		= $date[0];
-		// echo 'IL734';
-		// var_dump($_GET);exit;
+		
 		$page = new PageHistoricE();
 
 		$page->setTpl("historic-create",array(
@@ -956,6 +967,9 @@
 
 		$fireexting_id = $historic->getfireexting_id();
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$historic->setdata($user_id);
+		
 		$msg = $historic->delete();
 		
 		header("Location: /historicE?msg=$msg&fireexting_id=$fireexting_id");
@@ -1104,6 +1118,9 @@
 		$purifier = new Purifier();
 		$purifier->getById($purifier_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$purifier->setdata($user_id);
+		
 		$msg = $purifier->delete();
 		
 		header("Location: /purifier?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -1270,6 +1287,9 @@
 		
 		$historic->getById($hist[0]);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$historic->setdata($user_id);
+		
 		$purifier_id = $historic->getpurifier_id();
 
 		$msg = $historic->delete();
@@ -1291,12 +1311,7 @@
 
 		$historic = new HistoricP();
 		$historic->getbyid($historic_id);
-		// echo '<pre>';
-		// print_r($historic);
-		// print_r($historic->getValues());
-		// print_r($historic->getValues()["serialnumber"]);
-		// echo '</pre>';
-		// exit;
+		
 		$page = new PageHistoricP();
 		
 		$page ->setTpl("historic-update", array(
@@ -1364,10 +1379,7 @@
 		}
 		
 		$clothing	= Metodo::selectRegister($company, "Clothing");
-		// echo '<pre>';
-		// print_r($company);
-		// echo '</pre>';
-		// exit;
+		
 		$page = new PageClothing();
 		$page->setTpl("clothing", array(
 			"clothings"=>$clothing[0],
@@ -1424,6 +1436,9 @@
 		$clothing = new Clothing();
 		$clothing->getById($clothing_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$clothing->setdata($user_id);
+		
 		$msg = $clothing->delete();
 		
 		header("Location: /clothing?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -1559,6 +1574,9 @@
 		$material = new Material();
 		$material->getById($material_id);
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$material->setdata($user_id);
+		
 		$msg = $material->delete();
 		
 		header("Location: /material?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -1652,9 +1670,7 @@
 		$_POST["person_id"] = $_SESSION["User"]["person_id"];
 		
 		$hydrant->setData($_POST);
-		// echo '<pre>';
-		// print_r($hydrant);
-		// echo '</pre>';exit;
+		
 		$msg = $hydrant->save();
 		
 		header("Location: /hydrant/create?msg=$msg");
@@ -1666,6 +1682,10 @@
 		User::verifyLogin();
 		$hydrant = new Hydrant();
 		$hydrant->getById($hydrant_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$hydrant->setdata($user_id);
+		
 		$msg = $hydrant->delete();
 
 		header("Location: /hydrant?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -1684,10 +1704,7 @@
 
 		$hydrant = new Hydrant();
 		$hydrant->getById($hydrant_id);
-		// echo '<pre>';
-		// print_r($hydrant);
-		// echo '</pre>';
-		//exit;
+		
 		$page = new PageHydrant();
 		
 		$page ->setTpl("hydrant-update", array(
@@ -1829,6 +1846,9 @@
 
 		$hydrant_id = $historic->gethydrant_id();
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$historic->setdata($user_id);
+		
 		$msg = $historic->delete();
 		
 		header("Location: /historicH?msg=$msg&hydrant_id=$hydrant_id");
@@ -1936,9 +1956,7 @@
 		$_POST["person_id"] = $_SESSION["User"]["person_id"];
 		
 		$airconditioning->setData($_POST);
-		// echo '<pre>';
-		// print_r($airconditioning);
-		// echo '</pre>';exit;
+		
 		$msg = $airconditioning->save();
 		
 		header("Location: /airconditioning/create?msg=$msg");
@@ -1950,6 +1968,10 @@
 		User::verifyLogin();
 		$airconditioning = new AirConditioning();
 		$airconditioning->getById($airconditioning_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$airconditioning->setdata($user_id);
+		
 		$msg = $airconditioning->delete();
 
 		header("Location: /airconditioning?msg=".$msg."&daydate=&date_fim=&search=Search");
@@ -2122,6 +2144,9 @@
 
 		$airconditioning_id = $historic->getairconditioning_id();
 
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$historic->setdata($user_id);
+		
 		$msg = $historic->delete();
 		
 		header("Location: /historicA?msg=$msg&airconditioning_id=$airconditioning_id");
@@ -2174,6 +2199,7 @@
 /*======================================================================================*/
 /*					Rotas do Plano Anual de Manutenção Preventiva						*/
 /*======================================================================================*/
+	
 	$app->get('/anualplan', function() {
 		User::verifyLogin();
 		
@@ -2226,9 +2252,7 @@
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
 		$locations		= Metodo::selectRegister($company, "Location");
 		$responsables	= Metodo::selectRegister($company, "Responsable");
-		// echo '<pre>';
-		// print_r($responsables);
-		// echo '</pre>';exit;
+	
 		$page = new PageAnualPlan();
 		$page->setTpl('anualplan-create', array(
 			"equipaments"=>$equipaments[0],
@@ -2242,21 +2266,15 @@
 		User::verifyLogin();
 		
 		$anualplan = new AnualPlan();
-		$ppost = Metodo::convertDateToDataBase([
-							"jan"=>$_POST["jan"],"fev"=>$_POST["fev"],"mar"=>$_POST["mar"],"apr"=>$_POST["apr"],"may"=>$_POST["may"],"jun"=>$_POST["jun"],
-							"jul"=>$_POST["jul"],"aug"=>$_POST["aug"],"sep"=>$_POST["sep"],"oct"=>$_POST["oct"],"nov"=>$_POST["nov"],"dec"=>$_POST["dec"]]);
+		$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"]]);
 
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
 		}
-		echo '<pre>';
-		print_r($_POST);
-		echo '</pre>';exit;
+		
 		$anualplan->setData($_POST);
-		echo '<pre>';
-		print_r($anualplan);
-		echo '</pre>';exit;
-		$msg = $anualplan->saveE();
+		
+		$msg = $anualplan->saveA();
 
 		header("Location: /anualplan/create?msg=$msg");
 		exit;
@@ -2265,17 +2283,26 @@
 
 	$app->get("/anualplan/:anualplan_id/delete", function ($anualplan_id){
 		User::verifyLogin();
+		
 		$anualplan = new AnualPlan();
 		$anualplan->getByIdA($anualplan_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$anualplan->setdata($user_id);
+		
 		$msg = $anualplan->deleteA();
 		
-		header("Location: /equipament?msg=".$msg);
+		header("Location: /anualplan?msg=".$msg);
 		exit;
 	});
 
 	$app->get('/anualplan/:anualplan_id', function($anualplan_id) {
 		User::verifyLogin();
 		
+		$company["anualplan"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -2284,12 +2311,19 @@
 			$_GET["msg"] = '';
 		}
 
+		$equipaments	= Metodo::selectRegister($company, "Equipament");
+		$locations		= Metodo::selectRegister($company, "Location");
+		$responsables	= Metodo::selectRegister($company, "Responsable");
+
 		$anualplan = new AnualPlan();
 		$anualplan->getByIdA($anualplan_id);
 		
 		$page = new PageAnualPlan();
 		$page->setTpl('anualplan-update', array(
 			"anualplan" =>$anualplan->getValues(),
+			"equipaments"=>$equipaments[0],
+			"locations"=>$locations[0],
+			"responsables"=>$responsables[0],
 			"msg"=>$msg
 		));
 	});
@@ -2304,6 +2338,14 @@
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
 			$_GET["msg"] = '';
 		}
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
 		$anualplan = new AnualPlan();
 		$anualplan->getByIdA($anualplan_id);
 		
@@ -2368,9 +2410,7 @@
 		$equipament = new AnualPlan();
 
 		$equipament->setData($_POST);
-		// echo '<pre>';
-		// print_r($equipament);
-		// echo '</pre>';exit;
+		
 		$msg = $equipament->saveE();
 
 		header("Location: /equipament/create?msg=$msg");
@@ -2382,6 +2422,10 @@
 		User::verifyLogin();
 		$equipament = new AnualPlan();
 		$equipament->getByIdE($equipament_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$equipament->setdata($user_id);
+		
 		$msg = $equipament->deleteE();
 		
 		header("Location: /equipament?msg=".$msg);
@@ -2433,6 +2477,7 @@
 /*======================================================================================*/
 /*									Rotas da Localização								*/
 /*======================================================================================*/
+	
 	$app->get('/location', function() {
 		User::verifyLogin();
 
@@ -2482,9 +2527,7 @@
 		$location = new AnualPlan();
 
 		$location->setData($_POST);
-		// echo '<pre>';
-		// print_r($location);
-		// echo '</pre>';exit;
+		
 		$msg = $location->saveL();
 
 		header("Location: /location/create?msg=$msg");
@@ -2496,6 +2539,10 @@
 		User::verifyLogin();
 		$location = new AnualPlan();
 		$location->getByIdL($location_id);
+
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$location->setdata($user_id);
+
 		$msg = $location->deleteL();
 		
 		header("Location: /location?msg=".$msg);
@@ -2547,6 +2594,7 @@
 /*======================================================================================*/
 /*									Rotas do Responsável								*/
 /*======================================================================================*/
+	
 	$app->get('/responsable', function() {
 		User::verifyLogin();
 
@@ -2615,9 +2663,7 @@
 		$_POST["inadmin"] = '';
 
 		$user->setData($_POST);
-		// echo '<pre>';
-		// print_r($user);
-		// echo '</pre>';exit;
+		
 		$msg = $user->save();
 
 		header("Location: /responsable/create?msg=$msg");
@@ -2629,7 +2675,11 @@
 		User::verifyLogin();
 		$responsable = new Person();
 		$responsable->get($responsable_id);
-		$msg = $responsable->deleteA();
+
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$responsable->setdata($user_id);
+
+		$msg = $responsable->delete();
 		
 		header("Location: /responsable?msg=".$msg);
 		exit;
@@ -2680,7 +2730,7 @@
 		$responsable->get($responsable_id);
 		
 		$responsable->setData($_POST);
-		$msg = $responsable->updateA();
+		$msg = $responsable->update();
 		
 		header("Location: /responsable?msg=".$msg);
 		exit;
@@ -2830,8 +2880,17 @@
 		
 		User::verifyLogin();
 		if ($_SESSION["User"]["inadmin"] == '1') {
+			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+				$mess = explode(':', $_GET["msg"]);
+				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+				$_GET["msg"] = '';
+			}
 			$page = new PageUser();
-			$page->setTpl("users-create");
+			$page->setTpl("users-create", array(
+				"msg"=>$msg
+			));
 		} else {
 			header("Location: /visitant?pg=1&limit=10");
 			exit;

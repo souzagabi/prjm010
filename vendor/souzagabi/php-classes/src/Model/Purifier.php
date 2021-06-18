@@ -5,8 +5,6 @@
     
     class Purifier extends Model {
 
-
-
         public static function listAll($list)
         {
             $sql = new Sql();

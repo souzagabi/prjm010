@@ -73,9 +73,7 @@
         public function delete()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';
+           
             $results = $sql->select("CALL prc_hydrant_delete(:hydrant_id, :user_id)", array(
                 ":hydrant_id"  => $this->gethydrant_id(),
                 ":user_id"     => $this->getuser_id()

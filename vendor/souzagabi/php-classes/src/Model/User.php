@@ -106,10 +106,7 @@
         public function update()
         {
             $sql = new Sql();
-            echo '<pre>';
-            print_r($this);
-            echo '</pre>';
-            
+       
             $results = $sql->select("CALL prc_person_update(:seq_person_id,:seq_classp_id,:person_id,:user_id,:name_person,:phonenumber,:photo,:rg_person,:cpf_person,:classification_id,:daydate,:situation,:login,:pass,:inadmin)", array(
                 ":seq_person_id"     => $this->getseq_person_id(),
                 ":seq_classp_id"     => $this->getseq_classp_id(),
@@ -136,13 +133,15 @@
         public function delete()
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_person_delete(:person_id)", array(
-                ":person_id"=>(int)$this->getperson_id()
+            $results = $sql->select("CALL prc_person_delete(:person_id,:user_id)", array(
+                ":person_id"=>(int)$this->getperson_id(),
+                ":user_id"=>(int)$this->getuser_id()
             ));
            
             $this->setData($results);
             return $results[0]["MESSAGE"];
         }
+        
         public static function getForgot($email)
         {
             $sql = new Sql();

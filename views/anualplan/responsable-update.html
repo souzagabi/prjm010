@@ -13,11 +13,6 @@
 
     <!-- Main content -->
     <section class="content">
-        <div id="msgDanger" name="msgDanger"  class="alert-danger box box-danger" style="display: none;">
-            <div>
-            <div id="msgError" name="msgError" class="msgError"></div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-success">
@@ -53,7 +48,9 @@
                                   <label for="classification_id">Classificação</label>
                                   <select class="form-control" name="classification_id" id="classification_id">
                                     {loop="$classifications"}
+                                    {if="$value.classification_id == 5"}
                                     <option value="{$value.classification_id}" {if="$responsable.classification_id == $value.classification_id"}selected{/if}>{$value.description}</option>
+                                    {/if}
                                     {/loop}
                                   </select>
                                 </div>

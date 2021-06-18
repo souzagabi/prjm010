@@ -12,16 +12,6 @@
 
   <div class="row">
   	<div class="col-md-12">
-  		<div id="msg-success" class="box box-success" style="display: none;">
-        <div>
-          <div id="msgSuccess" class="alert-success"></div>
-        </div>
-      </div>
-  		<div id="msgDanger" name="msgDanger"  class="alert-danger box box-danger" style="display: none;">
-        <div>
-          <div id="msgError" name="msgError" class="msgError"></div>
-        </div>
-      </div>
   		<div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Editar Usuário</h3>
@@ -73,7 +63,7 @@
               <div class="col col-md-3">
                 <div class="form-group">
                   <label for="pass">Senha</label>
-                  <input type="password" class="form-control" id="pass" name="pass" placeholder="Digite a senha">
+                  <input type="password" class="form-control" id="pass" name="pass" onChange="verifyConfPassWord(pass,confpassword,msgDanger)" placeholder="Digite a senha">
                 </div>
               </div>
               <div class="col col-md-3">

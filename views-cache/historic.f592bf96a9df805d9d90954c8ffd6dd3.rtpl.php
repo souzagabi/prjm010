@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col col-md-4">
               <form action="/historicH/create" method="get">
-                <input type="submit" name="btnhydrant" class="btn btn-success" value="Cadastrar Hidrante">
+                <input type="submit" name="btnhydrant" class="btn btn-success" value="Cadastrar Histórico">
                 <a href="/hydrant?pg=1" class="btn btn-warning">Voltar</a>
                 <input type="text" name="hydrant_id" value="<?php if( $hydrants != NULL ){ ?><?php echo htmlspecialchars( $hydrants["0"]['hydrant_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
               </form>

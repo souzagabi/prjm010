@@ -19,41 +19,36 @@
     
       <div class="row">
           <div class="col-md-12">
-            <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-                    class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-                    <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-                <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
-            </div>
             <div class="box box-success">
             <!-- form start -->
             
-            <form role="form" action="/historicP/<?php echo htmlspecialchars( $historic["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
-              <input type="text" name="purifier_id" value="<?php echo htmlspecialchars( $historic["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
-              <input type="text" name="historic_id" value="<?php echo htmlspecialchars( $historic["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
-              <div class="box-body">
-                <div class="col col-md-2">
-                  <div class="form-group">
-                    <label for="daydate">Data da Manutenção</label>
-                    <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $historic["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+              <form role="form" action="/historicP/<?php echo htmlspecialchars( $historic["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+                <input type="text" name="purifier_id" value="<?php echo htmlspecialchars( $historic["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
+                <input type="text" name="historic_id" value="<?php echo htmlspecialchars( $historic["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
+                <div class="box-body">
+                  <div class="col col-md-2">
+                    <div class="form-group">
+                      <label for="daydate">Data da Manutenção</label>
+                      <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $historic["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                    </div>
                   </div>
-                </div>
-                <div class="col col-md-4">
-                  <div class="form-group">
-                    <label for="serialnumber">Nº Serial</label>
-                    <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $historic["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                  <div class="col col-md-4">
+                    <div class="form-group">
+                      <label for="serialnumber">Nº Serial</label>
+                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $historic["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                    </div>
                   </div>
+                                
                 </div>
-                               
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <input type="submit" id="purifier" class="btn btn-success" value="Atualizar Histórico">
-                
-                <a href="/historicP?purifier_id=<?php echo htmlspecialchars( $historic["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&limit=10" class="btn btn-warning">Voltar</a>
-                
-              </div>
-            </form>
-          </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                  <input type="submit" id="purifier" class="btn btn-success" value="Atualizar Histórico">
+                  
+                  <a href="/historicP?purifier_id=<?php echo htmlspecialchars( $historic["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>&limit=10" class="btn btn-warning">Voltar</a>
+                  
+                </div>
+              </form>
+            </div>
           </div>
       </div>
     

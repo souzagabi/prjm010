@@ -1,69 +1,71 @@
-/*function sumTotal(qtde, elementValue, elementTotal)
+function insertcolor(element,elementCompare)
 {
-    if (elementValue.value !== '') {
-        elementValue.value = replaceComa(elementValue);
-    }
-    if (qtde > 0 && elementValue.value > 0) {
-        var total =  qtde * elementValue.value;
-        var average = total / qtde;
-        document.getElementById(elementTotal.name).value = total.toFixed(2);
-        
-        if (elementTotal.name == "tlbuy") {
-            document.getElementById("bprcaverage").value = average.toFixed(2);
-        } else
-        {
-            document.getElementById("sprcaverage").value = average.toFixed(2);
-            var vlbuy = document.getElementById("prcbuy").value * qtde;
-            var vlsell = elementTotal.value;
-            
-    
-            if (vlbuy && vlsell) {
-                var lucre = vlsell - vlbuy;
-                if (lucre < 0 || lucre > 0) {
-                    var tax = ((lucre*100)/vlbuy);
-                    document.getElementById("tax").value = tax.toFixed(2)+" %";
-                }
-            }
-            document.getElementById("lucre").value = lucre.toFixed(2);
-        }
-      
-    }
-
-    return total;
-}*/
-function insertcolor(element)
-{
-    /*if (element.value >= 0) {
-        alert(element.value);
-    } else {
-        console.log(element);
-    }*/
     if (element.value != '') {
+
+        var d2 = compareDate(element.value);
+       
+        element.classList.remove("programado");
+        element.classList.remove("efetuado");
+        element.classList.remove("atrasado");
+        element.classList.remove("antecipado");
+        element.classList.remove("naoexecutou");
         
-        //element.classList.remove("programado");
-        //element.classList.remove("efetuado");
-        //element.classList.remove("atradado");
-        
-        var viewdate = element.value.split('-');
-        
-        var d1 = new Date(viewdate[1]+'/'+viewdate[0]+'/'+viewdate[2]);
-        var dataAtual = new Date();
-        
-        var dtv = (d1.getDate()+'/'+((d1.getMonth()+1))+'/'+d1.getFullYear());
-        var dta = (dataAtual.getDate()+'/'+((dataAtual.getMonth()+1))+'/'+dataAtual.getFullYear());
-        
-        if (dtv >  dta) {
-            element.classList.add("programado");
-        } else if (dtv == dta) {
-            element.classList.add("efetuado");
-        } else
+        if (elementCompare.value == '0') 
         {
-            element.classList.add("atrasado");
+            if (d2 === "menor") 
+            {
+                element.classList.add("atrasado");
+            } else if (d2 === "maior") 
+            {
+                element.classList.add("programado");
+            } else
+            {
+                element.classList.add("programado");
+            } 
+            
+        }
+        if (elementCompare.value == '1') 
+        {
+            if (d2 === "menor") 
+            {
+                element.classList.add("atrasado");
+            } 
+            if (d2 === "igual") 
+            {
+                element.classList.add("efetuado");
+            } 
+            if (d2 === "maior") 
+            {
+                element.classList.add("antecipado");
+            }
+        }
+        if (elementCompare.value == '2') {
+            element.classList.add("naoexecutou");
         }
         
-        
-        
     }
+}
+
+function compareDate(date)
+{
+    var viewdate = date.split('-');
+    var d1 = new Date(viewdate[2],viewdate[1]-1,viewdate[0]);
+    
+    var today = new Date();
+    var dta = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+        
+    var d2 = '';
+    if (d1 > dta)  
+    { 
+        d2 = 'maior';
+    } else if (d1 < dta)  
+    { 
+        d2 = 'menor';
+    } else 
+    { 
+        d2 = 'igual';
+    } 
+    return d2;
 }
 
 function replaceComa(element)
@@ -125,6 +127,7 @@ function removeMensagemError(element){
         }, 2000);
     }
 }
+
 function removeMensagem(){
     if (document.getElementById("msg-success")) {
         setTimeout(function(){ 

@@ -23,7 +23,48 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-success">
-                       <div class="box-body">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label for="jan">LEGENDA</label>
+                                    </div>
+                                </div>
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label>Antecipado</label>
+                                        <div class="antecipado">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label>Programado</label>
+                                        <div class="programado">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label>Efetuado</label>
+                                        <div class="efetuado">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label>Atrasado</label>
+                                        <div class="atrasado">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-2">
+                                    <div class="form-group"> 
+                                        <label>Não Executado</label>
+                                        <div class="naoexecutou">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-success">
+                        <div class="box-body">
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="yyear">Ano</label>
@@ -64,97 +105,69 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="box-footer">
-                            <button type="submit" id="btnSubmit" class="btn btn-success">Cadastrar</button>
-                            <a href="/anualplan?limit=10" class="btn btn-warning">Voltar</a>
-
+                        
+                        <div class="box-body">
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="frequency">Frequência</label>
+                                    <input type="text" class="form-control" name="frequency" id="frequency" onkeyup="convertLowToUpper(frequency)" >
+                                </div>
+                            </div>
+                            <div class="col col-md-2">
+                                <div class="form-group"> 
+                                    <label for="amonth">Mês</label>
+                                    <select class="form-control" name="amonth" id="amonth" required>
+                                        <option value="1">Janeiro</option>
+                                        <option value="2">Fevereiro</option>
+                                        <option value="3">Março</option>
+                                        <option value="4">Abril</option>
+                                        <option value="5">Maio</option>
+                                        <option value="6">Junho</option>
+                                        <option value="7">Julho</option>
+                                        <option value="8">Agosto</option>
+                                        <option value="9">Setembro</option>
+                                        <option value="10">Outubro</option>
+                                        <option value="11">Novembro</option>
+                                        <option value="12">Dezembro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="dtprevision">Data Previsão</label>
+                                    <input type="text" class="form-control" name="dtprevision" id="dtprevision" onkeyup="replaceSlash(dtprevision)" >
+                                </div>
+                            </div>
+                            <div class="col col-md-5">
+                                <div class="form-group"> 
+                                    <div class="col col-md-2">
+                                        <label for="rstatus">Execução</label>
+                                    </div>
+                                    <div class="col col-md-4">
+                                        <input type="radio" name="rstatus" id="rstatus" value="0" onclick="insertcolor(dtprevision,rstatus)"> Programado
+                                    </div>
+                                    <div class="col col-md-3">
+                                        <input type="radio" name="rstatus" id="rstatus" value="1" onclick="insertcolor(dtprevision,rstatus)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col col-md-3">
+                                        <input type="radio" name="rstatus" id="rstatus" value="2" onclick="insertcolor(dtprevision,rstatus)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
+                        <div class="row">&nbsp;</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col col-md-12">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <div class="col col-md-2">
-                                <div class="form-group"> 
-                                <label for="jan">Janeiro</label>
-                                <input type="text" class="form-control" name="jan" id="jan" onblur="insertcolor(jan)" onkeyup="replaceSlash(jan)">
-                                </div>
-                            </div>
-                            <div class="col col-md-1">
-                                <div class="form-group"> 
-                                <label for="rjan">Execução</label>
-                                <input type="radio" name="rjan" id="rjan" value="0" onblur="insertcolor(rjan)"> SIM&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="rjan" id="rjan" value="1" onblur="insertcolor(rjan)"> NÃO
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="fev">Fevereiro</label>
-                                <input type="text" class="form-control" name="fev" id="fev" onkeyup="replaceSlash(fev)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="mar">Março</label>
-                                <input type="text" class="form-control" name="mar" id="mar" onkeyup="replaceSlash(mar)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="apr">Abril</label>
-                                <input type="text" class="form-control" name="apr" id="apr" onkeyup="replaceSlash(apr)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="may">Maio</label>
-                                <input type="text" class="form-control" name="may" id="may" onkeyup="replaceSlash(may)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="jun">Junho</label>
-                                <input type="text" class="form-control" name="jun" id="jun" onkeyup="replaceSlash(jun)" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="jul">Julho</label>
-                                <input type="text" class="form-control" name="jul" id="jul" onkeyup="replaceSlash(jul)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="aug">Agosto</label>
-                                <input type="text" class="form-control" name="aug" id="aug" onkeyup="replaceSlash(aug)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="sep">Setembro</label>
-                                <input type="text" class="form-control" name="sep" id="sep" onkeyup="replaceSlash(sep)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="oct">Outubro</label>
-                                <input type="text" class="form-control" name="oct" id="oct" onkeyup="replaceSlash(oct)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="nov">Novembro</label>
-                                <input type="text" class="form-control" name="nov" id="nov" onkeyup="replaceSlash(nov)" >
-                                </div>
-                            </div>
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                <label for="dec">Dezembro</label>
-                                <input type="text" class="form-control" name="dec" id="dec" onkeyup="replaceSlash(dec)" >
+                    <div class="box box-primary">
+                        <div class="box-footer">
+                            <div class="row">
+                                <div class="col col-md-2">
+                                    <button type="submit" id="btnSubmit" class="btn btn-success">Cadastrar</button>
+                                    <a href="/anualplan?limit=10" class="btn btn-warning">Voltar</a>
                                 </div>
                             </div>
                         </div>

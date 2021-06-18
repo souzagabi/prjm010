@@ -9,7 +9,7 @@
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/goods">Resíduos</a></li>
+    <li><a href="/goods">Mercadoria</a></li>
     <li class="active"><a href="/goods/create">Cadastrar</a></li>
   </ol>
 </section>

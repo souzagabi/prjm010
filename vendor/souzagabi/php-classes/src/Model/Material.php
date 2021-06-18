@@ -67,7 +67,6 @@
             
             $sql = new Sql();
             
-            
             $results = $sql->select("CALL prc_material_update(:material_id,:person_id,:daydate,:dayhour,:material,:qtde,:receiver,:deliveryman,:situation)", array(
                 ":material_id"      => $this->getmaterial_id(),
                 ":person_id"        => $this->getperson_id(),

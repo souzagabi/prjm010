@@ -108,14 +108,14 @@
         public function delete()
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_visitant_delete(:visitant_id, :user_id)", array(
+            $results = $sql->select("CALL prc_visitant_delete(:visitant_id, :user_id,:person_id)", array(
                 ":visitant_id"  =>(int)$this->getvisitant_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+                ":user_id"      =>(int)$this->getuser_id(),
+                ":person_id"    =>(int)$this->getperson_id()
             ));
            
             $this->setData($results);
             return $results[0]["MESSAGE"];
         }
-           
     }
 ?>

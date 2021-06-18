@@ -40,7 +40,6 @@
             $this->mail->Subject = $subject;
             $this->mail->msgHTML($html);
             $this->mail->AltBody = 'This is a plain text message body';
-           
         }
 
         public function send(){

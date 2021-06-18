@@ -90,12 +90,13 @@
             if ($list["start"] == 1) {
                 $list["start"] = 0;
             }
-    
-            return  $sql->select("CALL prc_anualplan_sel(:daydate, :start, :limit)", array(
-                ":daydate"      => $list["daydate"],
+            
+            $results =  $sql->select("CALL prc_anualplan_sel(:start, :limit)", array(
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
+            
+            return $results;
         }
 
         public function getByIdE($equipament_id) 
@@ -161,15 +162,15 @@
         public function saveA()
         {
             $sql = new Sql();
-           
-            $results = $sql->select("CALL prc_anualplan_save(:person_id,:dateout,:qtdeout,:signout,:datein,:qtdein,:signin)", array(
+            $results = $sql->select("CALL prc_anualplan_save(:yyear,:equipament_id,:location_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
+                ":yyear"            => $this->getyyear(),
+                ":equipament_id"    => $this->getequipament_id(),
+                ":location_id"      => $this->getlocation_id(),
                 ":person_id"        => $this->getperson_id(),
-                ":dateout"          => $this->getdateout(),
-                ":qtdeout"          => $this->getqtdeout(),
-                ":signout"          => $this->getsignout(),
-                ":datein"           => $this->getdatein(),
-                ":qtdein"           => $this->getqtdein(),
-                ":signin"           => $this->getsignin()
+                ":frequency"        => $this->getfrequency(),
+                ":amonth"           => $this->getamonth(),
+                ":dtprevision"      => $this->getdtprevision(),
+                ":rstatus"        => $this->getrstatus()
             ));
             
             $this->setData($results);
@@ -181,7 +182,7 @@
         {
             
             $sql = new Sql();
-
+            
             $results = $sql->select("CALL prc_equipament_update(:equipament_id,:desequipament)", array(
                 ":equipament_id"      => $this->getequipament_id(),
                 ":desequipament"      => $this->getdesequipament()
@@ -213,18 +214,19 @@
         {
             
             $sql = new Sql();
-
-            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:person_id,:dateout,:qtdeout,:signout,:datein,:qtdein,:signin)", array(
-                ":anualplan_id"      => $this->getanualplan_id(),
+ 
+            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:yyear,:equipament_id,:location_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
+                ":anualplan_id"     => $this->getanualplan_id(),
+                ":yyear"            => $this->getyyear(),
+                ":equipament_id"    => $this->getequipament_id(),
+                ":location_id"      => $this->getlocation_id(),
                 ":person_id"        => $this->getperson_id(),
-                ":dateout"          => $this->getdateout(),
-                ":qtdeout"          => $this->getqtdeout(),
-                ":signout"          => $this->getsignout(),
-                ":datein"           => $this->getdatein(),
-                ":qtdein"           => $this->getqtdein(),
-                ":signin"           => $this->getsignin()
+                ":frequency"        => $this->getfrequency(),
+                ":amonth"           => $this->getamonth(),
+                ":dtprevision"      => $this->getdtprevision(),
+                ":rstatus"          => $this->getrstatus()
             ));
-
+           
             $this->setData($results);
             
             return $results[0]["MESSAGE"];
@@ -234,12 +236,14 @@
         public function deleteE()
         {
             $sql = new Sql();
-          
-            $results = $sql->select("CALL prc_equipament_delete(:equipament_id)", array(
-                ":equipament_id"  =>(int)$this->getequipament_id()
+            
+            $results = $sql->select("CALL prc_equipament_delete(:equipament_id,:user_id)", array(
+                ":equipament_id"  =>$this->getequipament_id(),
+                ":user_id"  =>$this->getuser_id()
             ));
-        
+            
             $this->setData($results);
+            
             return $results[0]["MESSAGE"];
         }
 
@@ -247,8 +251,9 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_location_delete(:location_id)", array(
-                ":location_id"  =>(int)$this->getlocation_id()
+            $results = $sql->select("CALL prc_location_delete(:location_id,:user_id)", array(
+                ":location_id"  =>(int)$this->getlocation_id(),
+                ":user_id"  =>(int)$this->getuser_id()
             ));
         
             $this->setData($results);
@@ -258,10 +263,10 @@
         public function deleteA()
         {
             $sql = new Sql();
-          
-            $results = $sql->select("CALL prc_anualplan_delete(:anualplan_id, :user_id)", array(
+            
+            $results = $sql->select("CALL prc_anualplan_delete(:anualplan_id, :person_id)", array(
                 ":anualplan_id"  =>(int)$this->getanualplan_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+                ":person_id"     =>(int)$this->getperson_id()
             ));
         
             $this->setData($results);

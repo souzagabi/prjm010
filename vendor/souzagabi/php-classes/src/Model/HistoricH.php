@@ -64,7 +64,6 @@
 
         public function update()
         {
-            
             $sql = new Sql();
             
             $results = $sql->select("CALL prc_historicH_update(:historic_id,:hydrant_id,:daydate,:idkey,:hose,:squirt,:painting,:alarmcentral,:glass,:inlock,:record,:signaling,:obstruction,:observation)", array(

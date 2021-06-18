@@ -6,7 +6,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="/anualplan">Manutenção Preventiva</a></li>
+        <li class="active">Manutenção Preventiva</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -15,27 +15,31 @@
         <div class="col form-control top">
           <div class="row">
             <div class="col col-md-3">
-              <form action="/anualplan/create" method="get">
-                <input type="submit" name="btnanualplan" class="btn btn-success" value="Cadastrar Plano Anual">
-                <input type="text" name="anualplan" value="anualplan" hidden>
-              </form>
-            </div>
-            <div class="col col-md-3">
               <form action="/equipament" method="get">
+                <label for="btnequipament" class="alert-warning">Passo 1</label>
                 <input type="submit" name="btnequipament" class="btn btn-success" value="Cadastrar Equipamentos">
                 <input type="text" name="equipament" value="equipament" hidden>
               </form>
             </div>
             <div class="col col-md-3">
               <form action="/location" method="get">
+                <label for="btnlocation" class="alert-warning">Passo 2</label>
                 <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastrar Localização">
                 <input type="text" name="location" value="location" hidden>
               </form>
             </div>
             <div class="col col-md-3">
               <form action="/responsable" method="get">
+                <label for="btnresponsable" class="alert-warning">Passo 3</label>
                 <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastrar Responsável">
                 <input type="text" name="responsable" value="responsable" hidden>
+              </form>
+            </div>
+            <div class="col col-md-3">
+              <form action="/anualplan/create" method="get">
+                <label for="btnanualplan" class="alert-warning">Passo 4</label>
+                <input type="submit" name="btnanualplan" class="btn btn-primary" value="Cadastrar Plano Anual">
+                <input type="text" name="anualplan" value="anualplan" hidden>
               </form>
             </div>
           </div>
@@ -75,18 +79,22 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
+                <th>Ano</th>
                 <th>Equipamento</th>
                 <th>Localização</th>
                 <th>Responsável</th>
+                <th>Prev. Manutenção</th>
                 <th>Ação</th>
               </tr>
             </thead>
             <tbody>
               {loop="$anualplans"}
               <tr>
+                <td>{$value.yyear}</td>
                 <td>{$value.desequipament}</td>
                 <td>{$value.deslocation}</td>
                 <td>{$value.responsable}</td>
+                <td>{$value.dtprevision}</td>
                 <td>
                   <a href="/anualplan/{$value.anualplan_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
                   <a href="/anualplan/{$value.anualplan_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>

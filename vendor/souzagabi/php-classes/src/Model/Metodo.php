@@ -20,9 +20,9 @@
         {
             $i = 0;
             
-            if ((isset($object["daydate"]) && $object["daydate"] != '') || (isset($object["dateout"]) && $object["dateout"] != '')  || (isset($object["datein"]) && $object["datein"] != '')) {
+            if ((isset($object["daydate"]) && $object["daydate"] != '') || (isset($object["dateout"]) && $object["dateout"] != '')  || (isset($object["datein"]) && $object["datein"] != '') || (isset($object["dtprevision"]) && $object["dtprevision"] != '')) {
                 foreach ($object as $key => $value) {
-                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager") || $key == "dateout"  || $key == "datein") {
+                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager") || $key == "dateout"  || $key == "datein" || $key == "dtprevision") {
                         $object[$key] =  Metodo::convertDateView($value);
                     }
                     $i++;
@@ -32,7 +32,7 @@
                 if (isset($object)) {
                     foreach ($object as $key => $values) {
                         foreach ($values as $key => $value) {
-                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager" || $key == "dateout"  || $key == "datein")) {
+                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager" || $key == "dateout"  || $key == "datein" || $key == "dtprevision")) {
                                 $values[$key] =  Metodo::convertDateView($value);
                             }
                         }
@@ -82,7 +82,7 @@
             }
             return $object;
         }
-
+        
         public function countRegister($qtdeRegister, $company)
         {
             $pgs = [];

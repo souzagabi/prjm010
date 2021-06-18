@@ -19,41 +19,36 @@
     
       <div class="row">
           <div class="col-md-12">
-            <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-                    class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-                    {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-                <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
-            </div>
             <div class="box box-success">
             <!-- form start -->
             
-            <form role="form" action="/historicP/{$historic.historic_id}" method="post" enctype="multipart/form-data">
-              <input type="text" name="purifier_id" value="{$historic.purifier_id}" hidden>
-              <input type="text" name="historic_id" value="{$historic.historic_id}" hidden>
-              <div class="box-body">
-                <div class="col col-md-2">
-                  <div class="form-group">
-                    <label for="daydate">Data da Manutenção</label>
-                    <input type="text" class="form-control" id="daydate" name="daydate" value="{$historic.daydate}" onChange="replaceSlash(daydate)" >
+              <form role="form" action="/historicP/{$historic.historic_id}" method="post" enctype="multipart/form-data">
+                <input type="text" name="purifier_id" value="{$historic.purifier_id}" hidden>
+                <input type="text" name="historic_id" value="{$historic.historic_id}" hidden>
+                <div class="box-body">
+                  <div class="col col-md-2">
+                    <div class="form-group">
+                      <label for="daydate">Data da Manutenção</label>
+                      <input type="text" class="form-control" id="daydate" name="daydate" value="{$historic.daydate}" onChange="replaceSlash(daydate)" >
+                    </div>
                   </div>
-                </div>
-                <div class="col col-md-4">
-                  <div class="form-group">
-                    <label for="serialnumber">Nº Serial</label>
-                    <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                  <div class="col col-md-4">
+                    <div class="form-group">
+                      <label for="serialnumber">Nº Serial</label>
+                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                    </div>
                   </div>
+                                
                 </div>
-                               
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
-                <input type="submit" id="purifier" class="btn btn-success" value="Atualizar Histórico">
-                
-                <a href="/historicP?purifier_id={$historic.purifier_id}&limit=10" class="btn btn-warning">Voltar</a>
-                
-              </div>
-            </form>
-          </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                  <input type="submit" id="purifier" class="btn btn-success" value="Atualizar Histórico">
+                  
+                  <a href="/historicP?purifier_id={$historic.purifier_id}&limit=10" class="btn btn-warning">Voltar</a>
+                  
+                </div>
+              </form>
+            </div>
           </div>
       </div>
     

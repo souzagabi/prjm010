@@ -20,9 +20,9 @@
       <div class="row">
           <div class="col-md-12">
             <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-                    class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-                    <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-                <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+                  class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                  <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+              <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
             </div>
             <div class="box box-success">
             <!-- form start -->
@@ -45,7 +45,7 @@
                 <div class="col col-md-2">
                   <div class="form-group">
                     <label for="idnumber">Número</label>
-                    <input type="text" class="form-control" name="idnumber" id="idnumber" onKeyUp="convertLowToUpper(idnumber)">
+                    <input type="text" class="form-control" name="idnumber" id="idnumber" idkey>
                   </div>
                 </div>
               </div>
@@ -56,7 +56,6 @@
                     <textarea class="form-control" maxlength="255" name="observation" id="observation"></textarea>
                   </div>
                 </div>
-               
               </div>
               <!-- /.box-body -->
               <div class="box-body">

@@ -60,15 +60,21 @@ img{
     font-size: 20px;
     font-weight: bold;
 }
-.teste{
-    background-color: #f0e768;
-}
 .programado{
-    background-color: #f0e768;
+    background-color: #eff5a1;
+}
+.antecipado{
+    background-color: #a1c5f5;
 }
 .efetuado{
-    background-color: #68f091;
+    background-color: #a8f5a1;
 }
 .atrasado{
-    background-color: #f06868;
+    background-color: #f5a1a1;
+}
+.naoexecutou{
+    background-color: #f5d5a1;
+}
+input[type=radio]{
+    margin-top: 30px;
 }

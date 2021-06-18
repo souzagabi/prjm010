@@ -65,10 +65,8 @@
 
         public function update()
         {
-            
             $sql = new Sql();
-            
-            
+             
             $results = $sql->select("CALL prc_goods_update(:goods_id,:person_id,:daydate,:dayhour,:goods,:qtde,:packing,:receiver,:deliveryman,:situation)", array(
                 ":goods_id"         => $this->getgoods_id(),
                 ":person_id"        => $this->getperson_id(),

@@ -54,7 +54,7 @@
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="resulttest">Embalagem</label>
+                <label for="resulttest">Resultado Teste</label>
                 <select class="form-control" name="resulttest" id="resulttest">
                   <option value="0" <?php if( $nobreak["resulttest"] == 0 ){ ?>selected<?php } ?>>OK</option>
                   <option value="1" <?php if( $nobreak["resulttest"] == 1 ){ ?>selected<?php } ?>>NÃO OK</option>

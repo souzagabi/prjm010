@@ -53,7 +53,9 @@
                                   <label for="classification_id">Classificação</label>
                                   <select class="form-control" name="classification_id" id="classification_id">
                                     {loop="$classifications"}
-                                    <option value="{$value.classification_id}" {if="$value.classification_id == 5"}selected{/if}>{$value.description}</option>
+                                    {if="$value.classification_id == 5"}
+                                    <option value="{$value.classification_id}" {if="$responsable.classification_id == $value.classification_id"}selected{/if}>{$value.description}</option>
+                                    {/if}
                                     {/loop}
                                   </select>
                                 </div>

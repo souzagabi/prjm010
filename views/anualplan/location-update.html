@@ -13,11 +13,6 @@
 
     <!-- Main content -->
     <section class="content">
-        <div id="msgDanger" name="msgDanger"  class="alert-danger box box-danger" style="display: none;">
-            <div>
-            <div id="msgError" name="msgError" class="msgError"></div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="box box-success">

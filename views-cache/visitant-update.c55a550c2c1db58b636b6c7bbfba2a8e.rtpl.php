@@ -10,7 +10,7 @@
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/visitant">Visitas</a></li>
-    <li class="active">Cadastrar</li>
+    <li class="active"><a href="/visitant/create">Cadastrar</a></li>
   </ol>
 </section>
 
@@ -23,6 +23,19 @@
         <!-- form start -->
         
         <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <!-- <div class="col col-md-5">
+              <div>
+                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
+              </div>
+            </div>
+            <div class="col col-md-4">
+              <div>
+                <label for="photo">Fotografia</label>
+                <img src="../../image/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>.jpg" id="photo" name="photo" width="80"  alt="">
+              </div>
+            </div> -->
+          </div>
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">

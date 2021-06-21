@@ -76,7 +76,7 @@ BEGIN
     
     INSERT INTO PRJM010001 (dt_save, situation) VALUES (par_daydate, par_situation);
     SET par_person_id = LAST_INSERT_ID();
-    
+        
     IF EX = 1 THEN
 		SELECT MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010001";
 	END IF;
@@ -271,12 +271,13 @@ DELIMITER ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
 /*!50003 SET character_set_client  = utf8mb4 */ ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_delete`(
-	par_person_id int(11)
+	par_person_id int(11),
+    par_user_id int(11)
 )
 BEGIN
 	DECLARE P_person_id int;
@@ -289,8 +290,14 @@ BEGIN
     
     IF par_person_id IS NOT NULL OR par_person_id != '' THEN
 		
-        SET @sql = CONCAT('DELETE FROM PRJM010001  WHERE person_id = ',par_person_id,';');
-     
+        #SET @sql = CONCAT('DELETE FROM PRJM010001  WHERE person_id = ',par_person_id,';');
+		SET @sql = CONCAT('UPDATE PRJM010014  ');
+        SET @sql = CONCAT(@sql,' SET situation = 1,');
+        SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
+        SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+		SET @sql = CONCAT(@sql,' WHERE person_id = ',par_person_id,';');
+		
+        #SELECT @sql;
         PREPARE STMT FROM @sql;
         EXECUTE STMT;
         IF EX = 1 THEN
@@ -298,7 +305,7 @@ BEGIN
 		END IF;
 		
 	ELSE
-    	SET MESSAGE = "Esta registro não existe!!";
+    	SET MESSAGE = "Este registro não existe!!";
         SET EX = 1;
     END IF;
    
@@ -357,11 +364,11 @@ BEGIN
 		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010010";
 	END IF;
     
-    SELECT LAST_INSERT_ID() INTO par_Person_id FROM PRJM010001 ;
+    SELECT LAST_INSERT_ID() INTO par_person_id FROM PRJM010001 ;
     
 	INSERT INTO prjm010014
 		(person_id,user_id,daydate,dayhour,company,reason,badge,auth,sign)
-		VALUES( par_Person_id,par_user_id,par_daydate,par_dayhour,par_company,par_reason,par_badge,par_auth,par_sign);
+		VALUES( par_person_id,par_user_id,par_daydate,par_dayhour,par_company,par_reason,par_badge,par_auth,par_sign);
      
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010014";
@@ -409,40 +416,40 @@ BEGIN
     IF par_daydate IS NULL THEN
 		SELECT daydate into par_daydate FROM PRJM010014 LIMIT 1;
 	END IF;
-    
-	SET @sql = CONCAT('SELECT *, (SELECT count(person_id) FROM PRJM010010) / ', par_limit, ' AS pgs');
-	SET @sql = CONCAT(@sql, ' FROM (SELECT * FROM PRJM010010 PRJM010 LIMIT ', par_start, ', ', par_limit, ' ) AS PRJM010 ');
-	SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010014 PRJM014 USING(person_id) ');
-	SET @sql = CONCAT(@sql, ' WHERE PRJM014.situation = 0 ');
-	
-	IF par_daydate IS NOT NULL AND par_daydate != '' THEN
-		SET @sql = CONCAT(@sql, ' AND PRJM014.daydate >= "', par_daydate, '"');
+    IF par_daydate IS NOT NULL THEN
+		SET @sql = CONCAT('SELECT *, (SELECT count(person_id) FROM PRJM010010) / ', par_limit, ' AS pgs');
+		SET @sql = CONCAT(@sql, ' FROM (SELECT * FROM PRJM010010 PRJM010 LIMIT ', par_start, ', ', par_limit, ' ) AS PRJM010 ');
+		SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010014 PRJM014 USING(person_id) ');
+		SET @sql = CONCAT(@sql, ' WHERE PRJM014.situation = 0 ');
+		
+		IF par_daydate IS NOT NULL AND par_daydate != '' THEN
+			SET @sql = CONCAT(@sql, ' AND PRJM014.daydate >= "', par_daydate, '"');
+		END IF;
+		
+		IF par_date_fim IS NOT NULL AND par_date_fim != '' THEN
+			SET @sql = CONCAT(@sql, ' AND PRJM014.daydate <= "',par_date_fim, '"');
+		END IF;
+		
+		IF par_name_person IS NOT NULL AND par_name_person != '' THEN
+		BEGIN
+			SET @sql = CONCAT(@sql, ' AND PRJM010.name_person LIKE "%', par_name_person, '%"' );
+		END;
+		END IF;
+		
+		#SELECT @sql;
+		PREPARE STMT FROM @sql;
+		EXECUTE STMT;
+		
+		IF EX = 1 THEN
+			SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010010";
+			SELECT MESSAGE;
+			ROLLBACK;
+		ELSE
+			SET MESSAGE = "SUCCESS: Dados salvo com sucesso!!" ;
+			SELECT MESSAGE;
+			COMMIT;
+		END IF; #Fim do if EX = 1 THEN
 	END IF;
-	
-	IF par_date_fim IS NOT NULL AND par_date_fim != '' THEN
-		SET @sql = CONCAT(@sql, ' AND PRJM014.daydate <= "',par_date_fim, '"');
-	END IF;
-	
-	IF par_name_person IS NOT NULL AND par_name_person != '' THEN
-	BEGIN
-		SET @sql = CONCAT(@sql, ' AND PRJM010.name_person LIKE "%', par_name_person, '%"' );
-	END;
-	END IF;
-	
-	#SELECT @sql;
-	PREPARE STMT FROM @sql;
-	EXECUTE STMT;
-	
-	IF EX = 1 THEN
-		SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010010";
-		SELECT MESSAGE;
-		ROLLBACK;
-	ELSE
-		SET MESSAGE = "SUCCESS: Dados salvo com sucesso!!" ;
-		SELECT MESSAGE;
-		COMMIT;
-	END IF; #Fim do if EX = 1 THEN
-	
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -546,7 +553,8 @@ BEGIN
 			reason		= par_reason,
 			badge		= par_badge,
 			auth		= par_auth,
-			sign		= par_sign
+			sign		= par_sign,
+            situation	=par_situation
 		WHERE visitant_id 	= par_visitant_id;
 		
 		IF EX = 1 THEN
@@ -581,4 +589,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-24 17:29:42
+-- Dump completed on 2021-05-25  9:51:04

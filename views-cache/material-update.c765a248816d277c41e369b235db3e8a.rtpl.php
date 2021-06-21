@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Edição de Material
+      Edição de Materiais
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/material">Material</a></li>
+    <li><a href="/material">Resíduos</a></li>
     <li class="active"><a href="/material/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -39,7 +39,7 @@
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="material">material</label>
+                <label for="material">Material</label>
                 <input type="text" class="form-control" name="material" id="material" value="<?php echo htmlspecialchars( $material["material"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(material)" autofocus>
               </div>
             </div>
@@ -47,6 +47,19 @@
               <div class="form-group">
                 <label for="qtde">Local</label>
                 <input type="text" class="form-control" name="qtde" id="qtde" value="<?php echo htmlspecialchars( $material["qtde"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)">
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="packing">Embalagem</label>
+                <select class="form-control" name="packing" id="packing">
+                  <option value="0"<?php if( $material["packing"] == 0 ){ ?>selected<?php } ?>>UN</option>
+                  <option value="1"<?php if( $material["packing"] == 1 ){ ?>selected<?php } ?>>CX</option>
+                  <option value="2"<?php if( $material["packing"] == 2 ){ ?>selected<?php } ?>>KG</option>
+                  <option value="3"<?php if( $material["packing"] == 3 ){ ?>selected<?php } ?>>L</option>
+                  <option value="4"<?php if( $material["packing"] == 4 ){ ?>selected<?php } ?>>ML</option>
+                  <option value="5"<?php if( $material["packing"] == 5 ){ ?>selected<?php } ?>>PC</option>
+                </select>
               </div>
             </div>
           </div>

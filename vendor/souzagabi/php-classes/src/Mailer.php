@@ -3,8 +3,8 @@
     use Rain\Tpl;
 
     class Mailer {
-        const USERNAME = "suporte@gmail.com";
-        const PASSWORD = "@supote!loo";
+        const USERNAME = "souteramoto@gmail.com";
+        const PASSWORD = "@GAb!loo";
         const NAME_FROM = "Gabriel";
         private $mail;
 
@@ -40,6 +40,7 @@
             $this->mail->Subject = $subject;
             $this->mail->msgHTML($html);
             $this->mail->AltBody = 'This is a plain text message body';
+           
         }
 
         public function send(){

@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro de Resíduos
+      Cadastro Visita
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/residual">Resíduos</a></li>
+    <li><a href="/residual">Visitas</a></li>
     <li class="active"><a href="/residual/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -19,10 +19,8 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+      <div id="{if="$msg.state == 'SUCCESS' "}msg-success{/if}" class="box box-success" {if="$msg.state != 'SUCCESS' "}readonly hidden{/if}>
+        <div class="msg"><input type="text" class="form-control {if="$msg.state == 'SUCCESS' "}alert-success{else}alert-danger{/if}" name="msg" id="msg" value="{if="$msg.state == 'SUCCESS' "}{$msg.msg}{/if}" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
@@ -34,7 +32,7 @@
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
                 {loop="$date"}
-                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}" onChange="replaceSlash(daydate)" >
+                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}" readonly>
                 {/loop}
               </div>
             </div>
@@ -42,7 +40,7 @@
               <div class="form-group">
                 <label for="dayhour">Hora do Dia</label>
                 {loop="$hour"}
-                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}">
+                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}" readonly>
                 {/loop}
               </div>
             </div>

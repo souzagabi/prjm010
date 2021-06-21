@@ -20,7 +20,22 @@
               <input type="text" name="material" value="material" hidden>
             </form>
           </div>
-  
+          
+          <!-- <form action="/material" method="get" <?php if( !$materials ){ ?>hidden<?php } ?>>
+            <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+            <div class="col col-md-2"><label for="date_save">Data Inicio</label><input type="text" name="date_save" id="date_save" class="form-control" onChange="replaceSlash(date_save)"></div>
+            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+            <div class="col col-md-1"><label for="limit">Qtde</label>
+              <select name="limit" id="limit" class="form-control">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+          </form> -->
         </div>
       </div>
     </div>
@@ -53,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" <?php if( !$material ){ ?>hidden<?php } ?>>
+    <div class="box box-primary" <?php if( !$materials ){ ?>hidden<?php } ?>>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -62,13 +77,13 @@
               <th>Hora</th>
               <th>Material</th>
               <th>Quantidade</th>
-              <th>Recebedor</th>
-              <th>Entregador</th>
+              <th>receiver</th>
+              <th>deliveryman</th>
               <th>Ação</th>
             </tr>
           </thead>
           <tbody>
-            <?php $counter1=-1;  if( isset($material) && ( is_array($material) || $material instanceof Traversable ) && sizeof($material) ) foreach( $material as $key1 => $value1 ){ $counter1++; ?>
+            <?php $counter1=-1;  if( isset($materials) && ( is_array($materials) || $materials instanceof Traversable ) && sizeof($materials) ) foreach( $materials as $key1 => $value1 ){ $counter1++; ?>
             <tr>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

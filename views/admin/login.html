@@ -33,13 +33,13 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+    <p class="login-box-msg">Logar para começar sua sessão</p>
     <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
           class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
           {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
       <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
     </div>
-	<p class="login-box-msg">Logar para começar sua sessão</p>
-
+  		
     <form action="/admin/login" method="post">
       <div class="form-group has-feedback">
         <input type="text" class="form-control" placeholder="Login" name="login" autofocus>

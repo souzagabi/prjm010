@@ -45,7 +45,6 @@
                 $this->tpl->draw("footer");
             }
         }
-        
         private function setConfig($tpl_dir)
         {
             //Configura o diretório raiz para carregar header,o footer e os contents

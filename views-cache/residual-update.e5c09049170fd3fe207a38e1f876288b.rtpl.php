@@ -28,7 +28,7 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
-                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $residual["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)">
+                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $residual["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               </div>
             </div>
             <div class="col col-md-2">

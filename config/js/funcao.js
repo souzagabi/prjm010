@@ -94,6 +94,7 @@ function convertLowToUpper(element)
 function verifyConfPassWord(element, elementCompare, elementMsg)
 {
     var msg = '';
+    
     if (element.value != '' && elementCompare.value != '') {
         
         if (element.value != elementCompare.value) {

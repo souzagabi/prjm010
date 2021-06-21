@@ -10,7 +10,7 @@
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/visitant">Visitas</a></li>
-    <li class="active">Cadastrar</li>
+    <li class="active"><a href="/visitant/create">Cadastrar</a></li>
   </ol>
 </section>
 
@@ -19,15 +19,22 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-            class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-            <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+      <div id="<?php if( $msg["state"] == 'SUCCESS'  ){ ?>msg-success<?php } ?>" class="box box-success" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" id="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
         
         <form role="form" action="/visitant/create" method="post" enctype="multipart/form-data">
+          <!-- <div class="box-body" hidden>
+            <div class="col col-md-5">
+              <div>
+                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
+              </div>
+            </div>
+            
+          </div> -->
+
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">

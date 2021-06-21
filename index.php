@@ -2922,7 +2922,7 @@
 			]);
 
 		$user->setData($_POST);
-
+		
 		$msg = $user->save();
 
 		header("Location: /users?msg=$msg");

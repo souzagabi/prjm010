@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro de Material
+      Cadastro de Materiais
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/material">Meaterial</a></li>
+    <li><a href="/material">Visitas</a></li>
     <li class="active"><a href="/material/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -19,10 +19,8 @@
 
   <div class="row">
   	<div class="col-md-12">
-      <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-            class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-            <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+      <div id="<?php if( $msg["state"] == 'SUCCESS'  ){ ?>msg-success<?php } ?>" class="box box-success" <?php if( $msg["state"] != 'SUCCESS'  ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control <?php if( $msg["state"] == 'SUCCESS'  ){ ?>alert-success<?php }else{ ?>alert-danger<?php } ?>" name="msg" id="msg" value="<?php if( $msg["state"] == 'SUCCESS'  ){ ?><?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
@@ -59,7 +57,19 @@
                 <input type="number" class="form-control" name="qtde" id="qtde" required>
               </div>
             </div>
-            
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="packing">Embalagem</label>
+                <select class="form-control" name="packing" id="packing">
+                  <option value="0" selected>UN</option>
+                  <option value="1">CX</option>
+                  <option value="2">KG</option>
+                  <option value="3">L</option>
+                  <option value="4">ML</option>
+                  <option value="5">PC</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="box-body">
             <div class="col col-md-4">
@@ -70,7 +80,7 @@
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="deliveryman">Responsável Entrega</label>
+                <label for="deliveryman">Entregador</label>
                 <input type="text" class="form-control" name="deliveryman" id="deliveryman" onKeyUp="convertLowToUpper(deliveryman)" required>
               </div>
             </div>

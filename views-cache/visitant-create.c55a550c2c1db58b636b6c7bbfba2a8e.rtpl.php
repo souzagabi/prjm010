@@ -26,32 +26,23 @@
         <!-- form start -->
         
         <form role="form" action="/visitant/create" method="post" enctype="multipart/form-data">
-          <!-- <div class="box-body" hidden>
-            <div class="col col-md-5">
-              <div>
-                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
-              </div>
-            </div>
-            
-          </div> -->
-
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="name_person">Nome</label>
+                <label for="name_person">Nome</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" autofocus="autofocus" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="rg_person">RG</label>
+                <label for="rg_person">RG</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="cpf_person">CPF</label>
-                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)" required>
+                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)">
               </div>
             </div>
           </div>
@@ -64,14 +55,14 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="company">Empresa</label>
-                <input type="text" class="form-control" name="company" id="company" onkeyup="convertLowToUpper(company)" >
+                <label for="company">Empresa</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="company" id="company" onkeyup="convertLowToUpper(company)" required>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="reason">Motivo da Visita</label>
-                <input type="text" class="form-control" name="reason" id="reason"onkeyup="convertLowToUpper(reason)">
+                <label for="reason">Motivo da Visita</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="reason" id="reason"onkeyup="convertLowToUpper(reason)" required>
               </div>
             </div>
             
@@ -80,8 +71,8 @@
           <div class="box-body">
             <div class="col col-md-1">
               <div class="form-group">
-                <label for="badge">Crachá</label>
-                <select class="form-control" name="badge" id="badge">
+                <label for="badge">Crachá</label><strong class="obrigatorio"> *</strong>
+                <select class="form-control" name="badge" id="badge" required>
                   <?php $i = 1; ?>
                   <option value=""></option>
                   <?php $counter1=-1;  if( isset($j) && ( is_array($j) || $j instanceof Traversable ) && sizeof($j) ) foreach( $j as $key1 => $value1 ){ $counter1++; ?>
@@ -92,13 +83,13 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="auth">Autorização</label>
+                <label for="auth">Autorização</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="auth" id="auth" onkeyup="convertLowToUpper(auth)" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
-                <label for="sign">Assinatura</label>
+                <label for="sign">Assinatura</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="sign" id="sign" onkeyup="convertLowToUpper(sign)" required>
               </div>
             </div>
@@ -120,8 +111,8 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="classification_id">Classificação</label>
-                <select class="form-control" name="classification_id" id="classification_id">
+                <label for="classification_id">Classificação</label><strong class="obrigatorio"> *</strong>
+                <select class="form-control" name="classification_id" id="classification_id" required>
                   <option value=""></option>
                   <?php $counter1=-1;  if( isset($classifications) && ( is_array($classifications) || $classifications instanceof Traversable ) && sizeof($classifications) ) foreach( $classifications as $key1 => $value1 ){ $counter1++; ?>
                   <option value="<?php echo htmlspecialchars( $value1["classification_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>

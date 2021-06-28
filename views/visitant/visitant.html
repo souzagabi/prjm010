@@ -77,8 +77,8 @@
               <th>Código</th>
               <th>Nome</th>
               <th>RG</th>
-              <th>CPF</th>
-              <th>Telefone</th>
+              <!-- <th>CPF</th>
+              <th>Telefone</th> -->
               <th>Empresa</th>
               <th>Motivo</th>
               <th>Data Visita</th>
@@ -92,15 +92,15 @@
               <th>{$value.person_id}</th>
               <td>{$value.name_person}</td>
               <td>{$value.rg_person}</td>
-              <td>{$value.cpf_person}</td>
-              <td>{$value.phonenumber}</td>
+              <!-- <td>{$value.cpf_person}</td>
+              <td>{$value.phonenumber}</td> -->
               <td>{$value.company}</td>
               <td>{$value.reason}</td>
               <td>{$value.daydate}</td>
               <td>{$value.dayhour}</td>
               <td>
-                <a href="/visitant/{$value.person_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                <a href="/visitant/{$value.person_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                <a href="/visitant/{$value.visitant_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                <a href="/visitant/{$value.visitant_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
             {/loop}

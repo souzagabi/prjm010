@@ -77,8 +77,8 @@
               <th>Código</th>
               <th>Nome</th>
               <th>RG</th>
-              <th>CPF</th>
-              <th>Telefone</th>
+              <!-- <th>CPF</th>
+              <th>Telefone</th> -->
               <th>Empresa</th>
               <th>Motivo</th>
               <th>Data Visita</th>
@@ -92,15 +92,15 @@
               <th><?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
               <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["rg_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <!-- <td><?php echo htmlspecialchars( $value1["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td> -->
               <td><?php echo htmlspecialchars( $value1["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["reason"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td>
-                <a href="/visitant/<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
-                <a href="/visitant/<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
+                <a href="/visitant/<?php echo htmlspecialchars( $value1["visitant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
+                <a href="/visitant/<?php echo htmlspecialchars( $value1["visitant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
             <?php } ?>

@@ -8,6 +8,17 @@ CREATE TABLE `prjm010001` (
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;
 
+CREATE TABLE `prjm010`.`prjm010009` (
+  `recovery_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `desip` varchar(45) NOT NULL,
+  `dtrecovery` datetime DEFAULT NULL,
+  `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`recovery_id`),
+  KEY `fk_prjm010009_prjm010013_idx` (`user_id`),
+  CONSTRAINT `fk_prjm010009_prjm010010` FOREIGN KEY (`user_id`) REFERENCES `prjm010013` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `prjm010010` (
   `seq_person_id` int NOT NULL AUTO_INCREMENT,
   `person_id` int NOT NULL,

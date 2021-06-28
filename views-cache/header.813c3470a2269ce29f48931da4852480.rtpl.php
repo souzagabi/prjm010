@@ -231,9 +231,6 @@ desired effect
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
       <li><a href="<?php if( $_SESSION['User']["inadmin"] != '' ){ ?>/visitant?pg=1<?php } ?>"><i class="fa fa-users"></i> <span>Controle Visitas</span></a></li>
-      <!-- <li class="active"><a href="/acoes?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Ações</span></a></li>
-        <li><a href="/notas?pg=1&limit=10"><i class="fa fa-envelope"></i> <span>Notas Compra</span></a></li>
-        <li><a href="/acoes-estoque?search"><i class="fa fa-envelope"></i> <span>Estoque</span></a></li> -->
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Grupo de Resíduos</span>
             <span class="pull-right-container">
@@ -252,7 +249,7 @@ desired effect
           </span>
         </a>
         <ul class="treeview-menu">
-          <li <?php if( $_SESSION['User']["inadmin"] == 0 ){ ?> hidden<?php } ?>><a href="<?php if( $_SESSION['User']["inadmin"] == 1 ){ ?>/goods?pg=1<?php } ?>"><i class="fa fa-shopping-cart"></i> <span>Controle Mercadorias</span></a></li>
+          <li><a href="<?php if( $_SESSION['User']["inadmin"] != '' ){ ?>/goods?pg=1<?php } ?>"><i class="fa fa-shopping-cart"></i> <span>Controle Mercadorias</span></a></li>
           <li <?php if( $_SESSION['User']["inadmin"] == 0 ){ ?> hidden<?php } ?>><a href="<?php if( $_SESSION['User']["inadmin"] == 1 ){ ?>/clothing?pg=1<?php } ?>"><i class="fa fa-flag"></i> <span>Controle Roupa</span></a></li>
         </ul>
       </li>

@@ -75,7 +75,6 @@
     <!-- /.social-auth-links -->
 
     <a href="/admin/forgot">Esqueci a senha</a><br>
-    <a href="../../config/register.html" class="text-center">Registrar-se como novo membro</a>
 
   </div>
   <!-- /.login-box-body -->

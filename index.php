@@ -144,7 +144,7 @@
 		{ 
 			$j[$i] = $i;
 		}
-		$date = explode(" ",date('d-m-Y H:i'));
+		$date = explode(" ",date('d-m-Y H:i:s'));
 		$dt["date"] = $date[0];
 		$dt1["hour"] =$date[1];
 
@@ -210,14 +210,14 @@
 		exit;
 	});
 
-	$app->get('/visitant/:person_id', function($person_id) 
+	$app->get('/visitant/:visitant_id', function($visitant_id) 
 	{
 		$dir = 'image';
 		User::verifyLogin();
 		$classifications = Visitant::listClassification();
 		
 		$visitant = new Visitant();
-		$visitant->getById($person_id);
+		$visitant->getById($visitant_id);
 		if(!is_dir($dir))
 			mkdir($dir, 777);
 		
@@ -2803,14 +2803,29 @@
 	});
 
 	$app->get("/admin/forgot", function(){
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		}
+
 		$page = new PageAdmin([
 			"header"=>false,
 			"footer"=>false
 		]);
-		$page->setTpl("forgot");
+		$page->setTpl("forgot", array(
+			"msg"=>$msg
+		));
 	});
 
 	$app->post("/admin/forgot", function(){
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		}
 		
 		$user = User::getForgot($_POST["email"]);
 		header("Location: /admin/forgot/sent");
@@ -2818,31 +2833,43 @@
 	});
 
 	$app->get("/admin/forgot/sent", function(){
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+		}
+
 		$page = new PageAdmin([
 			"header"=>false,
 			"footer"=>false
 		]);
-		$page->setTpl("forgot-sent");
+		$page->setTpl("forgot-sent",array(
+			"msg"=>$msg
+		));
 	});
 
 	$app->get("/admin/forgot/reset", function(){
+
+		var_dump($_GET);exit;
 		$user = User::validForgotDecrypt($_GET["code"]);
 		$page = new PageAdmin([
 			"header"=>false,
 			"footer"=>false
 		]);
 		$page->setTpl("forgot-reset", array(
-			"name"=>$user["desperson"],
+			"name"=>$user["name_person"],
 			"code"=>$_GET["code"]
 		));
 	});
 
 	$app->post("/admin/forgot/reset", function(){
 		$forgot = User::validForgotDecrypt($_GET["code"]);
-		User::setForgotUsed($forgot["idrecovery"]);
+		User::setForgotUsed($forgot["recovery_id"]);
 		$user= new User();
 		$user->get((int)$forgot["iduser"]);
 		$user->setPassword($_POST["password"]);
+
 	});
 
 

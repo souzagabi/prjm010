@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3cb55916dd7fa221b4eb6a760a29f5b81daabe14',
+    'reference' => 'df89bb26d8b878f5f72317b12e948c9530526aa3',
     'name' => 'souzagabi/prjm010',
   ),
   'versions' => 
@@ -69,7 +69,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3cb55916dd7fa221b4eb6a760a29f5b81daabe14',
+      'reference' => 'df89bb26d8b878f5f72317b12e948c9530526aa3',
     ),
   ),
 );

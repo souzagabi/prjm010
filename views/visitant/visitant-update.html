@@ -23,19 +23,7 @@
         <!-- form start -->
         
         <form role="form" action="/visitant/{$visitant.person_id}" method="post" enctype="multipart/form-data">
-          <div class="box-body">
-            <!-- <div class="col col-md-5">
-              <div>
-                <input type="file" id="image" name="image"class="btn btn-success" multiple/>
-              </div>
-            </div>
-            <div class="col col-md-4">
-              <div>
-                <label for="photo">Fotografia</label>
-                <img src="../../image/{$visitant.person_id}.jpg" id="photo" name="photo" width="80"  alt="">
-              </div>
-            </div>
-          </div>-->
+       
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
@@ -55,15 +43,15 @@
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="name_person">Nome</label>
+                <label for="name_person">Nome</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" value="{$visitant.name_person}" autofocus="autofocus" required>
               </div>
               
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="rg_person">RG</label>
-                <input type="text" class="form-control" name="rg_person" id="rg_person" value="{$visitant.rg_person}" onKeyUp="convertLowToUpper(rg_person)">
+                <label for="rg_person">RG</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="rg_person" id="rg_person" value="{$visitant.rg_person}" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
             <div class="col col-md-2">
@@ -82,14 +70,14 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="company">Empresa</label>
-                <input type="text" class="form-control" name="company" id="company" value="{$visitant.company}" onkeyup="convertLowToUpper(company)" >
+                <label for="company">Empresa</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="company" id="company" value="{$visitant.company}" onkeyup="convertLowToUpper(company)" required>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="reason">Motivo da Visita</label>
-                <input type="text" class="form-control" name="reason" id="reason" value="{$visitant.reason}" onkeyup="convertLowToUpper(reason)">
+                <label for="reason">Motivo da Visita</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="reason" id="reason" value="{$visitant.reason}" onkeyup="convertLowToUpper(reason)" required>
               </div>
             </div>
             <div class="col col-md-2">
@@ -106,8 +94,8 @@
           <div class="box-body">
             <div class="col col-md-1">
               <div class="form-group">
-                <label for="badge">Crachá</label>
-                <select class="form-control" name="badge" id="badge">
+                <label for="badge">Crachá</label><strong class="obrigatorio"> *</strong>
+                <select class="form-control" name="badge" id="badge" required>
                   {$i = 1}
                   <option value=""></option>
                   {loop="$j"}
@@ -118,13 +106,13 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="auth">Autorização</label>
+                <label for="auth">Autorização</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="auth" id="auth" value="{$visitant.auth}" onkeyup="convertLowToUpper(auth)" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
-                <label for="sign">Assinatura</label>
+                <label for="sign">Assinatura</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="sign" id="sign" value="{$visitant.sign}" onkeyup="convertLowToUpper(sign)" required>
               </div>
             </div>
@@ -142,8 +130,8 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="classification_id">Classificação</label>
-                <select class="form-control" name="classification_id" id="classification_id">
+                <label for="classification_id">Classificação</label><strong class="obrigatorio"> *</strong>
+                <select class="form-control" name="classification_id" id="classification_id" required>
                   <option value=""></option>
                   {loop="$classifications"}
                   <option value="{$value.classification_id}" {if="$visitant.classification_id == $value.classification_id"}selected{/if}>{$value.description}</option>

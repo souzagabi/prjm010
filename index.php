@@ -2833,6 +2833,7 @@
 	});
 
 	$app->get("/admin/forgot/sent", function(){
+		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -2851,7 +2852,6 @@
 
 	$app->get("/admin/forgot/reset", function(){
 
-		var_dump($_GET);exit;
 		$user = User::validForgotDecrypt($_GET["code"]);
 		$page = new PageAdmin([
 			"header"=>false,
@@ -2864,12 +2864,21 @@
 	});
 
 	$app->post("/admin/forgot/reset", function(){
-		$forgot = User::validForgotDecrypt($_GET["code"]);
+		
+		$_POST['password'] = password_hash($_POST["password"], PASSWORD_DEFAULT, [
+			"cost"=>12
+			]);
+		$forgot = User::validForgotDecrypt($_POST["code"]);
 		User::setForgotUsed($forgot["recovery_id"]);
 		$user= new User();
-		$user->get((int)$forgot["iduser"]);
+		$user->get((int)$forgot["user_id"]);
 		$user->setPassword($_POST["password"]);
 
+		$page = new PageAdmin([
+			"header"=>false,
+			"footer"=>false
+		]);
+		$page->setTpl("forgot-reset-success");
 	});
 
 

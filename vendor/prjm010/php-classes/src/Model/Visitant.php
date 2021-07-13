@@ -52,11 +52,7 @@
         public function save()
         {
             $sql = new Sql();
-           
-            // echo '<pre>';
-            // print_r($this);
-            // echo '</pre>';exit;
-            
+          
             $results = $sql->select("CALL prc_visitant_save(:name_person,:rg_person,:cpf_person,:phonenumber,:photo,:company,:reason,:badge,:auth,:sign,:daydate,:dayhour,:classification_id)", array(
                 ":name_person"      => $this->getname_person(),    
                 ":rg_person"        => $this->getrg_person(),    

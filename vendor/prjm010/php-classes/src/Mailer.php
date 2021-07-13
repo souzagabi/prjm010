@@ -5,7 +5,7 @@
     class Mailer {
         const USERNAME = "suporte@adjsistemas.com.br";
         const PASSWORD = "@adjsuporte";
-        const NAME_FROM = "Gabriel";
+        const NAME_FROM = "Suporte";
         private $mail;
 
         public function __construct($toAddress, $toName, $subject, $tplName, $data = array())
@@ -41,7 +41,6 @@
             $this->mail->msgHTML($html);
             $this->mail->AltBody = 'Este é um corpo de mensagem de texto simples';
            
-            var_dump($this->mail);exit;
         }
         public function send(){
             return $this->mail->send();

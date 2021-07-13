@@ -6,7 +6,8 @@
     
     class User extends Model {
         const SESSION = "User";
-        const SECRET = "ADJ-SIG_Sistemas";
+        const SECRET  = "ADJ-SIG_SistemasTi";
+        const SECRET2 = "1234567899876543";
 
         public static function login($login, $password)
         {
@@ -151,10 +152,9 @@
                  array(
                      ":email"=>$email
             ));
-
             
             if(count($results) === 0){
-                $msg = "ERROR: Não foi pssível recuperar a senha.";
+                $msg = "ERROR: 1 - Não foi pssível recuperar a senha.";
                 header("Location: /admin/forgot?msg=$msg");
 			    exit;
             } else {
@@ -165,17 +165,18 @@
                 ));
               
                 if (count($results2) === 0) {
-                    $msg = "ERROR: Não foi pssível recuperar a senha.";
+                    $msg = "ERROR: 2 - Não foi pssível recuperar a senha.";
                     header("Location: /admin/forgot?msg=$msg");
                     exit;
                 } else {
                     
-                    
                     $dataRecovery = $results2[0];
-                    $ivlen = openssl_cipher_iv_length("aes-256-ctr");
-                    $iv = openssl_random_pseudo_bytes($ivlen);
-                    $code = base64_encode(openssl_encrypt($dataRecovery["recovery_id"], "aes-256-ctr", USER::SECRET, 0, $iv));
-                    //$code = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, USER::SECRET, $dataRecovery["recovery_id"], MCRYPT_MODE_ECB));
+                    $method = "aes-256-ctr";
+                    $ivlen = openssl_cipher_iv_length($method);
+                    $iv = USER::SECRET2;
+                    
+                    $code = base64_encode(openssl_encrypt($dataRecovery["recovery_id"], $method, USER::SECRET, 0, $iv));
+
                     $link = "http://www.gbsuporte.com.br:99/admin/forgot/reset?code=$code";
                     
                     $mailer = new Mailer($data["email"], $data["name_person"], "Redefinir senha", "forgot", 
@@ -183,10 +184,7 @@
                         "name"=>$data["name_person"],
                         "link"=>$link
                     ));
-                    echo '<pre>';
-                    print_r($mailer);
-                    echo '</pre>';
-                    exit;
+                   
                     $mailer->send();
 
                     return $data;
@@ -196,9 +194,12 @@
 
         public static function validForgotDecrypt($code)
         {
-            $ivlen = openssl_cipher_iv_length("aes-256-ctr");
-            $iv = openssl_random_pseudo_bytes($ivlen);
-            $recovery_id = openssl_decrypt(base64_decode($code), "aes-256-ctr", USER::SECRET, 0, $iv);
+            $method = "aes-256-ctr";
+            $ivlen = openssl_cipher_iv_length($method);
+            $iv = USER::SECRET2;
+            $code2 = base64_decode($code);
+            $recovery_id = openssl_decrypt($code2, $method, USER::SECRET, 0, $iv);
+            
             $sql = new Sql();
             $results = $sql->select("SELECT *
                 FROM PRJM010009 PRJM009
@@ -209,16 +210,13 @@
                     AND
                     PRJM009.dtrecovery IS NULL
                     AND
-                    DATE_ADD(PRJM009.dtregister, INTERVAL 1 HOUR) >= NOW();
+                    DATE_ADD(PRJM009.dtregister, INTERVAL 5 MINUTE) >= NOW();
             ", array(
                 ":recovery_id"=>$recovery_id
             ));
 
-            echo '<pre>';
-            print_r($results);
-            echo '</pre>';exit;
             if (count($results) === 0) {
-                $msg = "ERROR: Não foi pssível recuperar a senha.";
+                $msg = "ERROR: 3 - Não foi pssível recuperar a senha.";
                 header("Location: /admin/forgot?msg=$msg");
                 exit;
             } else {
@@ -229,17 +227,17 @@
         public static function setForgotUsed($recovery_id)
         {
             $sql = new Sql();
-            $sql->query("UPDATE tb_userspasswordsrecoveries SET dtrecovery = NOW() WHERE recovery_id = :recovery_id", array(
+            $sql->query("UPDATE PRJM010009 SET dtrecovery = NOW() WHERE recovery_id = :recovery_id", array(
                 ":recovery_id"=>$recovery_id
             ));
         }
 
-        public function setPassword($password)
+        public function setPassword($pass)
         {
             $sql = new Sql();
-            $sql->query("UPDATE PRJM010013 SET password = :password WHERE user_id = :user_id", array(
-                ":password" =>$password,
-                ":user_id"  =>1
+            $sql->query("UPDATE PRJM010013 SET pass = :pass WHERE user_id = :user_id", array(
+                ":pass" =>$pass,
+                ":user_id"  =>$this->getuser_id()
             ));
         }
     }

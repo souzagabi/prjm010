@@ -48,8 +48,7 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_residual_save(:user_id,:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse)", array(
-                ":user_id"          => $this->getuser_id(),
+            $results = $sql->select("CALL prc_residual_save(:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
@@ -69,9 +68,8 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_residual_update(:residual_id,:user_id,:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse,:situation)", array(
+            $results = $sql->select("CALL prc_residual_update(:residual_id,:person_id,:daydate,:dayhour,:name_person,:material,:location,:warehouse,:situation)", array(
                 ":residual_id"  => $this->getresidual_id(),    
-                ":user_id"      => $this->getuser_id(),    
                 ":person_id"    => $this->getperson_id(),    
                 ":daydate"      => $this->getdaydate(),    
                 ":dayhour"      => $this->getdayhour(),    

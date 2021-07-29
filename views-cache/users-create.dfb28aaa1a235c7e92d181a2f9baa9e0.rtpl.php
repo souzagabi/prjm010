@@ -31,46 +31,52 @@
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="name_person">Nome</label>
+                <label for="name_person">Nome</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" autofocus="autofocus" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="rg_person">RG</label>
+                <label for="rg_person">RG</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="cpf_person">CPF</label>
-                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)" required>
+                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)">
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-4">
               <div class="form-group">
-                <label for="phonenumber">Telefone</label>
-                <input type="text" class="form-control" name="phonenumber" id="phonenumber">
+                <label for="email">Email</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" name="email" id="email" required>
               </div>
             </div>
           </div>
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="login">Login</label>
-                <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login">
+                <label for="phonenumber">Telefone</label>
+                <input type="text" class="form-control" name="phonenumber" id="phonenumber">
+              </div>
+            </div>
+            <div class="col col-md-2">
+              <div class="form-group">
+                <label for="login">Login</label><strong class="obrigatorio"> *</strong>
+                <input type="text" class="form-control" id="login" name="login" placeholder="Digite o login" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
-                <label for="pass">Senha</label>
-                <input type="password" class="form-control" id="pass" name="pass" placeholder="Digite a senha">
+                <label for="pass">Senha</label><strong class="obrigatorio"> *</strong>
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="Digite a senha" required>
               </div>
             </div>
             <div class="col col-md-3">
               <div class="form-group">
-                <label for="confpassword">Confirma a Senha</label>
-                <input type="password" class="form-control" id="confpassword" onChange="verifyConfPassWord(pass,confpassword,msgDanger)" placeholder="Digite a senha novamente">
+                <label for="confpassword">Confirma a Senha</label><strong class="obrigatorio"> *</strong>
+                <input type="password" class="form-control" id="confpassword" onChange="verifyConfPassWord(pass,confpassword,msgDanger)" placeholder="Digite a senha novamente" required>
               </div>
             </div>
             <div class="col col-md-2">

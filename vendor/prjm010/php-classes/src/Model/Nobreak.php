@@ -5,8 +5,6 @@
     
     class Nobreak extends Model {
 
-
-
         public static function listAll($list)
         {
             $sql = new Sql();
@@ -47,12 +45,13 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_nobreak_save(:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
+            $results = $sql->select("CALL prc_nobreak_save(:person_id,:name_person,:daydate,:dayhour,:location_id,:local_id,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":name_person"      => $this->getname_person(),
                 ":daydate"          => $this->getdaydate(),
-                ":dayhour"          => $this->getdayhour(),    
-                ":location"         => $this->getlocation(),   
+                ":dayhour"          => $this->getdayhour(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),   
                 ":nobreakmodel"     => $this->getnobreakmodel(),    
                 ":resulttest"       => $this->getresulttest(),
                 ":observation"      => $this->getobservation(),
@@ -69,13 +68,14 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:person_id,:name_person,:daydate,:dayhour,:location,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
+            $results = $sql->select("CALL prc_nobreak_update(:nobreak_id,:person_id,:name_person,:daydate,:dayhour,:location_id,:local_id,:nobreakmodel,:resulttest,:observation,:serialnumber)", array(
                 ":nobreak_id"   => $this->getnobreak_id(),    
                 ":person_id"        => $this->getperson_id(),    
                 ":name_person"      => $this->getname_person(),
                 ":daydate"          => $this->getdaydate(),
-                ":dayhour"          => $this->getdayhour(),    
-                ":location"         => $this->getlocation(),   
+                ":dayhour"          => $this->getdayhour(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),   
                 ":nobreakmodel"     => $this->getnobreakmodel(),    
                 ":resulttest"       => $this->getresulttest(),
                 ":observation"      => $this->getobservation(),

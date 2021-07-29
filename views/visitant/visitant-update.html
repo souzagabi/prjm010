@@ -22,7 +22,7 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/{$visitant.person_id}" method="post" enctype="multipart/form-data">
+        <form role="form" action="/visitant/{$visitant.visitant_id}" method="post" enctype="multipart/form-data">
        
           <div class="box-body">
             <div class="col col-md-2">
@@ -41,6 +41,8 @@
                 </select>
               </div>
             </div>
+          </div>
+          <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
                 <label for="name_person">Nome</label><strong class="obrigatorio"> *</strong>
@@ -60,6 +62,12 @@
                 <input type="text" class="form-control" name="cpf_person" id="cpf_person" value="{$visitant.cpf_person}" onKeyUp="convertLowToUpper(rg_person)">
               </div>
             </div>
+            <div class="col col-md-4">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email" id="email" value="{$visitant.email}">
+              </div>
+            </div>
           </div>
           <div class="box-body">
             <div class="col col-md-2">
@@ -68,7 +76,7 @@
                 <input type="text" class="form-control" name="phonenumber" id="phonenumber" value="{$visitant.phonenumber}">
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-4">
               <div class="form-group">
                 <label for="company">Empresa</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="company" id="company" value="{$visitant.company}" onkeyup="convertLowToUpper(company)" required>

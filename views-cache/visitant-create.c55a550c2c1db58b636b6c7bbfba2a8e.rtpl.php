@@ -36,13 +36,19 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="rg_person">RG</label><strong class="obrigatorio"> *</strong>
-                <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)" required>
+                <input type="text" class="form-control" name="rg_person" id="rg_person" maxlength="11" onKeyUp="convertLowToUpper(rg_person)" required>
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-3">
               <div class="form-group">
                 <label for="cpf_person">CPF</label>
-                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)">
+                <input type="text" class="form-control" name="cpf_person" id="cpf_person"  maxlength="11">
+              </div>
+            </div>
+            <div class="col col-md-3">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email" id="email">
               </div>
             </div>
           </div>
@@ -53,7 +59,7 @@
                 <input type="text" class="form-control" name="phonenumber" id="phonenumber">
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-4">
               <div class="form-group">
                 <label for="company">Empresa</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="company" id="company" onkeyup="convertLowToUpper(company)" required>
@@ -65,11 +71,7 @@
                 <input type="text" class="form-control" name="reason" id="reason"onkeyup="convertLowToUpper(reason)" required>
               </div>
             </div>
-            
-          </div>
-
-          <div class="box-body">
-            <div class="col col-md-1">
+            <div class="col col-md-2">
               <div class="form-group">
                 <label for="badge">Crachá</label><strong class="obrigatorio"> *</strong>
                 <select class="form-control" name="badge" id="badge" required>
@@ -81,6 +83,10 @@
                 </select>
               </div>
             </div>
+            
+          </div>
+
+          <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="auth">Autorização</label><strong class="obrigatorio"> *</strong>

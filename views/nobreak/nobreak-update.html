@@ -38,13 +38,27 @@
               </div>
             </div>
             
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
                 <label for="location">Localização</label>
-                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" value="{$nobreak.location}"required>
+                <select class="form-control" name="location" id="location" required>
+                  {loop="$locations"}
+                  <option value="{$value.location}" >{$value.deslocation}</option>
+                  {/loop}
+                </select>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
+              <div class="form-group">
+                <label for="local_id">Local</label>
+                  <select class="form-control" name="local_id" id="local_id" required>
+                    {loop="$locais"}
+                    <option value="{$value.local_id}" >{$value.deslocal}</option>
+                    {/loop}
+                  </select>
+              </div>
+            </div>
+            <div class="col col-md-3">
               <div class="form-group">
                 <label for="nobreakmodel">Modelo do NoBreak</label>
                 <input type="text" class="form-control" name="nobreakmodel" id="nobreakmodel" onKeyUp="convertLowToUpper(nobreakmodel)" value="{$nobreak.nobreakmodel}" required>

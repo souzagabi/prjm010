@@ -28,11 +28,12 @@
         {
             $sql = new Sql();
                                                      
-            $results = $sql->select("CALL sp_persons_update_save(:idperson, :desperson, :sgcompany, :descpfcnpj)", array(
+            $results = $sql->select("CALL sp_persons_update_save(:idperson, :desperson, :sgcompany, :descpfcnpj, :email)", array(
                 ":idperson"         => $this->getidperson(),
                 ":desperson"        => $this->getdesperson(),   
                 ":sgcompany"        => $this->getsgcompany(),   
-                ":descpfcnpj"       => $this->getdescpfcnpj()
+                ":descpfcnpj"       => $this->getdescpfcnpj(),
+                ":email"            => $this->getemail()
             ));
            
             $this->setData($results);

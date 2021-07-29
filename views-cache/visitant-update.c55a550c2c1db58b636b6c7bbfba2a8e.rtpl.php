@@ -22,7 +22,7 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+        <form role="form" action="/visitant/<?php echo htmlspecialchars( $visitant["visitant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
        
           <div class="box-body">
             <div class="col col-md-2">
@@ -41,6 +41,8 @@
                 </select>
               </div>
             </div>
+          </div>
+          <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
                 <label for="name_person">Nome</label><strong class="obrigatorio"> *</strong>
@@ -60,6 +62,12 @@
                 <input type="text" class="form-control" name="cpf_person" id="cpf_person" value="<?php echo htmlspecialchars( $visitant["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(rg_person)">
               </div>
             </div>
+            <div class="col col-md-4">
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars( $visitant["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              </div>
+            </div>
           </div>
           <div class="box-body">
             <div class="col col-md-2">
@@ -68,7 +76,7 @@
                 <input type="text" class="form-control" name="phonenumber" id="phonenumber" value="<?php echo htmlspecialchars( $visitant["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
               </div>
             </div>
-            <div class="col col-md-2">
+            <div class="col col-md-4">
               <div class="form-group">
                 <label for="company">Empresa</label><strong class="obrigatorio"> *</strong>
                 <input type="text" class="form-control" name="company" id="company" value="<?php echo htmlspecialchars( $visitant["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="convertLowToUpper(company)" required>

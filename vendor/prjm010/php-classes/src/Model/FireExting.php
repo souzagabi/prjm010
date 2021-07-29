@@ -41,11 +41,12 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_fireexting_save(:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
+            $results = $sql->select("CALL prc_fireexting_save(:person_id,:daydate,:dayhour,:location_id,:local_id,:tipe,:weight,:capacity,:rechargedate)", array(
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
-                ":location"         => $this->getlocation(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),
                 ":tipe"             => $this->gettipe(),
                 ":weight"           => $this->getweight(),
                 ":capacity"         => $this->getcapacity(),
@@ -62,12 +63,13 @@
             
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_fireexting_update(:fireexting_id,:person_id,:daydate,:dayhour,:location,:tipe,:weight,:capacity,:rechargedate)", array(
+            $results = $sql->select("CALL prc_fireexting_update(:fireexting_id,:person_id,:daydate,:dayhour,:location_id,:local_id,:tipe,:weight,:capacity,:rechargedate)", array(
                 ":fireexting_id"    => $this->getfireexting_id(),
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
-                ":location"         => $this->getlocation(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),
                 ":tipe"             => $this->gettipe(),
                 ":weight"           => $this->getweight(),
                 ":capacity"         => $this->getcapacity(),

@@ -27,16 +27,16 @@
             User::passwordVerity($password, $data );
             
         }
+
         public static function passwordVerity($passUser, $data = array() )
         {
             if (password_verify($passUser, $data["pass"]) === true) {
                 $user = new User;
-                
                 if (!$data["photo"] && $data["photo"] == '') {
                     $data["photo"] = 0;
                 }
                 $user->setData($data);
-
+                
                 $_SESSION[User::SESSION] = $user->getValues();
                 
                 return $user;
@@ -87,12 +87,13 @@
         {
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_person_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:classification_id,:daydate,:situation, :login, :pass, :inadmin)", array(
+            $results = $sql->select("CALL prc_person_save(:name_person,:phonenumber,:photo,:rg_person, :cpf_person,:email,:classification_id,:daydate,:situation, :login, :pass, :inadmin)", array(
                 ":name_person"          => $this->getname_person(),
                 ":phonenumber"          => $this->getphonenumber(),
                 ":photo"                => $this->getphoto(),
                 ":rg_person"            => $this->getrg_person(),
                 ":cpf_person"           => $this->getcpf_person(),
+                ":email"                => $this->getemail(),
                 ":classification_id"    => $this->getclassification_id(),
                 ":daydate"              => $this->getdaydate(),
                 ":situation"            => $this->getsituation(),
@@ -108,7 +109,7 @@
         {
             $sql = new Sql();
        
-            $results = $sql->select("CALL prc_person_update(:seq_person_id,:seq_classp_id,:person_id,:name_person,:phonenumber,:photo,:rg_person,:cpf_person,:classification_id,:daydate,:situation,:login,:pass,:inadmin)", array(
+            $results = $sql->select("CALL prc_person_update(:seq_person_id,:seq_classp_id,:person_id,:name_person,:phonenumber,:photo,:rg_person,:cpf_person,:email,:classification_id,:daydate,:situation,:login,:pass,:inadmin)", array(
                 ":seq_person_id"     => $this->getseq_person_id(),
                 ":seq_classp_id"     => $this->getseq_classp_id(),
                 ":person_id"         => $this->getperson_id(),
@@ -117,6 +118,7 @@
                 ":photo"             => $this->getphoto(),
                 ":rg_person"         => $this->getrg_person(),
                 ":cpf_person"        => $this->getcpf_person(),
+                ":email"             => $this->getemail(),
                 ":classification_id" => $this->getclassification_id(),
                 ":daydate"           => $this->getdt_save(),
                 ":situation"         => $this->getsituation(),

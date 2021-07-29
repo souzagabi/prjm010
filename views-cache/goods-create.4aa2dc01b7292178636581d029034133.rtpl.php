@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro de Materiais
+      Cadastro de Mercadoria
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/goods">Mercadorias</a></li>
+    <li><a href="/goods">Mercadoria</a></li>
     <li class="active"><a href="/goods/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -20,9 +20,9 @@
   <div class="row">
   	<div class="col-md-12">
       <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-              class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-              <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-          <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+            class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+            <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
       </div>
   		<div class="box box-success">
         <!-- form start -->
@@ -76,14 +76,20 @@
           <div class="box-body">
             <div class="col col-md-4">
               <div class="form-group">
+                <label for="deliveryman">Entregador</label>
+                <input type="text" class="form-control" name="deliveryman" id="deliveryman" onKeyUp="convertLowToUpper(deliveryman)" required>
+              </div>
+            </div>
+            <div class="col col-md-4">
+              <div class="form-group">
                 <label for="receiver">Responsável Recebimento</label>
                 <input type="text" class="form-control" name="receiver" id="receiver" onKeyUp="convertLowToUpper(receiver)" required>
               </div>
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="deliveryman">Entregador</label>
-                <input type="text" class="form-control" name="deliveryman" id="deliveryman" onKeyUp="convertLowToUpper(deliveryman)" required>
+                <label for="receiver">Responsável Recebimento</label>
+                <input type="text" class="form-control" name="receiver" id="receiver" onKeyUp="convertLowToUpper(receiver)" required>
               </div>
             </div>
            

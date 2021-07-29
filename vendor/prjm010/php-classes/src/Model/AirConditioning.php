@@ -37,9 +37,10 @@
         {
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_airconditioning_save(:person_id,:location)", array(
+            $results = $sql->select("CALL prc_airconditioning_save(:person_id,:location_id,:local_id)", array(
                 ":person_id"        => $this->getperson_id(),
-                ":location"         => $this->getlocation()
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id()
             ));
             
             $this->setData($results);
@@ -52,10 +53,11 @@
             
             $sql = new Sql();
 
-            $results = $sql->select("CALL prc_airconditioning_update(:airconditioning_id,:person_id,:location)", array(
+            $results = $sql->select("CALL prc_airconditioning_update(:airconditioning_id,:person_id,:location_id,:local_id)", array(
                 ":airconditioning_id"   => $this->getairconditioning_id(),
                 ":person_id"            => $this->getperson_id(),
-                ":location"             => $this->getlocation()
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id()
             ));
 
             $this->setData($results);

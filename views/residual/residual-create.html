@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro Visita
+      Cadastro de Resíduo
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/residual">Visitas</a></li>
+    <li><a href="/residual">Resíduo</a></li>
     <li class="active"><a href="/residual/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -32,7 +32,7 @@
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
                 {loop="$date"}
-                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}" readonly>
+                <input type="text" class="form-control" id="daydate" name="daydate" value="{$date.date}">
                 {/loop}
               </div>
             </div>
@@ -40,22 +40,36 @@
               <div class="form-group">
                 <label for="dayhour">Hora do Dia</label>
                 {loop="$hour"}
-                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}" readonly>
+                <input type="text" class="form-control" id="dayhour" name="dayhour" value="{$hour.hour}">
                 {/loop}
               </div>
             </div>
             
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
                 <label for="material">Material</label>
                 <input type="text" class="form-control" name="material" id="material" onKeyUp="convertLowToUpper(material)" autofocus="autofocus" required>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
-                <label for="location">Local</label>
-                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" required>
+                  <label for="location_id">Localização</label>
+                  <select class="form-control" name="location_id" id="location_id" required>
+                    {loop="$locations"}
+                    <option value="{$value.location_id}" >{$value.deslocation}</option>
+                    {/loop}
+                  </select>
               </div>
+            </div>
+            <div class="col col-md-3">
+                <div class="form-group">
+                    <label for="local_id">Local</label>
+                    <select class="form-control" name="local_id" id="local_id" required>
+                      {loop="$locais"}
+                      <option value="{$value.local_id}" >{$value.deslocal}</option>
+                      {/loop}
+                    </select>
+                </div>
             </div>
           </div>
           <div class="box-body">

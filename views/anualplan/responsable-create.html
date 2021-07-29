@@ -54,7 +54,7 @@
                                   <select class="form-control" name="classification_id" id="classification_id">
                                     {loop="$classifications"}
                                     {if="$value.classification_id == 5"}
-                                    <option value="{$value.classification_id}" {if="$responsable.classification_id == $value.classification_id"}selected{/if}>{$value.description}</option>
+                                    <option value="{$value.classification_id}" >{$value.description}</option>
                                     {/if}
                                     {/loop}
                                   </select>

@@ -50,6 +50,14 @@
                   <input type="text" class="form-control" id="cpf_person" name="cpf_person" value="<?php echo htmlspecialchars( $user["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Digite o CPF">
                 </div>
               </div>
+              <div class="col col-md-4">
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars( $user["email"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Digite o Email">
+                </div>
+              </div>
+            </div>
+            <div class="box-body">  
               <div class="col col-md-2">
                 <div class="form-group">
                   <label for="phonenumber">Telefone</label>
@@ -62,14 +70,6 @@
                   <input type="text" class="form-control" id="login" name="login" value="<?php echo htmlspecialchars( $user["login"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" placeholder="Digite o login">
                 </div>
               </div>
-            </div>
-            <div class="box-body">  
-              <!-- <div class="col col-md-3">
-                <div class="form-group">
-                  <label for="oldpassword">Senha Atual</label>
-                  <input type="password" class="form-control" id="oldpassword" placeholder="Digite a senha" onCahnge="passwordVerity(oldpassword)">
-                </div>
-              </div> -->
               <div class="col col-md-3">
                 <div class="form-group">
                   <label for="pass">Senha</label>

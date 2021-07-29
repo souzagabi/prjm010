@@ -14,6 +14,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../../config/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- jvectormap -->
@@ -71,107 +72,13 @@ desired effect
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle fa fa-bars" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-          <li class="dropdown messages-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
-              <li>
-                <!-- inner menu: contains the messages -->
-                <ul class="menu">
-                  <li><!-- start message -->
-                    <a href="#">
-                      <div class="pull-left">
-                        <!-- User Image -->
-                        <img class="img-circle" src="../../image/{if="$_SESSION['User'].photo == 0"}admin.jpg{else}{$_SESSION['User'].user_id}.jpg{/if}">
-                      </div>
-                      <!-- Message title and timestamp -->
-                      <h4>
-                        Support Team
-                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                      </h4>
-                      <!-- The message -->
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-                  <!-- end message -->
-                </ul>
-                <!-- /.menu -->
-              </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
-            </ul>
-          </li>
-          <!-- /.messages-menu -->
-
-          <!-- Notifications Menu -->
-          <li class="dropdown notifications-menu">
-            <!-- Menu toggle button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- Inner Menu: contains the notifications -->
-                <ul class="menu">
-                  <li><!-- start notification -->
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                  <!-- end notification -->
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
-          <!-- Tasks Menu -->
-          <li class="dropdown tasks-menu">
-            <!-- Menu Toggle Button -->
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-flag-o"></i>
-              <span class="label label-danger">9</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 9 tasks</li>
-              <li>
-                <!-- Inner menu: contains the tasks -->
-                <ul class="menu">
-                  <li><!-- Task item -->
-                    <a href="#">
-                      <!-- Task title and progress text -->
-                      <h3>
-                        Design some buttons
-                        <small class="pull-right">20%</small>
-                      </h3>
-                      <!-- The progress bar -->
-                      <div class="progress xs">
-                        <!-- Change the css width attribute to simulate progress -->
-                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                          <span class="sr-only">20% Complete</span>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <!-- end task item -->
-                </ul>
-              </li>
-              <li class="footer">
-                <a href="#">View all tasks</a>
-              </li>
-            </ul>
-          </li>
           <!-- User Account Menu -->
           <li class="dropdown user user-menu">
             <!-- Menu Toggle Button -->
@@ -230,31 +137,44 @@ desired effect
 
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
-      <li><a href="{if="$_SESSION['User'].inadmin != ''"}/visitant?pg=1{/if}"><i class="fa fa-users"></i> <span>Controle Visitas</span></a></li>
+      <li><a href="{if="$_SESSION['User'].inadmin != ''"}/visitant?pg=1{/if}"><i class="fa fa-user-friends"></i> <span>Controle Visitas</span></a></li>
         <li class="treeview">
-          <a href="#"><i class="fa fa-link"></i> <span>Grupo de Resíduos</span>
+          <a href="#"><i class="fa fa-radiation"></i> <span>Grupo de Resíduos</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
         <ul class="treeview-menu">
-          <li><a href="{if="$_SESSION['User'].inadmin != ''"}/residual?pg=1{/if}"><i class="fa fa-trash"></i> <span>Controle Resíduos</span></a></li>
+          <li><a href="{if="$_SESSION['User'].inadmin != ''"}/residual?pg=1{/if}"><i class="fa fa-radiation"></i> <span>Controle Resíduos</span></a></li>
           <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/material?pg=1{/if}"><i class="fa fa-shopping-basket"></i> <span>Controle Material</span></a></li>
         </ul>
       </li>
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Grupo de Produtos</span>
+        <a href="#"><i class="fa fa-users"></i> <span>Grupo de Produtos</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
           <li><a href="{if="$_SESSION['User'].inadmin != ''"}/goods?pg=1{/if}"><i class="fa fa-shopping-cart"></i> <span>Controle Mercadorias</span></a></li>
-          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/clothing?pg=1{/if}"><i class="fa fa-flag"></i> <span>Controle Roupa</span></a></li>
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/clothing?pg=1{/if}"><i class="fa fa-tshirt"></i> <span>Controle Roupa</span></a></li>
         </ul>
       </li>
-      <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Grupo de Equipamentos</span>
+      <li class="treeview" {if="$_SESSION['User'].inadmin == 0"} hidden{/if}>
+        <a href="#"><i class="fa fa-save"></i> <span>Cadastros</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/equipament?pg=1{/if}"><i class="fa fa-tools"></i> <span>Cadastro de Equipamento</span></a></li>
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/location?pg=1{/if}"><i class="fa fa-map-marker"></i> <span>Cadastro de Localização</span></a></li>
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/local?pg=1{/if}"><i class="fa fa-map-marker-alt"></i> <span>Cadastro de Local</span></a></li>
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/responsable?pg=1{/if}"><i class="fa fa-user-tie"></i> <span>Cadastro de Responsável</span></a></li>
+        </ul>
+      </li>
+      <li class="treeview" {if="$_SESSION['User'].inadmin == 0"} hidden{/if}>
+        <a href="#"><i class="fa fa-users"></i> <span>Grupo de Equipamentos</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
@@ -265,7 +185,17 @@ desired effect
           <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/airconditioning?pg=1{/if}"><i class="fa fa-tint"></i> <span>Controle Ar Condicionado</span></a></li>
           <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/hydrant?pg=1{/if}"><i class="fa fa-fire"></i> <span>Controle Hidrante</span></a></li>
           <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/fireexting?pg=1{/if}"><i class="fa fa-fire-extinguisher"></i> <span>Controle Extintor</span></a></li>
-          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/anualplan?pg=1{/if}"><i class="fa fa-gears"></i> <span>Manutenção Preventiva</span></a></li>
+        </ul>
+      </li>
+      <li class="treeview" {if="$_SESSION['User'].inadmin == 0"} hidden{/if}>
+        <a href="#"><i class="fa fa-users"></i> <span>Controle Geral</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/anualplan?pg=1{/if}"><i class="fa fa-cog"></i> <span>Manutenção Preventiva</span></a></li>
+          <li {if="$_SESSION['User'].inadmin == 0"} hidden{/if}><a href="{if="$_SESSION['User'].inadmin == 1"}/generalcontrol?pg=1{/if}"><i class="fa fa-cogs"></i> <span>Controle Geral</span></a></li>
         </ul>
       </li>
     </ul>

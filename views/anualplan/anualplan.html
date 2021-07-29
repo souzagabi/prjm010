@@ -14,32 +14,36 @@
       <div class="box box-primary">
         <div class="col form-control top">
           <div class="row">
-            <div class="col col-md-3">
+            <div class="col col-md-2">
               <form action="/equipament" method="get">
-                <label for="btnequipament" class="alert-warning">Passo 1</label>
-                <input type="submit" name="btnequipament" class="btn btn-success" value="Cadastrar Equipamentos">
-                <input type="text" name="equipament" value="equipament" hidden>
+                <label for="btnequipament" class="alert-warning">1</label>
+                <input type="submit" name="btnequipament" class="btn btn-success" value="Cadastrar Equip.">
               </form>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-md-2">
               <form action="/location" method="get">
-                <label for="btnlocation" class="alert-warning">Passo 2</label>
-                <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastrar Localização">
-                <input type="text" name="location" value="location" hidden>
+                <label for="btnlocation" class="alert-warning">2</label>
+                <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastrar Localiz.">
               </form>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-md-2">
+              <form action="/local" method="get">
+                <label for="btnlocal" class="alert-warning">3</label>
+                <input type="submit" name="btnlocal" class="btn btn-success" value="Cadastrar Local">
+              </form>
+            </div>
+            <div class="col col-md-2">
               <form action="/responsable" method="get">
-                <label for="btnresponsable" class="alert-warning">Passo 3</label>
-                <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastrar Responsável">
-                <input type="text" name="responsable" value="responsable" hidden>
+                <label for="btnresponsable" class="alert-warning">4</label>
+                <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastrar Respon.">
               </form>
             </div>
-            <div class="col col-md-3">
+            <div class="col col-md-2">
+            </div>
+            <div class="col col-md-2">
               <form action="/anualplan/create" method="get">
-                <label for="btnanualplan" class="alert-warning">Passo 4</label>
-                <input type="submit" name="btnanualplan" class="btn btn-primary" value="Cadastrar Plano Anual">
-                <input type="text" name="anualplan" value="anualplan" hidden>
+                <label for="btnanualplan" class="alert-warning">5</label>
+                <input type="submit" name="btnanualplan" class="btn btn-primary" value="Cadastrar Plano">
               </form>
             </div>
           </div>
@@ -81,7 +85,7 @@
               <tr class="alert-warning">
                 <th>Ano</th>
                 <th>Equipamento</th>
-                <th>Localização</th>
+                <th>Local</th>
                 <th>Responsável</th>
                 <th>Prev. Manutenção</th>
                 <th>Ação</th>
@@ -92,7 +96,7 @@
               <tr>
                 <td>{$value.yyear}</td>
                 <td>{$value.desequipament}</td>
-                <td>{$value.deslocation}</td>
+                <td>{$value.deslocal}</td>
                 <td>{$value.responsable}</td>
                 <td>{$value.dtprevision}</td>
                 <td>

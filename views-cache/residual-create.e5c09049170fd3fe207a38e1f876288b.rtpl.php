@@ -4,12 +4,12 @@
 <section class="content-header">
   <div class="box box-success title" style="background-color: #d5f8da;">
     <h4>
-      Cadastro de Resíduos
+      Cadastro de Resíduo
     </h4>
   </div>
   <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="/residual">Visitas</a></li>
+    <li><a href="/residual">Resíduo</a></li>
     <li class="active"><a href="/residual/create">Cadastrar</a></li>
   </ol>
 </section>
@@ -32,7 +32,7 @@
               <div class="form-group">
                 <label for="daydate">Data do Dia</label>
                 <?php $counter1=-1;  if( isset($date) && ( is_array($date) || $date instanceof Traversable ) && sizeof($date) ) foreach( $date as $key1 => $value1 ){ $counter1++; ?>
-                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $date["date"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $date["date"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                 <?php } ?>
               </div>
             </div>
@@ -45,17 +45,31 @@
               </div>
             </div>
             
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
                 <label for="material">Material</label>
                 <input type="text" class="form-control" name="material" id="material" onKeyUp="convertLowToUpper(material)" autofocus="autofocus" required>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
-                <label for="location">Local</label>
-                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" required>
+                  <label for="location_id">Localização</label>
+                  <select class="form-control" name="location_id" id="location_id" required>
+                    <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
+                    <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                    <?php } ?>
+                  </select>
               </div>
+            </div>
+            <div class="col col-md-3">
+                <div class="form-group">
+                    <label for="local_id">Local</label>
+                    <select class="form-control" name="local_id" id="local_id" required>
+                      <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                      <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                      <?php } ?>
+                    </select>
+                </div>
             </div>
           </div>
           <div class="box-body">

@@ -84,7 +84,7 @@
                             </div>
                             <div class="col col-md-3">
                                 <div class="form-group">
-                                    <label for="location_id">Localização</label>
+                                    <label for="location_id">locationização</label>
                                     <select class="form-control" name="location_id" id="location_id" required>
                                     <option value=""></option>
                                     <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
@@ -93,6 +93,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="local_id">Local</label>
+                                    <select class="form-control" name="local_id" id="local_id" required>
+                                    <option value=""></option>
+                                    <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                                    <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                    <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="box-body">
                             <div class="col col-md-3">
                                 <div class="form-group">
                                     <label for="person_id">Responsável</label>
@@ -104,9 +118,6 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="box-body">
                             <div class="col col-md-3">
                                 <div class="form-group">
                                     <label for="frequency">Frequência</label>
@@ -138,6 +149,8 @@
                                     <input type="text" class="form-control" name="dtprevision" id="dtprevision" onkeyup="replaceSlash(dtprevision)" >
                                 </div>
                             </div>
+                        </div>
+                        <div class="box-body">
                             <div class="col col-md-5">
                                 <div class="form-group"> 
                                     <div class="col col-md-2">
@@ -165,7 +178,7 @@
                     <div class="box box-primary">
                         <div class="box-footer">
                             <div class="row">
-                                <div class="col col-md-2">
+                                <div class="col col-md-4">
                                     <button type="submit" id="btnSubmit" class="btn btn-success">Cadastrar</button>
                                     <a href="/anualplan?limit=10" class="btn btn-warning">Voltar</a>
                                 </div>

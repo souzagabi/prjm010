@@ -36,13 +36,29 @@
                                   <label for="serialnumber">Nº Sério</label>
                                   <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$purifier.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" autofocus="autofocus" required>
                                 </div>
-                              </div>
-                            <div class="col col-md-2">
+                            </div>
+                            <div class="col col-md-3">
                                 <div class="form-group">
-                                    <label for="location">Local</label>
-                                    <input type="text" class="form-control" name="location" id="location" value="{$purifier.location}" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
+                                    <label for="location">Localização</label>
+                                    <select class="form-control" name="location" id="location" required>
+                                    {loop="$locations"}
+                                    <option value="{$value.location}" >{$value.deslocation}</option>
+                                    {/loop}
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="local_id">Local</label>
+                                    <select class="form-control" name="local_id" id="local_id" required>
+                                        {loop="$locais"}
+                                        <option value="{$value.local_id}" >{$value.deslocal}</option>
+                                        {/loop}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
                             <div class="col col-md-2">
                                 <div class="form-group">
                                     <label for="nextmanager">Data de Recarga</label>

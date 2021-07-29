@@ -148,13 +148,19 @@
                 $classModel = AnualPlan::listEquipamentAll($act);
             }
             if ($model == "Location") {
-                $classModel = AnualPlan::listLocationAll($act);
+                $classModel = Location::listAll($act);
+            }
+            if ($model == "Local") {
+                $classModel = Local::listAll($act);
             }
             if ($model == "Responsable") {
                 $classModel = AnualPlan::listResponsableAll($act);
             }
             if ($model == "AnualPlan") {
                 $classModel = AnualPlan::listAnualPlanAll($act);
+            }
+            if ($model == "GeneralControl") {
+                $classModel = GeneralControl::listGeneralControlAll($act);
             }
             
             $classModel = Metodo::convertDateToView($classModel);

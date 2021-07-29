@@ -1,0 +1,78 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Cadastro de Controle Geral
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li>Controle Geral></li>
+            <li class="active">Cadastrar</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+            <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-success">
+                    <!-- form start -->
+                    <form role="form" action="/generalcontrol/create" method="post">
+                        <div class="box-body">
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="location_id">Localização</label>
+                                    <select class="form-control" name="location_id" id="location_id" required>
+                                      {loop="$locations"}
+                                      <option value="{$value.location_id}" >{$value.deslocation}</option>
+                                      {/loop}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="local_id">Local</label>
+                                    <select class="form-control" name="local_id" id="local_id" required>
+                                      {loop="$locais"}
+                                      <option value="{$value.local_id}" >{$value.deslocal}</option>
+                                      {/loop}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="dthydraulic">Hidráulica</label>
+                                    <input type="text" class="form-control" id="dthydraulic" name="dthydraulic" onChange="replaceSlash(dthydraulic)" >
+                                </div>
+                            </div>
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="dteletric">Elétrica</label>
+                                    <input type="text" class="form-control" id="dteletric" name="dteletric" onChange="replaceSlash(dteletric)" >
+                                </div>
+                            </div>
+                            <div class="col col-md-2">
+                                <div class="form-group">
+                                    <label for="dtbuilding">Predial</label>
+                                    <input type="text" class="form-control" id="dtbuilding" name="dtbuilding" onChange="replaceSlash(dtbuilding)" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" id="btnSubmit" class="btn btn-success">Cadastrar</button>
+                            <a href="/generalcontrol?limit=10" class="btn btn-warning">Voltar</a>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

@@ -29,7 +29,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../config/index2.html"><b>ADJ</b> - SISTEMAS</a>
+    <b>Controle</b>  de Manutenção
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

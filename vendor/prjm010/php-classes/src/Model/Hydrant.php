@@ -37,9 +37,10 @@
         {
             $sql = new Sql();
          
-            $results = $sql->select("CALL prc_hydrant_save(:person_id,:location,:tipe,:idnumber,:observation)", array(
+            $results = $sql->select("CALL prc_hydrant_save(:person_id,:location_id,:local_id,:tipe,:idnumber,:observation)", array(
                 ":person_id"        => $this->getperson_id(),
-                ":location"         => $this->getlocation(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),
                 ":tipe"             => $this->gettipe(),
                 ":idnumber"         => $this->getidnumber(),
                 ":observation"      => $this->getobservation()
@@ -55,10 +56,11 @@
             
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_hydrant_update(:hydrant_id,:person_id,:location,:tipe,:idnumber,:observation)", array(
+            $results = $sql->select("CALL prc_hydrant_update(:hydrant_id,:person_id,:location_id,:local_id,:tipe,:idnumber,:observation)", array(
                 ":hydrant_id"       => $this->gethydrant_id(),
                 ":person_id"        => $this->getperson_id(),
-                ":location"         => $this->getlocation(),
+                ":location_id"      => $this->getlocation_id(),
+                ":local_id"         => $this->getlocal_id(),
                 ":tipe"             => $this->gettipe(),
                 ":idnumber"         => $this->getidnumber(),
                 ":observation"      => $this->getobservation()

@@ -53,7 +53,9 @@
                                   <label for="classification_id">Classificação</label>
                                   <select class="form-control" name="classification_id" id="classification_id">
                                     <?php $counter1=-1;  if( isset($classifications) && ( is_array($classifications) || $classifications instanceof Traversable ) && sizeof($classifications) ) foreach( $classifications as $key1 => $value1 ){ $counter1++; ?>
-                                    <option value="<?php echo htmlspecialchars( $value1["classification_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["classification_id"] == 5 ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                    <?php if( $value1["classification_id"] == 5 ){ ?>
+                                    <option value="<?php echo htmlspecialchars( $value1["classification_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["description"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                    <?php } ?>
                                     <?php } ?>
                                   </select>
                                 </div>

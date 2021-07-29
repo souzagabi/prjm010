@@ -21,6 +21,10 @@
 	use \PRJM010\PageHistoricA;
 	use \PRJM010\PageAirConditioning;
 	use \PRJM010\PageAnualPlan;
+	use \PRJM010\PageLocation;
+	use \PRJM010\PageLocal;
+	use \PRJM010\PageGeneralControl;
+
 	use \PRJM010\Model\User;
 	use \PRJM010\Model\Person;
 	use \PRJM010\Model\Visitant;
@@ -39,6 +43,9 @@
 	use \PRJM010\Model\AirConditioning;
 	use \PRJM010\Model\HistoricA;
 	use \PRJM010\Model\AnualPlan;
+	use \PRJM010\Model\Location;
+	use \PRJM010\Model\Local;
+	use \PRJM010\Model\GeneralControl;
 
 	include_once("./config/php/funcao.php");
 
@@ -52,28 +59,20 @@
 /*										Rotas dos Visitants								*/
 /*======================================================================================*/
 	$app->get('/', function() {
-		User::verifyLogin();
-		$company["name_person"]	= NULL;
-		$company["date_save"] 	= NULL;
-		$company["date_fim"] 	= NULL;
-		$company["visitants"]	= "visitants";
-		$company["search"]		= NULL;
-
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-		} 
+		}
 
-		$visitants = Metodo::selectRegister($company, "Visitant");
-		
-		$page = new PageVisitant();
-		
-		$page->setTpl("visitant", array(
-			"visitants"	=> $visitants[0],
-			"pgs"		=> $visitants[1],
-			"msg"		=> $msg
+		$page = new PageAdmin([
+			"header"=> false,
+			"footer"=> false
+
+		]);
+		$page->setTpl("login", array(
+			"msg"=>$msg
 		));
 		
 	});
@@ -188,8 +187,8 @@
 		} else {
 			$_POST["photo"] = '';
 		}
-		
 		$visitant->setData($_POST);
+		
 		$msg = $visitant->save();
 				
 		header("Location: /visitant/create?msg=".$msg);
@@ -213,11 +212,12 @@
 	$app->get('/visitant/:visitant_id', function($visitant_id) 
 	{
 		$dir = 'image';
-		User::verifyLogin();
 		$classifications = Visitant::listClassification();
 		
 		$visitant = new Visitant();
 		$visitant->getById($visitant_id);
+		
+		User::verifyLogin();
 		if(!is_dir($dir))
 			mkdir($dir, 777);
 		
@@ -269,8 +269,8 @@
 
 			fclose($fp);
 		}
-		
 		$visitant->setData($_POST);
+		
 		$msg = $visitant->update();
 		
 		header("Location: /visitant?msg=".$msg);
@@ -327,6 +327,13 @@
 
 	$app->get('/residual/create', function() {
 		User::verifyLogin();
+		$company["residual"]	= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -346,7 +353,9 @@
 			"msg"=>$msg,
 			"date"=>$dt,
 			"hour"=>$dt1,
-			"residual"=>$responsable
+			"residual"=>$responsable,
+			"locations"=>$locations,
+			"locais" =>$locais,
 		));
 		
 	});
@@ -389,13 +398,22 @@
 
 	$app->get("/residual/:residual_id", function($residual_id) {
 		User::verifyLogin();
+		$company["residual"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["search"] 		= NULL;
+
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
+
 		$residual = new Residual();
 		$residual->getById($residual_id);
 		
 		$page = new PageResidual();
 		
 		$page ->setTpl("residual-update", array(
-			"residual"=>$residual->getValues()
+			"residual"=>$residual->getValues(),
+			"locations"=>$locations,
+			"locais" =>$locais,
 		));
 	});
 
@@ -608,6 +626,13 @@
 
 	$app->get('/nobreak/create', function() {
 		User::verifyLogin();
+
+		$company["nobreak"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["name_person"] = NULL;
+		$company["search"] 		= NULL;
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -621,13 +646,18 @@
 		$dt1["hour"]	= $date[1];
 		$responsable["name_person"] = $_SESSION["User"]["name_person"];
 
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$page = new PageNobreak();
 
 		$page->setTpl("nobreak-create",array(
 			"msg"=>$msg,
 			"date"=>$dt,
 			"hour"=>$dt1,
-			"nobreak"=>$responsable
+			"nobreak"=>$responsable,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 		
 	});
@@ -670,13 +700,26 @@
 
 	$app->get("/nobreak/:nobreak_id", function($nobreak_id) {
 		User::verifyLogin();
+		
+		$company["nobreak"]	= NULL;
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["name_person"] = NULL;
+		$company["search"] 		= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$nobreak = new Nobreak();
 		$nobreak->getById($nobreak_id);
 		
+
 		$page = new PageNobreak();
 		
 		$page ->setTpl("nobreak-update", array(
-			"nobreak"=>$nobreak->getValues()
+			"nobreak"=>$nobreak->getValues(),
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 	});
 
@@ -751,6 +794,12 @@
 	
 	$app->get('/fireexting/create', function() {
 		User::verifyLogin();
+
+		$company["fireexting"]	= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -768,7 +817,9 @@
 		$page->setTpl("fireexting-create",array(
 			"msg"=>$msg,
 			"date"=>$dt,
-			"hour"=>$dt1
+			"hour"=>$dt1,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 		
 	});
@@ -812,6 +863,12 @@
 
 	$app->get('/fireexting/:fireexting_id', function($fireexting_id) {
 		User::verifyLogin();
+
+		$company["fireexting"]	= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -827,7 +884,9 @@
 		
 		$page ->setTpl("fireexting-update", array(
 			"fireexting"=>$fireexting->getValues(),
-			"msg"=>$msg
+			"msg"=>$msg,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 	});
 
@@ -1069,6 +1128,15 @@
 
 	$app->get('/purifier/create', function() {
 		User::verifyLogin();
+
+		$company["purifier"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
+		$company["search"] 			= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -1086,7 +1154,9 @@
 		$page->setTpl("purifier-create",array(
 			"msg"=>$msg,
 			"date"=>$dt,
-			"purifier"=>$responsable
+			"purifier"=>$responsable,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 		
 	});
@@ -1129,13 +1199,24 @@
 
 	$app->get("/purifier/:purifier_id", function($purifier_id) {
 		User::verifyLogin();
+
+		$company["purifier"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
+		$company["search"] 			= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$purifier = new Purifier();
 		$purifier->getById($purifier_id);
 		
 		$page = new PagePurifier();
 		
 		$page ->setTpl("purifier-update", array(
-			"purifier"=>$purifier->getValues()
+			"purifier"=>$purifier->getValues(),
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 	});
 
@@ -1646,6 +1727,11 @@
 	$app->get('/hydrant/create', function() {
 		User::verifyLogin();
 		
+		$company["hydrant"]		= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
@@ -1656,7 +1742,9 @@
 		$page = new PageHydrant();
 	
 		$page->setTpl("hydrant-create",array(
-			"msg"=>$msg
+			"msg"=>$msg,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 		
 	});
@@ -1694,6 +1782,12 @@
 
 	$app->get('/hydrant/:hydrant_id', function($hydrant_id) {
 		User::verifyLogin();
+
+		$company["hydrant"]		= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -1709,7 +1803,9 @@
 		
 		$page ->setTpl("hydrant-update", array(
 			"hydrant"=>$hydrant->getValues(),
-			"msg"=>$msg
+			"msg"=>$msg,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 	});
 
@@ -1907,9 +2003,8 @@
 		$company["daydate"]	    = NULL;
 		$company["date_fim"]    = NULL;
 		$company["search"] 		= NULL;
-
 		$company["airconditioning"]	= NULL;
-		$company["search"] 		= NULL;
+
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
@@ -1932,6 +2027,14 @@
 	$app->get('/airconditioning/create', function() {
 		User::verifyLogin();
 		
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["search"] 		= NULL;
+		$company["airconditioning"]	= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
@@ -1942,7 +2045,9 @@
 		$page = new PageAirConditioning();
 
 		$page->setTpl("airconditioning-create",array(
-			"msg"=>$msg
+			"msg"=>$msg,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 		
 	});
@@ -1980,6 +2085,15 @@
 
 	$app->get('/airconditioning/:airconditioning_id', function($airconditioning_id) {
 		User::verifyLogin();
+
+		$company["daydate"]	    = NULL;
+		$company["date_fim"]    = NULL;
+		$company["search"] 		= NULL;
+		$company["airconditioning"]	= NULL;
+		
+		$locations = GeneralControl::listLocationAll($company);
+		$locais = AnualPlan::listLocalAll($company);
+
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -1995,7 +2109,9 @@
 		
 		$page ->setTpl("airconditioning-update", array(
 			"airconditioning"=>$airconditioning->getValues(),
-			"msg"=>$msg
+			"msg"=>$msg,
+			"locations"=>$locations,
+			"locais"=>$locais
 		));
 	});
 
@@ -2226,7 +2342,6 @@
 		$anualplan	= Metodo::selectRegister($company, "AnualPlan");
 
 		$page = new PageAnualPlan();
-		
 		$page->setTpl("anualplan", array(
 			"anualplans"=>$anualplan[0],
 			"pgs"=>$anualplan[1],
@@ -2250,12 +2365,14 @@
 		}
 
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
+		$locais			= Metodo::selectRegister($company, "Local");
 		$locations		= Metodo::selectRegister($company, "Location");
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 	
 		$page = new PageAnualPlan();
 		$page->setTpl('anualplan-create', array(
 			"equipaments"=>$equipaments[0],
+			"locais"=>$locais[0],
 			"locations"=>$locations[0],
 			"responsables"=>$responsables[0],
 			"msg"=>$msg
@@ -2312,7 +2429,7 @@
 		}
 
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
-		$locations		= Metodo::selectRegister($company, "Location");
+		$locais		= Metodo::selectRegister($company, "Local");
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 
 		$anualplan = new AnualPlan();
@@ -2322,7 +2439,7 @@
 		$page->setTpl('anualplan-update', array(
 			"anualplan" =>$anualplan->getValues(),
 			"equipaments"=>$equipaments[0],
-			"locations"=>$locations[0],
+			"locais"=>$locais[0],
 			"responsables"=>$responsables[0],
 			"msg"=>$msg
 		));
@@ -2475,13 +2592,13 @@
 	});
 
 /*======================================================================================*/
-/*									Rotas da Localização								*/
+/*										Rotas da Local									*/
 /*======================================================================================*/
 	
-	$app->get('/location', function() {
+	$app->get('/local', function() {
 		User::verifyLogin();
 
-		$company["location"]		= NULL;
+		$company["local"]		= NULL;
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
@@ -2493,18 +2610,18 @@
 			$_GET["msg"] = '';
 		} 
 
-		$locations	= Metodo::selectRegister($company, "Location");
+		$locais	= Metodo::selectRegister($company, "Local");
 		
-		$page = new PageAnualPlan();
+		$page = new PageLocal();
 		
-		$page->setTpl("location", array(
-			"locations"=>$locations[0],
-			"pgs"=>$locations[1],
+		$page->setTpl("local", array(
+			"locais"=>$locais[0],
+			"pgs"=>$locais[1],
 			"msg"=>$msg
 		));
 	});
 
-	$app->get('/location/create', function() {
+	$app->get('/local/create', function() {
 		User::verifyLogin();
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
@@ -2515,41 +2632,41 @@
 			$_GET["msg"] = '';
 		}
 
-		$page = new PageAnualPlan();
-		$page->setTpl('location-create', array(
+		$page = new PageLocal();
+		$page->setTpl('local-create', array(
 			"msg"=>$msg
 		));
 	});
 
-	$app->post('/location/create', function() {
+	$app->post('/local/create', function() {
 		User::verifyLogin();
 		
-		$location = new AnualPlan();
+		$local = new Local();
 
-		$location->setData($_POST);
+		$local->setData($_POST);
 		
-		$msg = $location->saveL();
+		$msg = $local->save();
 
-		header("Location: /location/create?msg=$msg");
+		header("Location: /local/create?msg=$msg");
 		exit;
 
 	});
 
-	$app->get("/location/:location_id/delete", function ($location_id){
+	$app->get("/local/:local_id/delete", function ($local_id){
 		User::verifyLogin();
-		$location = new AnualPlan();
-		$location->getByIdL($location_id);
+		$local = new Local();
+		$local->getById($local_id);
 
 		$user_id["user_id"] = $_SESSION["User"]["user_id"];
-		$location->setdata($user_id);
+		$local->setdata($user_id);
 
-		$msg = $location->deleteL();
+		$msg = $local->delete();
 		
-		header("Location: /location?msg=".$msg);
+		header("Location: /local?msg=".$msg);
 		exit;
 	});
 
-	$app->get('/location/:location_id', function($location_id) {
+	$app->get('/local/:local_id', function($local_id) {
 		User::verifyLogin();
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
@@ -2560,17 +2677,17 @@
 			$_GET["msg"] = '';
 		}
 
-		$location = new AnualPlan();
-		$location->getByIdL($location_id);
+		$local = new Local();
+		$local->getById($local_id);
 		
-		$page = new PageAnualPlan();
-		$page->setTpl('location-update', array(
-			"location" =>$location->getValues(),
+		$page = new PageLocal();
+		$page->setTpl('local-update', array(
+			"local" =>$local->getValues(),
 			"msg"=>$msg
 		));
 	});
 
-	$app->post('/location/:location_id', function($location_id) {
+	$app->post('/local/:local_id', function($local_id) {
 		User::verifyLogin();
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
@@ -2580,13 +2697,13 @@
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
 			$_GET["msg"] = '';
 		}
-		$location = new AnualPlan();
-		$location->getByIdL($location_id);
+		$local = new Local();
+		$local->getById($local_id);
 		
-		$location->setData($_POST);
-		$msg = $location->updateL();
+		$local->setData($_POST);
+		$msg = $local->update();
 		
-		header("Location: /location?msg=".$msg);
+		header("Location: /local?msg=".$msg);
 		exit;
 		
 	});
@@ -2736,6 +2853,201 @@
 		exit;
 		
 	});
+/******************************************************************************************/
+
+/*======================================================================================*/
+/*									Rotas da Localização								*/
+/*======================================================================================*/
+	
+	$app->get('/location', function() {
+		User::verifyLogin();
+
+		$company["location"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
+		$locations	= Metodo::selectRegister($company, "Location");
+		
+		$page = new PageLocation();
+		
+		$page->setTpl("location", array(
+			"locations"=>$locations[0],
+			"pgs"=>$locations[1],
+			"msg"=>$msg
+		));
+	});
+
+	$app->get('/location/create', function() {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$page = new PageLocation();
+		$page->setTpl('location-create', array(
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/location/create', function() {
+		User::verifyLogin();
+		
+		$location = new Location();
+
+		$location->setData($_POST);
+		
+		$msg = $location->save();
+
+		header("Location: /location/create?msg=$msg");
+		exit;
+
+	});
+
+	$app->get("/location/:location_id/delete", function ($location_id){
+		User::verifyLogin();
+		$location = new Location();
+		$location->getById($location_id);
+
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$location->setdata($user_id);
+
+		$msg = $location->delete();
+		
+		header("Location: /location?msg=".$msg);
+		exit;
+	});
+
+	$app->get('/location/:location_id', function($location_id) {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$location = new Location();
+		$location->getById($location_id);
+		
+		$page = new PageLocation();
+		$page->setTpl('location-update', array(
+			"location" =>$location->getValues(),
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/location/:location_id', function($location_id) {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+		$location = new Location();
+		$location->getById($location_id);
+		
+		$location->setData($_POST);
+		$msg = $location->update();
+		
+		header("Location: /location?msg=".$msg);
+		exit;
+		
+	});
+
+
+
+
+
+/*======================================================================================*/
+/*								Rotas do Controle Geral									*/
+/*======================================================================================*/
+
+	$app->get('/generalcontrol', function() {
+		User::verifyLogin();
+
+		$company["generalcontrol"]	= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		} 
+
+		$generalcontrols	= Metodo::selectRegister($company, "GeneralControl");
+		
+		$page = new PageGeneralControl();
+		
+		$page->setTpl("generalcontrol", array(
+			"generalcontrols"=>$generalcontrols[0],
+			"pgs"=>$generalcontrols[1],
+			"msg"=>$msg
+		));
+	});
+
+	$app->get('/generalcontrol/create', function() {
+		User::verifyLogin();
+		$company["generalcontrol"]	= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$page = new PageGeneralControl();
+		$page->setTpl('generalcontrol-create', array(
+			"locations"=>$locations,
+			"locais" =>$locais,
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/generalcontrol/create', function() {
+		User::verifyLogin();
+		
+		$generalcontrol = new GeneralControl();
+
+		$generalcontrol->setData($_POST);
+		
+		$msg = $generalcontrol->save();
+
+		header("Location: /generalcontrol/create?msg=$msg");
+		exit;
+
+	});
+
+
+
+
 /*======================================================================================*/
 /*										Rotas do Admin									*/
 /*======================================================================================*/
@@ -2790,7 +3102,7 @@
 		
 		User::login($_POST["login"], $_POST["pass"]);
 		
-		header("Location: /");
+		header("Location: /visitant");
 		exit;
 		
 	});
@@ -3008,7 +3320,11 @@
 		exit;
 		
 	});
-	
+
+/*======================================================================================*/
+/*									Execução do aplicativo								*/
+/*======================================================================================*/
+
 	$app->run();
 
 ?>

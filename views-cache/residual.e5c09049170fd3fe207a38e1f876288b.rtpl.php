@@ -76,6 +76,7 @@
               <th>Data</th>
               <th>Hora</th>
               <th>Material</th>
+              <th>Localização</th>
               <th>Local</th>
               <th>Depósito</th>
               <th>Responsável</th>
@@ -88,7 +89,8 @@
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["material"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["warehouse"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td>

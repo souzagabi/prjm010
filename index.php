@@ -495,6 +495,8 @@
 			$_GET["msg"] = '';
 		} 
 
+		$responsable["name_person"] = $_SESSION["User"]["name_person"];
+
 		$date = explode(" ",date('d-m-Y H:i'));
 		$dt["date"]		= $date[0];
 		$dt1["hour"]	= $date[1];
@@ -503,6 +505,7 @@
 
 		$page->setTpl("goods-create",array(
 			"msg"=>$msg,
+			"responsable"=>$responsable,
 			"date"=>$dt,
 			"hour"=>$dt1
 		));
@@ -646,8 +649,8 @@
 		$dt1["hour"]	= $date[1];
 		$responsable["name_person"] = $_SESSION["User"]["name_person"];
 
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$page = new PageNobreak();
 
@@ -707,8 +710,8 @@
 		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$nobreak = new Nobreak();
 		$nobreak->getById($nobreak_id);
@@ -797,8 +800,8 @@
 
 		$company["fireexting"]	= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
@@ -866,8 +869,8 @@
 
 		$company["fireexting"]	= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
@@ -1134,8 +1137,8 @@
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
@@ -1205,8 +1208,8 @@
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$purifier = new Purifier();
 		$purifier->getById($purifier_id);
@@ -1729,8 +1732,8 @@
 		
 		$company["hydrant"]		= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -1785,8 +1788,8 @@
 
 		$company["hydrant"]		= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
@@ -2032,8 +2035,8 @@
 		$company["search"] 		= NULL;
 		$company["airconditioning"]	= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -2091,8 +2094,8 @@
 		$company["search"] 		= NULL;
 		$company["airconditioning"]	= NULL;
 		
-		$locations = GeneralControl::listLocationAll($company);
-		$locais = AnualPlan::listLocalAll($company);
+		$locations = Location::listAll($company);
+		$locais = Local::listAll($company);
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
@@ -2774,6 +2777,7 @@
 		}
 
 		$_POST["situation"] = '0';
+		$_POST["email"] = '';
 		$_POST["photo"] = '';
 		$_POST["login"] = '';
 		$_POST["pass"] = '';
@@ -2790,7 +2794,7 @@
 
 	$app->get("/responsable/:responsable_id/delete", function ($responsable_id){
 		User::verifyLogin();
-		$responsable = new Person();
+		$responsable = new User();
 		$responsable->get($responsable_id);
 
 		$user_id["user_id"] = $_SESSION["User"]["user_id"];
@@ -2814,7 +2818,7 @@
 			$_GET["msg"] = '';
 		}
 
-		$responsable = new Person();
+		$responsable = new User();
 		$responsable->get($responsable_id);
 		
 		$page = new PageAnualPlan();
@@ -2832,9 +2836,12 @@
 			$_POST["rg_person"] = '999999';
 		}
 		
+		$_POST["situation"] = '0';
+		$_POST["email"] = '';
+		$_POST["photo"] = '';
 		$_POST["login"] = '';
 		$_POST["pass"] = '';
-		$_POST["inadmin"] = '0';
+		$_POST["inadmin"] = '';
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
 		
@@ -2843,7 +2850,8 @@
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
 			$_GET["msg"] = '';
 		}
-		$responsable = new Person();
+		
+		$responsable = new User();
 		$responsable->get($responsable_id);
 		
 		$responsable->setData($_POST);
@@ -2853,6 +2861,7 @@
 		exit;
 		
 	});
+
 /******************************************************************************************/
 
 /*======================================================================================*/

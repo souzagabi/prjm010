@@ -73,7 +73,7 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("SELECT * FROM PRJM010001 PRJM001 INNER JOIN PRJM010012 PRJM012 USING(person_id) INNER JOIN PRJM010013 PRJM013 USING(person_id) INNER JOIN PRJM010010 PRJM010 USING(person_id) WHERE PRJM001.person_id = :person_id", array(
+            $results = $sql->select("SELECT *, PRJM010.person_id as responsable_id FROM PRJM010001 PRJM001 INNER JOIN PRJM010012 PRJM012 ON PRJM012.person_id = PRJM001.person_id INNER JOIN PRJM010010 PRJM010 ON PRJM010.person_id = PRJM001.person_id LEFT JOIN PRJM010013 PRJM013 ON PRJM013.person_id = PRJM001.person_id WHERE PRJM001.person_id = :person_id", array(
             ":person_id"=>$person_id
             ));
             
@@ -135,8 +135,8 @@
         public function delete()
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_person_delete(:person_id,:user_id)", array(
-                ":person_id"=>(int)$this->getperson_id(),
+            $results = $sql->select("CALL prc_person_delete(:responsable_id,:user_id)", array(
+                ":responsable_id"=>(int)$this->getresponsable_id(),
                 ":user_id"=>(int)$this->getuser_id()
             ));
            
@@ -243,6 +243,5 @@
             ));
         }
     }
-    
 
 ?>

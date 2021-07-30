@@ -39,9 +39,13 @@
         public function save()
         {
             $sql = new Sql();
-           
-            $results = $sql->select("CALL prc_generalcontrol_save(:desgeneralcontrol)", array(
-                ":desgeneralcontrol"      => $this->getdesgeneralcontrol()
+            
+            $results = $sql->select("CALL prc_generalcontrol_save(:location_id,:local_id,:dthydraulic,:dteletric,:dtbuilding)", array(
+                ":location_id"  => $this->getlocation_id(),
+                ":local_id"     => $this->getlocal_id(),
+                ":dthydraulic"  => $this->getdthydraulic(),
+                ":dteletric"    => $this->getdteletric(),
+                ":dtbuilding"   => $this->getdtbuilding()
             ));
             
             $this->setData($results);
@@ -54,9 +58,13 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_generalcontrol_update(:generalcontrol_id,:desgeneralcontrol)", array(
-                ":generalcontrol_id"      => $this->getgeneralcontrol_id(),
-                ":desgeneralcontrol"      => $this->getdesgeneralcontrol()
+            $results = $sql->select("CALL prc_generalcontrol_update(:generalcontrol_id,:location_id,:local_id,:dthydraulic,:dteletric,:dtbuilding)", array(
+                ":generalcontrol_id"    => $this->getgeneralcontrol_id(),
+                ":location_id"           => $this->getlocation_id(),
+                ":local_id"              => $this->getlocal_id(),
+                ":dthydraulic"           => $this->getdthydraulic(),
+                ":dteletric"             => $this->getdteletric(),
+                ":dtbuilding"            => $this->getdtbuilding()
             ));
 
             $this->setData($results);

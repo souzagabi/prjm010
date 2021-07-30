@@ -5,7 +5,6 @@
     
     class Goods extends Model {
 
-
         public static function listAll($list)
         {
             $sql = new Sql();
@@ -46,7 +45,7 @@
         public function save()
         {
             $sql = new Sql();
-          
+            
             $results = $sql->select("CALL prc_goods_save(:person_id,:daydate,:dayhour,:goods,:qtde,:packing,:receiver,:deliveryman)", array(
                 ":person_id"        => $this->getperson_id(),
                 ":daydate"          => $this->getdaydate(),

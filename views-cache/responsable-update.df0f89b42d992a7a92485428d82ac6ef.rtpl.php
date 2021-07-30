@@ -17,7 +17,7 @@
             <div class="col-md-12">
                 <div class="box box-success">
                     <!-- form start -->
-                    <form role="form" action="/responsable/<?php echo htmlspecialchars( $responsable["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
+                    <form role="form" action="/responsable/<?php echo htmlspecialchars( $responsable["responsable_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
                         <div class="box-body">
                             <div class="col col-md-3">
                                 <div class="form-group">

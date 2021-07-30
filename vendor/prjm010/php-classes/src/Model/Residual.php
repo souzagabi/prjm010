@@ -45,7 +45,7 @@
         public function save()
         {
             $sql = new Sql();
-          
+            
             $results = $sql->select("CALL prc_residual_save(:person_id,:daydate,:dayhour,:name_person,:material,:location_id,:local_id,:warehouse)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),

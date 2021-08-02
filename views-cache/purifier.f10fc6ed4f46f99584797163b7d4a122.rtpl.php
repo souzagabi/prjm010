@@ -60,9 +60,9 @@
               <tr class="alert-warning">
                 <th>Data</th>
                 <th>Nº de Séria</th>
-                <th>Local</th>
+                <th>Localização</th>
                 <th>Responsável</th>
-                <th>Próxima Manutenção</th>
+                <th>Data Recarga</th>
                 <th>Ação</th>
               </tr>
             </thead>
@@ -71,7 +71,7 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>

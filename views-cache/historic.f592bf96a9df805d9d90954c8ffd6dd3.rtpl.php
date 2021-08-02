@@ -59,19 +59,19 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Número</th>
-                <th>Observação</th>
               </tr>
             </thead>
             <tbody>
               <?php if( $hydrants["0"]['historic_id'] != NULL ){ ?>
               <tr>
-                <td><?php echo htmlspecialchars( $hydrants["0"]['location'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $hydrants["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $hydrants["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $hydrants["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $hydrants["0"]['idnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $hydrants["0"]['observation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               </tr>
               <?php } ?>
             </tbody>

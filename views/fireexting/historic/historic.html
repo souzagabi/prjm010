@@ -59,6 +59,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Peso</th>
@@ -69,7 +70,8 @@
             <tbody>
               {if="$fireextings[0]['historic_id'] != NULL"}
               <tr>
-                <td>{$fireextings[0]['location']}</td>
+                <td>{$fireextings[0]['deslocation']}</td>
+                <td>{$fireextings[0]['deslocal']}</td>
                 <td>{$fireextings[0]['tipe']}</td>
                 <td>{$fireextings[0]['weight']}</td>
                 <td>{$fireextings[0]['capacity']}</td>

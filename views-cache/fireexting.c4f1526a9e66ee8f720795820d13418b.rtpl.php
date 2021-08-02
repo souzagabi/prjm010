@@ -58,6 +58,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Peso</th>
@@ -69,7 +70,8 @@
             <tbody>
               <?php $counter1=-1;  if( isset($fireextings) && ( is_array($fireextings) || $fireextings instanceof Traversable ) && sizeof($fireextings) ) foreach( $fireextings as $key1 => $value1 ){ $counter1++; ?>
               <tr>
-                <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["tipe"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["weight"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["capacity"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

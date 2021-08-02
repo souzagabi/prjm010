@@ -2433,6 +2433,7 @@
 
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
 		$locais		= Metodo::selectRegister($company, "Local");
+		$locations		= Metodo::selectRegister($company, "Location");
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 
 		$anualplan = new AnualPlan();
@@ -2442,6 +2443,7 @@
 		$page->setTpl('anualplan-update', array(
 			"anualplan" =>$anualplan->getValues(),
 			"equipaments"=>$equipaments[0],
+			"locations"=>$locations[0],
 			"locais"=>$locais[0],
 			"responsables"=>$responsables[0],
 			"msg"=>$msg

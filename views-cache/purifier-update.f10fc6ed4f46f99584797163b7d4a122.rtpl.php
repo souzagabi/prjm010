@@ -36,13 +36,29 @@
                                   <label for="serialnumber">Nº Sério</label>
                                   <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $purifier["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" autofocus="autofocus" required>
                                 </div>
-                              </div>
-                            <div class="col col-md-2">
+                            </div>
+                            <div class="col col-md-3">
                                 <div class="form-group">
-                                    <label for="location">Local</label>
-                                    <input type="text" class="form-control" name="location" id="location" value="<?php echo htmlspecialchars( $purifier["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
+                                    <label for="location_id">Localização</label>
+                                    <select class="form-control" name="location_id" id="location_id" required>
+                                    <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
+                                    <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["location_id"] == $purifier["location_id"]  ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                    <?php } ?>
+                                    </select>
                                 </div>
                             </div>
+                            <div class="col col-md-3">
+                                <div class="form-group">
+                                    <label for="local_id">Local</label>
+                                    <select class="form-control" name="local_id" id="local_id" required>
+                                        <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                                        <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["local_id"] == $purifier["local_id"]  ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
                             <div class="col col-md-2">
                                 <div class="form-group">
                                     <label for="nextmanager">Data de Recarga</label>

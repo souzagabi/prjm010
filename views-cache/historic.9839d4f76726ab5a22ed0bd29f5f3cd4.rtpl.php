@@ -59,6 +59,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Peso</th>
@@ -69,7 +70,8 @@
             <tbody>
               <?php if( $fireextings["0"]['historic_id'] != NULL ){ ?>
               <tr>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['location'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $fireextings["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $fireextings["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $fireextings["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $fireextings["0"]['weight'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $fireextings["0"]['capacity'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

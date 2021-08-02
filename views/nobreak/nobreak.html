@@ -58,12 +58,10 @@
           <thead class="thead-dark">
             <tr class="alert-warning">
               <th>Data</th>
-              <th>Hora</th>
               <th>Localização</th>
               <th>Modelo do NoBreak</th>
               <th>Número de Série</th>
               <th>Resultado do Teste</th>
-              <th>Responsável</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -71,12 +69,10 @@
             {loop="$nobreaks"}
             <tr>
               <td>{$value.daydate}</td>
-              <td>{$value.dayhour}</td>
-              <td>{$value.location}</td>
+              <td>{$value.deslocation}</td>
               <td>{$value.nobreakmodel}</td>
               <td>{$value.serialnumber}</td>
               <td>{if="$value.resulttest == 0"}OK{else}NÃO OK{/if}</td>
-              <td>{$value.name_person}</td>
               <td>
                 <a href="/nobreak/{$value.nobreak_id}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
                 <a href="/nobreak/{$value.nobreak_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>

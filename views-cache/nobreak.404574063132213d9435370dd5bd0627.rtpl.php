@@ -58,12 +58,10 @@
           <thead class="thead-dark">
             <tr class="alert-warning">
               <th>Data</th>
-              <th>Hora</th>
               <th>Localização</th>
               <th>Modelo do NoBreak</th>
               <th>Número de Série</th>
               <th>Resultado do Teste</th>
-              <th>Responsável</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -71,12 +69,10 @@
             <?php $counter1=-1;  if( isset($nobreaks) && ( is_array($nobreaks) || $nobreaks instanceof Traversable ) && sizeof($nobreaks) ) foreach( $nobreaks as $key1 => $value1 ){ $counter1++; ?>
             <tr>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+              <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["nobreakmodel"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php if( $value1["resulttest"] == 0 ){ ?>OK<?php }else{ ?>NÃO OK<?php } ?></td>
-              <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td>
                 <a href="/nobreak/<?php echo htmlspecialchars( $value1["nobreak_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></a>
                 <a href="/nobreak/<?php echo htmlspecialchars( $value1["nobreak_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>

@@ -58,14 +58,16 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
-                <th>Sala/Local</th>
+                <th>Localização</th>
+                <th>Local</th>
                 <th>Ação</th>
               </tr>
             </thead>
             <tbody>
               <?php $counter1=-1;  if( isset($airconditionings) && ( is_array($airconditionings) || $airconditionings instanceof Traversable ) && sizeof($airconditionings) ) foreach( $airconditionings as $key1 => $value1 ){ $counter1++; ?>
               <tr>
-                <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/airconditioning/<?php echo htmlspecialchars( $value1["airconditioning_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
                   <a href="/historicA?airconditioning_id=<?php echo htmlspecialchars( $value1["airconditioning_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>

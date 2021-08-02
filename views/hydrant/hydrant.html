@@ -58,6 +58,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Número</th>
@@ -68,7 +69,8 @@
             <tbody>
               {loop="$hydrants"}
               <tr>
-                <td>{$value.location}</td>
+                <td>{$value.deslocation}</td>
+                <td>{$value.deslocal}</td>
                 <td>{$value.tipe}</td>
                 <td>{$value.idnumber}</td>
                 <td>{$value.observation}</td>

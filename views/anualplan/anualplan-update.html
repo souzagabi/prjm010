@@ -83,11 +83,11 @@
                                         </div>
                                         <div class="col col-md-3">
                                             <div class="form-group">
-                                                <label for="local_id">Local</label>
-                                                <select class="form-control" name="local_id" id="local_id" required>
+                                                <label for="location_id">Localização</label>
+                                                <select class="form-control" name="location_id" id="location_id" required>
                                                 <option value=""></option>
-                                                {loop="$locais"}
-                                                <option value="{$value.local_id}" {if="$anualplan.local_id == $value.local_id"}selected{/if}>{$value.deslocal}</option>
+                                                {loop="$locations"}
+                                                <option value="{$value.location_id}" {if="$anualplan.location_id == $value.location_id"}selected{/if}>{$value.deslocation}</option>
                                                 {/loop}
                                                 </select>
                                             </div>
@@ -145,7 +145,7 @@
                                         <div class="col col-md-2">
                                             <div class="form-group">
                                                 <label for="dtprevision">Data Previsão</label>
-                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="{$anualplan.dtprevision}" onkeyup="replaceSlash(dtprevision)" >
+                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="{$anualplan.dtprevision}" onkeyup="replaceSlash(dtprevision)" onChange="insertcolor(dtprevision,rstatus)" >
                                             </div>
                                         </div>
                                     </div>

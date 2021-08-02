@@ -59,13 +59,15 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
-                <th>Sala/Local</th>
+                <th>Localização</th>
+                <th>Local</th>
               </tr>
             </thead>
             <tbody>
               {if="$airconditionings[0]['historic_id'] != NULL"}
               <tr>
-                <td>{$airconditionings[0]['location']}</td>
+                <td>{$airconditionings[0]['deslocation']}</td>
+                <td>{$airconditionings[0]['deslocal']}</td>
               </tr>
               {/if}
             </tbody>
@@ -78,7 +80,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Mês</th>
-                <th>Data</th>
+                <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
             </thead>

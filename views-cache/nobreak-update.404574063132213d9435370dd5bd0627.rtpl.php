@@ -38,13 +38,27 @@
               </div>
             </div>
             
-            <div class="col col-md-4">
+            <div class="col col-md-2">
               <div class="form-group">
-                <label for="location">Localização</label>
-                <input type="text" class="form-control" name="location" id="location" onKeyUp="convertLowToUpper(location)" value="<?php echo htmlspecialchars( $nobreak["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"required>
+                <label for="location_id">Localização</label>
+                <select class="form-control" name="location_id" id="location_id" required>
+                  <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["location_id"] == $nobreak["location_id"]  ){ ?>selected<?php } ?> ><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
+              <div class="form-group">
+                <label for="local_id">Local</label>
+                  <select class="form-control" name="local_id" id="local_id" required>
+                    <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                    <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["local_id"] == $nobreak["local_id"]  ){ ?>selected<?php } ?> ><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                    <?php } ?>
+                  </select>
+              </div>
+            </div>
+            <div class="col col-md-3">
               <div class="form-group">
                 <label for="nobreakmodel">Modelo do NoBreak</label>
                 <input type="text" class="form-control" name="nobreakmodel" id="nobreakmodel" onKeyUp="convertLowToUpper(nobreakmodel)" value="<?php echo htmlspecialchars( $nobreak["nobreakmodel"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
@@ -54,7 +68,7 @@
           <div class="box-body">
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="resulttest">Embalagem</label>
+                <label for="resulttest">Resultado Teste</label>
                 <select class="form-control" name="resulttest" id="resulttest">
                   <option value="0" <?php if( $nobreak["resulttest"] == 0 ){ ?>selected<?php } ?>>OK</option>
                   <option value="1" <?php if( $nobreak["resulttest"] == 1 ){ ?>selected<?php } ?>>NÃO OK</option>

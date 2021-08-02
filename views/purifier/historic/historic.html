@@ -61,15 +61,13 @@
               <tr class="alert-primary">
                 <th>Nº Série</th>
                 <th>Local</th>
-                <th>Próxima Manutenção</th>
               </tr>
             </thead>
             <tbody>
               {if="$purifiers[0]['historic_id'] != NULL"}
               <tr>
                 <td>{$purifiers[0]['serialnumber']}</td>
-                <td>{$purifiers[0]['location']}</td>
-                <td>{$purifiers[0]['nextmanager']}</td>
+                <td>{$purifiers[0]['deslocation']}</td>
               </tr>
               {/if}
             </tbody>
@@ -82,7 +80,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Nº Série</th>
-                <th>Data</th>
+                <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
             </thead>

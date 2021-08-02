@@ -94,6 +94,20 @@
                                         </div>
                                         <div class="col col-md-3">
                                             <div class="form-group">
+                                                <label for="local_id">Local</label>
+                                                <select class="form-control" name="local_id" id="local_id" required>
+                                                <option value=""></option>
+                                                <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                                                <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $anualplan["local_id"] == $value1["local_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                                <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="box-body">
+                                        <div class="col col-md-3">
+                                            <div class="form-group">
                                                 <label for="person_id">Responsável</label>
                                                 <select class="form-control" name="person_id" id="person_id" required>
                                                 <option value=""></option>
@@ -103,9 +117,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="box-body">
                                         <div class="col col-md-3">
                                             <div class="form-group">
                                                 <label for="frequency">Frequência</label>
@@ -134,9 +145,11 @@
                                         <div class="col col-md-2">
                                             <div class="form-group">
                                                 <label for="dtprevision">Data Previsão</label>
-                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="<?php echo htmlspecialchars( $anualplan["dtprevision"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="replaceSlash(dtprevision)" >
+                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="<?php echo htmlspecialchars( $anualplan["dtprevision"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="replaceSlash(dtprevision)" onChange="insertcolor(dtprevision,rstatus)" >
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="box-body">
                                         <div class="col col-md-5">
                                             <div class="form-group"> 
                                                 <div class="col col-md-2">

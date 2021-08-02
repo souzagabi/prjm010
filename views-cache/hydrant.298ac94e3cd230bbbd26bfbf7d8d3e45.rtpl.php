@@ -58,6 +58,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Número</th>
@@ -68,7 +69,8 @@
             <tbody>
               <?php $counter1=-1;  if( isset($hydrants) && ( is_array($hydrants) || $hydrants instanceof Traversable ) && sizeof($hydrants) ) foreach( $hydrants as $key1 => $value1 ){ $counter1++; ?>
               <tr>
-                <td><?php echo htmlspecialchars( $value1["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["tipe"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["idnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["observation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

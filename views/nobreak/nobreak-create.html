@@ -49,10 +49,10 @@
             
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="location">Localização</label>
-                <select class="form-control" name="location" id="location" required>
+                <label for="location_id">Localização</label>
+                <select class="form-control" name="location_id" id="location_id" required>
                   {loop="$locations"}
-                  <option value="{$value.location}" >{$value.deslocation}</option>
+                  <option value="{$value.location_id}" >{$value.deslocation}</option>
                   {/loop}
                 </select>
               </div>

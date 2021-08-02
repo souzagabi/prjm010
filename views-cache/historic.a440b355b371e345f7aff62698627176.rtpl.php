@@ -61,15 +61,13 @@
               <tr class="alert-primary">
                 <th>Nº Série</th>
                 <th>Local</th>
-                <th>Próxima Manutenção</th>
               </tr>
             </thead>
             <tbody>
               <?php if( $purifiers["0"]['historic_id'] != NULL ){ ?>
               <tr>
                 <td><?php echo htmlspecialchars( $purifiers["0"]['serialnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $purifiers["0"]['location'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $purifiers["0"]['nextmanager'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $purifiers["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -82,7 +80,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Nº Série</th>
-                <th>Data</th>
+                <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
             </thead>

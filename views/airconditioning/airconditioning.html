@@ -58,14 +58,16 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
-                <th>Sala/Local</th>
+                <th>Localização</th>
+                <th>Local</th>
                 <th>Ação</th>
               </tr>
             </thead>
             <tbody>
               {loop="$airconditionings"}
               <tr>
-                <td>{$value.location}</td>
+                <td>{$value.deslocation}</td>
+                <td>{$value.deslocal}</td>
                 <td>
                   <a href="/airconditioning/{$value.airconditioning_id}" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
                   <a href="/historicA?airconditioning_id={$value.airconditioning_id}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>

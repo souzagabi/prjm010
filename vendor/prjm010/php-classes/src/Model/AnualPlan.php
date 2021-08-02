@@ -115,7 +115,8 @@
         public function saveA()
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_anualplan_save(:yyear,:equipament_id,:localtion_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
+           
+            $results = $sql->select("CALL prc_anualplan_save(:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
                 ":yyear"            => $this->getyyear(),
                 ":equipament_id"    => $this->getequipament_id(),
                 ":location_id"      => $this->getlocation_id(),

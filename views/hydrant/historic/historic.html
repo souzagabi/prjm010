@@ -59,19 +59,19 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Tipo</th>
                 <th>Número</th>
-                <th>Observação</th>
               </tr>
             </thead>
             <tbody>
               {if="$hydrants[0]['historic_id'] != NULL"}
               <tr>
-                <td>{$hydrants[0]['location']}</td>
+                <td>{$hydrants[0]['deslocation']}</td>
+                <td>{$hydrants[0]['deslocal']}</td>
                 <td>{$hydrants[0]['tipe']}</td>
                 <td>{$hydrants[0]['idnumber']}</td>
-                <td>{$hydrants[0]['observation']}</td>
               </tr>
               {/if}
             </tbody>

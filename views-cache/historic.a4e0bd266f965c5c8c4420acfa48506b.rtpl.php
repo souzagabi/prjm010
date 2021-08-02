@@ -59,13 +59,15 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-primary">
-                <th>Sala/Local</th>
+                <th>Localização</th>
+                <th>Local</th>
               </tr>
             </thead>
             <tbody>
               <?php if( $airconditionings["0"]['historic_id'] != NULL ){ ?>
               <tr>
-                <td><?php echo htmlspecialchars( $airconditionings["0"]['location'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $airconditionings["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $airconditionings["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -78,7 +80,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Mês</th>
-                <th>Data</th>
+                <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
             </thead>

@@ -39,10 +39,10 @@
                             </div>
                             <div class="col col-md-3">
                                 <div class="form-group">
-                                    <label for="location">Localização</label>
-                                    <select class="form-control" name="location" id="location" required>
+                                    <label for="location_id">Localização</label>
+                                    <select class="form-control" name="location_id" id="location_id" required>
                                     {loop="$locations"}
-                                    <option value="{$value.location}" >{$value.deslocation}</option>
+                                    <option value="{$value.location_id}" {if="$value.location_id == $purifier.location_id "}selected{/if}>{$value.deslocation}</option>
                                     {/loop}
                                     </select>
                                 </div>
@@ -52,7 +52,7 @@
                                     <label for="local_id">Local</label>
                                     <select class="form-control" name="local_id" id="local_id" required>
                                         {loop="$locais"}
-                                        <option value="{$value.local_id}" >{$value.deslocal}</option>
+                                        <option value="{$value.local_id}" {if="$value.local_id == $purifier.local_id "}selected{/if}>{$value.deslocal}</option>
                                         {/loop}
                                     </select>
                                 </div>

@@ -19,11 +19,6 @@
     
       <div class="row">
           <div class="col-md-12">
-            <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-                    class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-                    <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-                <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
-            </div>
             <div class="box box-success">
             <!-- form start -->
             
@@ -43,13 +38,27 @@
                   </div>
                 </div>
                 
-                <div class="col col-md-4">
+                <div class="col col-md-2">
                   <div class="form-group">
-                    <label for="location">Local</label>
-                    <input type="text" class="form-control" name="location" id="location" value="<?php echo htmlspecialchars( $fireexting["location"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)" autofocus="autofocus" required>
+                      <label for="location_id">Localização</label>
+                      <select class="form-control" name="location_id" id="location_id" required>
+                        <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
+                        <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                        <?php } ?>
+                      </select>
                   </div>
                 </div>
-                <div class="col col-md-4">
+                <div class="col col-md-3">
+                    <div class="form-group">
+                        <label for="local_id">Local</label>
+                        <select class="form-control" name="local_id" id="local_id" required>
+                          <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                          <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                          <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-md-2">
                   <div class="form-group">
                     <label for="tipe">Tipo</label>
                     <input type="text" class="form-control" name="tipe" maxlength="20" id="tipe" value="<?php echo htmlspecialchars( $fireexting["tipe"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(tipe)" required>

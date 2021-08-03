@@ -32,8 +32,6 @@ CREATE TABLE `prjm010024` (
   `tipe` varchar(20) DEFAULT NULL,
   `idnumber` varchar(20) DEFAULT NULL,
   `observation` varchar(255) DEFAULT NULL,
-  `user_id_deleted` int DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`hydrant_id`),
@@ -52,7 +50,7 @@ CREATE TABLE `prjm010024` (
 
 LOCK TABLES `prjm010024` WRITE;
 /*!40000 ALTER TABLE `prjm010024` DISABLE KEYS */;
-INSERT INTO `prjm010024` VALUES (1,1,3,4,'PÓ VERDE POO','235 GGG','dsf dfsdf sdf f sdfghj cvcc',1,'2021-08-02 19:34:42','1','2021-08-02 14:28:21');
+INSERT INTO `prjm010024` VALUES (1,1,3,4,'PÓ VERDE POO','235 GGG','dsf dfsdf sdf f sdfghj cvcc','1','2021-08-02 14:28:21');
 /*!40000 ALTER TABLE `prjm010024` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -65,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:13
+-- Dump completed on 2021-08-03 17:35:20

@@ -76,9 +76,8 @@
         {
             $sql = new Sql();
            
-            $results = $sql->select("CALL prc_hydrant_delete(:hydrant_id, :user_id)", array(
-                ":hydrant_id"  => $this->gethydrant_id(),
-                ":user_id"     => $this->getuser_id()
+            $results = $sql->select("CALL prc_hydrant_delete(:hydrant_id)", array(
+                ":hydrant_id"  => $this->gethydrant_id()
             ));
       
             $this->setData($results);

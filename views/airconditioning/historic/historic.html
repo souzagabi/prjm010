@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Ar Condicionado
+        Histórico do Ar Condicionado {if="$airconditionings[0]['airconditioning_id'] != NULL"} {$airconditionings[0]['brand']} - {$airconditionings[0]['serialnumber']}{/if}
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -61,6 +61,8 @@
               <tr class="alert-primary">
                 <th>Localização</th>
                 <th>Local</th>
+                <th>Marca</th>
+                <th>Nº de Série</th>
               </tr>
             </thead>
             <tbody>
@@ -68,6 +70,8 @@
               <tr>
                 <td>{$airconditionings[0]['deslocation']}</td>
                 <td>{$airconditionings[0]['deslocal']}</td>
+                <td>{$airconditionings[0]['brand']}</td>
+                <td>{$airconditionings[0]['serialnumber']}</td>
               </tr>
               {/if}
             </tbody>
@@ -80,6 +84,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Mês</th>
+                <th>Data Manutenção</th>
                 <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
@@ -90,6 +95,7 @@
               <tr>
                 <td>{$value.inmonth}</td>
                 <td>{$value.daydate}</td>
+                <td>{$value.dtnextmanager}</td>
                 <td>
                   <a href="/historicA/{if="$airconditionings[0]['historic_id']"}{$value.historic_id}{/if}" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
                   <a href="/historicA/{if="$airconditionings[0]['historic_id']"}{$value.historic_id}{/if}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>

@@ -72,9 +72,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_local_delete(:local_id,:user_id)", array(
-                ":local_id"  =>(int)$this->getlocal_id(),
-                ":user_id"  =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_local_delete(:local_id)", array(
+                ":local_id"  =>(int)$this->getlocal_id()
             ));
         
             $this->setData($results);

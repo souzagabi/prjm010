@@ -93,9 +93,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_historicH_delete(:historic_id, :user_id)", array(
-                ":historic_id"  =>(int)$this->gethistoric_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_historicH_delete(:historic_id)", array(
+                ":historic_id"  =>(int)$this->gethistoric_id()
             ));
         
             $this->setData($results);

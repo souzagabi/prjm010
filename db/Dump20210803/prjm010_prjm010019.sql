@@ -34,8 +34,6 @@ CREATE TABLE `prjm010019` (
   `painting` char(1) DEFAULT NULL,
   `hydrostatic` char(1) DEFAULT NULL,
   `hothers` varchar(100) DEFAULT NULL,
-  `user_id_deleted` int DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`historic_id`),
@@ -50,7 +48,7 @@ CREATE TABLE `prjm010019` (
 
 LOCK TABLES `prjm010019` WRITE;
 /*!40000 ALTER TABLE `prjm010019` DISABLE KEYS */;
-INSERT INTO `prjm010019` VALUES (1,1,'2021-08-02','0','0','0','0','0','SEM COMENTÁRIO',1,'2021-08-02 19:47:21','1','2021-08-02 19:44:00');
+INSERT INTO `prjm010019` VALUES (1,1,'2021-08-02','0','0','0','0','0','SEM COMENTÁRIO','1','2021-08-02 19:44:00');
 /*!40000 ALTER TABLE `prjm010019` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:13
+-- Dump completed on 2021-08-03 17:35:22

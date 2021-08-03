@@ -36,8 +36,6 @@ CREATE TABLE `prjm010017` (
   `resulttest` char(1) DEFAULT NULL,
   `observation` varchar(100) DEFAULT NULL,
   `serialnumber` varchar(50) DEFAULT NULL,
-  `user_id_deleted` int DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`nobreak_id`),
@@ -56,7 +54,7 @@ CREATE TABLE `prjm010017` (
 
 LOCK TABLES `prjm010017` WRITE;
 /*!40000 ALTER TABLE `prjm010017` DISABLE KEYS */;
-INSERT INTO `prjm010017` VALUES (1,1,3,3,'2021-08-02','08:50:00','ADMINISTRADOR DO SISTEMA','BCF 13D F154','0','erew xzcxzczxcxz xzc xzcxzc','323443',1,'2021-08-02 12:14:47','1','2021-08-02 11:51:24');
+INSERT INTO `prjm010017` VALUES (1,1,3,3,'2021-08-02','08:50:00','ADMINISTRADOR DO SISTEMA','BCF 13D F154','0','erew xzcxzczxcxz xzc xzcxzc','323443','1','2021-08-02 11:51:24');
 /*!40000 ALTER TABLE `prjm010017` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -69,4 +67,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:12
+-- Dump completed on 2021-08-03 17:35:23

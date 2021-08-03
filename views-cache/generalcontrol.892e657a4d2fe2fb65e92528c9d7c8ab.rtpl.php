@@ -58,6 +58,7 @@
           <table class="table table-straped">
             <thead class="thead-dark">
               <tr class="alert-warning">
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Hidrálica</th>
                 <th>Elétrica</th>
@@ -69,6 +70,7 @@
               <?php $counter1=-1;  if( isset($generalcontrols) && ( is_array($generalcontrols) || $generalcontrols instanceof Traversable ) && sizeof($generalcontrols) ) foreach( $generalcontrols as $key1 => $value1 ){ $counter1++; ?>
               <tr>
                 <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["dthydraulic"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["dteletric"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["dtbuilding"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

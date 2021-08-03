@@ -29,14 +29,13 @@ CREATE TABLE `prjm010027` (
   `airconditioning_id` int NOT NULL,
   `inmonth` varchar(15) DEFAULT NULL,
   `daydate` date DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
-  `user_id_deleted` int DEFAULT NULL,
+  `dtnextmanager` date DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`historic_id`),
   KEY `FK_prjm010027_PRJM010026_idx` (`airconditioning_id`),
   CONSTRAINT `fk_prjm010027_PRJM010026` FOREIGN KEY (`airconditioning_id`) REFERENCES `prjm010026` (`airconditioning_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +44,6 @@ CREATE TABLE `prjm010027` (
 
 LOCK TABLES `prjm010027` WRITE;
 /*!40000 ALTER TABLE `prjm010027` DISABLE KEYS */;
-INSERT INTO `prjm010027` VALUES (1,1,'JULHO','2021-08-02',NULL,NULL,'0','2021-08-02 14:00:06'),(2,1,'AGOSTO','2021-08-06',NULL,NULL,'0','2021-08-02 14:13:24');
 /*!40000 ALTER TABLE `prjm010027` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:14
+-- Dump completed on 2021-08-03 17:35:23

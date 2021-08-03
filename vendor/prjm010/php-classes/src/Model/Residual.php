@@ -90,9 +90,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_residual_delete(:residual_id, :user_id)", array(
-                ":residual_id"  =>(int)$this->getresidual_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_residual_delete(:residual_id)", array(
+                ":residual_id"  =>(int)$this->getresidual_id()
             ));
         
             $this->setData($results);

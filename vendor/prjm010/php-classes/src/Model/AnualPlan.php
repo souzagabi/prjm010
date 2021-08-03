@@ -177,9 +177,8 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_equipament_delete(:equipament_id,:user_id)", array(
-                ":equipament_id"  =>$this->getequipament_id(),
-                ":user_id"  =>$this->getuser_id()
+            $results = $sql->select("CALL prc_equipament_delete(:equipament_id)", array(
+                ":equipament_id"  =>$this->getequipament_id()
             ));
             
             $this->setData($results);
@@ -191,9 +190,8 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_anualplan_delete(:anualplan_id, :person_id)", array(
-                ":anualplan_id"  =>(int)$this->getanualplan_id(),
-                ":person_id"     =>(int)$this->getperson_id()
+            $results = $sql->select("CALL prc_anualplan_delete(:anualplan_id)", array(
+                ":anualplan_id"  =>(int)$this->getanualplan_id()
             ));
         
             $this->setData($results);

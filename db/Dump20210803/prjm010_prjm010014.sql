@@ -35,8 +35,6 @@ CREATE TABLE `prjm010014` (
   `auth` varchar(45) NOT NULL,
   `sign` varchar(100) NOT NULL,
   `situation` char(1) DEFAULT '0',
-  `user_id_deleted` int DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`visitant_id`),
   KEY `FK_PRJM010014_PRJM010001_idx` (`person_id`),
@@ -62,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:12
+-- Dump completed on 2021-08-03 17:35:20

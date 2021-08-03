@@ -20,33 +20,44 @@
         {
             $i = 0;
             
-            if ((isset($object["daydate"]) && $object["daydate"] != '') || (isset($object["dateout"]) && $object["dateout"] != '')  || (isset($object["datein"]) && $object["datein"] != '') || (isset($object["dtprevision"]) && $object["dtprevision"] != '')) {
-                foreach ($object as $key => $value) {
-                    if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager") || $key == "dateout"  || $key == "datein" || $key == "dtprevision") {
-                        $object[$key] =  Metodo::convertDateView($value);
-                    }
-                    $i++;
-                }
-            } else 
-            {
+            //if ((isset($object["daydate"]) && $object["daydate"] != '') || (isset($object["dateout"]) && $object["dateout"] != '')  || (isset($object["datein"]) && $object["datein"] != '') || (isset($object["dtprevision"]) && $object["dtprevision"] != '')) {
+                // foreach ($object as $key => $value) {
+                //     $d = date_create_from_format('Y-m-d', $value);
+                //     if($d && $d->format('Y-m-d') == $value){
+                //         $values[$key] =  Metodo::convertDateView($value);
+                //     }
+                //     // if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager") || $key == "dateout"  || $key == "datein" || $key == "dtprevision") {
+                //     //     $object[$key] =  Metodo::convertDateView($value);
+                //     // }
+                //     $i++;
+                // }
+            // } else 
+            // {
                 if (isset($object)) {
                     foreach ($object as $key => $values) {
+                        
                         foreach ($values as $key => $value) {
-                            if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager" || $key == "dateout"  || $key == "datein" || $key == "dtprevision")) {
+                            $d = date_create_from_format('Y-m-d', $value);
+                            if($d && $d->format('Y-m-d') == $value){
                                 $values[$key] =  Metodo::convertDateView($value);
                             }
+                            // if ($value != '' && ($key == "daydate" || $key == "dt_save" || $key == "rechargedate" || $key == "nextmanager" || $key == "dateout"  || $key == "datein" || $key == "dtprevision")) {
+                            //     $values[$key] =  Metodo::convertDateView($value);
+                            // }
                         }
                         $object[$i] = $values;
                         $i++;
                     }
+                  
                 }
-            }
+            // }
         
             return $object;
         }
         
         public function convertDateToDataBase($object = array())
         {
+            
             foreach ($object as $key => $value) {
                 if (isset($value) && $value !='') {
                     $object[$key] =  Metodo::convertDateDataBase($object[$key]);
@@ -168,7 +179,6 @@
             if (isset($classModel[0]["pgs"]) && count($classModel) > 0 && $classModel != '') {
                 $pgs 	= Metodo::countRegister($classModel[0]["pgs"], $act);
             }
-                   
             return [$classModel, $pgs];
         }
     }

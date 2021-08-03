@@ -60,6 +60,8 @@
               <tr class="alert-warning">
                 <th>Localização</th>
                 <th>Local</th>
+                <th>Marca</th>
+                <th>N de Série</th>
                 <th>Ação</th>
               </tr>
             </thead>
@@ -68,6 +70,8 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["brand"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/airconditioning/<?php echo htmlspecialchars( $value1["airconditioning_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
                   <a href="/historicA?airconditioning_id=<?php echo htmlspecialchars( $value1["airconditioning_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>

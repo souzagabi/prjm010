@@ -31,6 +31,7 @@
             $results = $sql->select("CALL prc_generalcontrol_sel_byid(:generalcontrol_id)", array(
                 ":generalcontrol_id"=>(int)$generalcontrol_id
             ));
+            $results[0] = Metodo::convertDateToView($results);
             
             $this->setData($results[0]);
                      
@@ -77,9 +78,8 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_generalcontrol_delete(:generalcontrol_id,:user_id)", array(
-                ":generalcontrol_id"  =>$this->getgeneralcontrol_id(),
-                ":user_id"  =>$this->getuser_id()
+            $results = $sql->select("CALL prc_generalcontrol_delete(:generalcontrol_id)", array(
+                ":generalcontrol_id"  =>$this->getgeneralcontrol_id()
             ));
             
             $this->setData($results);

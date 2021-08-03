@@ -29,8 +29,8 @@ CREATE TABLE `prjm010026` (
   `person_id` int NOT NULL,
   `location_id` int NOT NULL,
   `local_id` int NOT NULL,
-  `user_id_deleted` int DEFAULT NULL,
-  `dt_deleted` timestamp NULL DEFAULT NULL,
+  `brand` varchar(100) DEFAULT NULL,
+  `serialnumber` varchar(40) DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`airconditioning_id`),
@@ -40,7 +40,7 @@ CREATE TABLE `prjm010026` (
   CONSTRAINT `fk_prjm010026_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_prjm010026_PRJM010029` FOREIGN KEY (`local_id`) REFERENCES `prjm010029` (`local_id`),
   CONSTRAINT `fk_prjm010026_PRJM010032` FOREIGN KEY (`location_id`) REFERENCES `prjm010032` (`location_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,6 @@ CREATE TABLE `prjm010026` (
 
 LOCK TABLES `prjm010026` WRITE;
 /*!40000 ALTER TABLE `prjm010026` DISABLE KEYS */;
-INSERT INTO `prjm010026` VALUES (1,1,4,2,NULL,NULL,'0','2021-08-02 13:51:49');
 /*!40000 ALTER TABLE `prjm010026` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:10
+-- Dump completed on 2021-08-03 17:35:21

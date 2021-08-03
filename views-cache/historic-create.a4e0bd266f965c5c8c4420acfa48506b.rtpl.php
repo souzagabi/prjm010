@@ -4,7 +4,7 @@
     <section class="content-header">
       <div class="box box-success title" style="background-color: #d5f8da;">
         <h4>
-          Cadastro de Histórico de Extintor
+          Cadastro de Histórico de Ar Condicionado
         </h4>
       </div>
       <ol class="breadcrumb">
@@ -36,10 +36,16 @@
                     <input type="text" class="form-control" id="inmonth" name="inmonth" value="<?php echo htmlspecialchars( $month, ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(inmonth)" >
                   </div>
                 </div>
-                <div class="col col-md-2">
+                <div class="col col-md-3">
                   <div class="form-group">
-                    <label for="daydate">Data do Dia</label>
+                    <label for="daydate">Data na Manutenção</label>
                     <input type="text" class="form-control" id="daydate" name="daydate" onChange="replaceSlash(daydate)" >
+                  </div>
+                </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                    <label for="dtnextmanager">Data Próxima Manutenção</label>
+                    <input type="text" class="form-control" id="dtnextmanager" name="dtnextmanager" onChange="replaceSlash(dtnextmanager)" >
                   </div>
                 </div>
               </div>

@@ -31,10 +31,16 @@
                     <input type="text" class="form-control" id="inmonth" name="inmonth" value="<?php echo htmlspecialchars( $historic["inmonth"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(inmonth)" >
                   </div>
                 </div>
-                <div class="col col-md-2">
+                <div class="col col-md-3">
                   <div class="form-group">
-                    <label for="daydate">Data do Dia</label>
+                    <label for="daydate">Data da Manutenção</label>
                     <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $historic["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
+                  </div>
+                </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                    <label for="dtnextmanager">Data da Próxima Manutenção</label>
+                    <input type="text" class="form-control" id="dtnextmanager" name="dtnextmanager" value="<?php echo htmlspecialchars( $historic["dtnextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(dtnextmanager)" >
                   </div>
                 </div>
               </div>

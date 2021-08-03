@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Ar Condicionado
+        Histórico do Ar Condicionado <?php if( $airconditionings["0"]['airconditioning_id'] != NULL ){ ?> <?php echo htmlspecialchars( $airconditionings["0"]['brand'], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $airconditionings["0"]['serialnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -61,6 +61,8 @@
               <tr class="alert-primary">
                 <th>Localização</th>
                 <th>Local</th>
+                <th>Marca</th>
+                <th>Nº de Série</th>
               </tr>
             </thead>
             <tbody>
@@ -68,6 +70,8 @@
               <tr>
                 <td><?php echo htmlspecialchars( $airconditionings["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $airconditionings["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $airconditionings["0"]['brand'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $airconditionings["0"]['serialnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -80,6 +84,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Mês</th>
+                <th>Data Manutenção</th>
                 <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
@@ -90,6 +95,7 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["inmonth"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["dtnextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/historicA/<?php if( $airconditionings["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
                   <a href="/historicA/<?php if( $airconditionings["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>

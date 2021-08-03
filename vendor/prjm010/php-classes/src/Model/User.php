@@ -135,9 +135,8 @@
         public function delete()
         {
             $sql = new Sql();
-            $results = $sql->select("CALL prc_person_delete(:responsable_id,:user_id)", array(
-                ":responsable_id"=>(int)$this->getresponsable_id(),
-                ":user_id"=>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_person_delete(:responsable_id)", array(
+                ":responsable_id"=>(int)$this->getresponsable_id()
             ));
            
             $this->setData($results);

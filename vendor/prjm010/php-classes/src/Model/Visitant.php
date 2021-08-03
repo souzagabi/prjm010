@@ -110,10 +110,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_visitant_delete(:visitant_id, :user_id,:person_id)", array(
-                ":visitant_id"  =>(int)$this->getvisitant_id(),
-                ":user_id"      =>(int)$this->getuser_id(),
-                ":person_id"    =>(int)$this->getperson_id()
+            $results = $sql->select("CALL prc_visitant_delete(:visitant_id)", array(
+                ":visitant_id"  =>(int)$this->getvisitant_id()
             ));
             
             $this->setData($results);

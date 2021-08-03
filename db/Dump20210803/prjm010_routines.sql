@@ -35,8 +35,7 @@ USE `prjm010`;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_airconditioning_delete`(
-	par_airconditioning_id int(11),
-    par_user_id int(11)
+	par_airconditioning_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -46,26 +45,14 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010026  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE airconditioning_id = par_airconditioning_id;
+    DELETE FROM PRJM010026 WHERE airconditioning_id = par_airconditioning_id;
 	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Ar Condicionado";
 	ELSE
 		SET MESSAGE = "SUCCESS: Registro excluído Extintor com sucesso!!" ;
 	END IF;
-    
-	UPDATE PRJM010027  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE airconditioning_id = par_airconditioning_id;
-	
+   
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Histórico";
 	ELSE
@@ -100,7 +87,9 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_airconditioning_save`(
 	par_person_id int(11),
 	par_location_id int(11),
-    par_local_id int(11)
+    par_local_id int(11),
+    par_brand varchar(100),
+    par_serialnumber varchar(50)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -111,8 +100,8 @@ BEGIN
     START TRANSACTION;
     
     INSERT INTO PRJM010026
-		(person_id,location_id,local_id)
-		VALUES(par_person_id,par_location_id,par_local_id);
+		(person_id,location_id,local_id, brand, serialnumber)
+		VALUES(par_person_id,par_location_id,par_local_id, par_serialnumber);
     
     IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010026";
@@ -214,7 +203,7 @@ BEGIN
     
     SET @sql = CONCAT('SELECT * ');
 	SET @sql = CONCAT(@sql, ' FROM PRJM010026 PRJM026 ');
-    SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010010 PRJM010 USING(person_id) ');
+    #SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010010 PRJM010 USING(person_id) ');
 	SET @sql = CONCAT(@sql, ' WHERE PRJM026.airconditioning_id = "', par_airconditioning_id, '"');
     
     PREPARE STMT FROM @sql;
@@ -247,7 +236,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_airconditioning_update`(
 	par_airconditioning_id int(11),
     par_person_id int(11),
 	par_location_id int(11),
-    par_local_id int(11)
+    par_local_id int(11),
+    par_brand varchar(100),
+    par_serialnumber varchar(50)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -261,7 +252,9 @@ BEGIN
 	SET
 		person_id       = par_person_id,
 		location_id     = par_location_id,
-        local_id		= par_local_id
+        local_id		= par_local_id,
+		brand			= par_brand ,
+		serialnumber	= par_serialnumber
 	WHERE airconditioning_id = par_airconditioning_id;
 	
 	IF EX = 1 THEN
@@ -290,8 +283,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_anualplan_delete`(
-	par_anualplan_id int(11),
-    par_user_id int(11)
+	par_anualplan_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -301,13 +293,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERRO: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010030 
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-        
-	WHERE anualplan_id = par_anualplan_id;
+    DELETE FROM PRJM010030 WHERE anualplan_id = par_anualplan_id;
     
     IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010030";
@@ -578,8 +564,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_clothing_delete`(
-	par_clothing_id int(11),
-    par_user_id int(11)
+	par_clothing_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -589,10 +574,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     	       
-	SET @sql = CONCAT('UPDATE PRJM010022  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010022  ');
 	SET @sql = CONCAT(@sql,' WHERE clothing_id = ',par_clothing_id,';');
 	
 	#SELECT @sql;
@@ -848,8 +830,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_equipament_delete`(
-	par_equipament_id int(11),
-    par_user_id int(11)
+	par_equipament_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -859,20 +840,8 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010028 
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE equipament_id = par_equipament_id;
-    
-    UPDATE PRJM010030
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE equipament_id = par_equipament_id;
-        
+    DELETE FROM PRJM010028 WHERE equipament_id = par_equipament_id;
+         
     IF EX = 1 THEN
 		SELECT MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010028";
 	END IF;
@@ -1078,8 +1047,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_fireexting_delete`(
-	par_fireexting_id int(11),
-    par_user_id int(11)
+	par_fireexting_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -1089,12 +1057,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010018  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE fireexting_id = par_fireexting_id;
+    DELETE FROM PRJM010018 WHERE fireexting_id = par_fireexting_id;
 	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Extintor";
@@ -1102,13 +1065,6 @@ BEGIN
 		SET MESSAGE = "SUCCESS: Registro excluído Extintor com sucesso!!" ;
 	END IF;
     
-	UPDATE PRJM010019  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE fireexting_id = par_fireexting_id;
-	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Histórico";
 	ELSE
@@ -1351,8 +1307,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_generalcontrol_delete`(
-	par_generalcontrol_id int(11),
-    par_user_id int(11)
+	par_generalcontrol_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -1362,10 +1317,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-	SET @sql = CONCAT('UPDATE PRJM010031  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010031  ');
 	SET @sql = CONCAT(@sql,' WHERE generalcontrol_id = ',par_generalcontrol_id,';');
 	
 	#SELECT @sql;
@@ -1462,6 +1414,8 @@ BEGIN
     
     SET @sql = CONCAT('SELECT *, (SELECT count(generalcontrol_id) FROM PRJM010031) / ', par_limit, ' AS pgs');
 	SET @sql = CONCAT(@sql, ' FROM PRJM010031 PRJM031  ');
+	SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010029 PRJM029 ON PRJM029.local_id = PRJM031.local_id');
+    SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010032 PRJM032 ON PRJM032.location_id = PRJM031.location_id ');
 	SET @sql = CONCAT(@sql, ' WHERE PRJM031.situation = 0 ');
 	
 	SET @sql = CONCAT(@sql, ' LIMIT ', par_start, ', ', par_limit);
@@ -1588,8 +1542,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_goods_delete`(
-	par_goods_id int(11),
-    par_user_id int(11)
+	par_goods_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -1599,10 +1552,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-	SET @sql = CONCAT('UPDATE PRJM010016  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010016  ');
 	SET @sql = CONCAT(@sql,' WHERE goods_id = ',par_goods_id,';');
 	
 	#SELECT @sql;
@@ -1857,8 +1807,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicA_delete`(
-	par_historic_id int(11), 
-    par_user_id int(11)
+	par_historic_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -1868,10 +1817,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     	
-	SET @sql = CONCAT('UPDATE PRJM010027  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = "',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010027  ');
 	SET @sql = CONCAT(@sql,' WHERE historic_id = ',par_historic_id,';');
 	
 	#SELECT @sql;
@@ -1908,7 +1854,8 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicA_save`(
 	par_airconditioning_id int(11),
 	par_inmonth varchar(15),
-	par_daydate date
+	par_daydate date,
+    par_dtnextmanager date
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -1919,8 +1866,8 @@ BEGIN
     START TRANSACTION;
     
     INSERT INTO PRJM010027
-		(airconditioning_id,inmonth,daydate)
-		VALUES(par_airconditioning_id,par_inmonth,par_daydate);
+		(airconditioning_id,inmonth,daydate, dtnextmanager)
+		VALUES(par_airconditioning_id,par_inmonth,par_daydate, par_dtnextmanager);
     
     IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao gravar registro na tabela PRJM010027";
@@ -1970,7 +1917,7 @@ BEGIN
     SET @sql = CONCAT(@sql, ' LEFT JOIN PRJM010027 PRJM027 USING(airconditioning_id) ');
 	SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010029 PRJM029 ON PRJM029.local_id = PRJM026.local_id');
     SET @sql = CONCAT(@sql, ' INNER JOIN PRJM010032 PRJM032 ON PRJM032.location_id = PRJM026.location_id ');
-	SET @sql = CONCAT(@sql, ' WHERE PRJM027.situation = 0 AND PRJM026.airconditioning_id = ',par_airconditioning_id);
+	SET @sql = CONCAT(@sql, ' WHERE PRJM026.situation = 0 AND PRJM026.airconditioning_id = ',par_airconditioning_id);
 	
 	IF par_daydate IS NOT NULL AND par_daydate != '' THEN
 		SET @sql = CONCAT(@sql, ' AND PRJM027.daydate >= "', par_daydate, '"');
@@ -1983,7 +1930,7 @@ BEGIN
 	EXECUTE STMT;
 	  
     IF EX = 1 THEN
-		SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010027";
+		SET MESSAGE = "ERROR: Erro ao filtrar registro na tabela PRJM010027. ";
 		SELECT MESSAGE;
 		ROLLBACK;
 	ELSE
@@ -2055,7 +2002,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicA_update`(
 	par_historic_id int(11),
 	par_airconditioning_id int(11),
 	par_inmonth varchar(15),
-    par_daydate varchar(10)
+    par_daydate date,
+    par_dtnextmanager date
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -2069,7 +2017,8 @@ BEGIN
 	SET
 		airconditioning_id 	= par_airconditioning_id,
         inmonth				= par_inmonth,
-		daydate         	= par_daydate
+		daydate         	= par_daydate,
+		dtnextmanager		= par_dtnextmanager
 	WHERE historic_id 	= par_historic_id;
 	
 	IF EX = 1 THEN
@@ -2098,8 +2047,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicE_delete`(
-	par_historic_id int(11), 
-    par_user_id int(11)
+	par_historic_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -2109,10 +2057,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     	
-	SET @sql = CONCAT('UPDATE PRJM010019  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = "',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010019  ');
 	SET @sql = CONCAT(@sql,' WHERE historic_id = ',par_historic_id,';');
 	
 	#SELECT @sql;
@@ -2357,8 +2302,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicH_delete`(
-	par_historic_id int(11), 
-    par_user_id int(11)
+	par_historic_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -2368,10 +2312,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     	
-	SET @sql = CONCAT('UPDATE PRJM010025  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = "',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010025  ');
 	SET @sql = CONCAT(@sql,' WHERE historic_id = ',par_historic_id,';');
 	
 	#SELECT @sql;
@@ -2632,8 +2573,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_historicP_delete`(
-	par_historic_id int(11), 
-    par_user_id int(11)
+	par_historic_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -2643,10 +2583,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     	
-	SET @sql = CONCAT('UPDATE PRJM010021  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = "',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010021  ');
 	SET @sql = CONCAT(@sql,' WHERE historic_id = ',par_historic_id,';');
 	
 	#SELECT @sql;
@@ -2878,8 +2815,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_hydrant_delete`(
-	par_hydrant_id int(11),
-    par_user_id int(11)
+	par_hydrant_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -2889,26 +2825,14 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010024 
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE hydrant_id = par_hydrant_id;
+    DELETE FROM PRJM010024 WHERE hydrant_id = par_hydrant_id;
 	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Hidrante";
 	ELSE
 		SET MESSAGE = "SUCCESS: Registro excluído Extintor com sucesso!!" ;
 	END IF;
-    
-	UPDATE PRJM010025  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE hydrant_id = par_hydrant_id;
-	
+ 
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Histórico";
 	ELSE
@@ -3133,8 +3057,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_local_delete`(
-	par_local_id int(11),
-    par_user_id int(11)
+	par_local_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -3144,21 +3067,8 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010029 
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-        
-    WHERE local_id = par_local_id;
-    
-    UPDATE PRJM010030
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE local_id = par_local_id;
-    
+    DELETE FROM PRJM010029 WHERE local_id = par_local_id;
+   
     IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010029";
 	END IF;
@@ -3366,8 +3276,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_location_delete`(
-	par_location_id int(11),
-    par_user_id int(11)
+	par_location_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -3377,20 +3286,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010032 
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-        
-    WHERE location_id = par_location_id;
-    
-    UPDATE PRJM010030
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE location_id = par_location_id;
+    DELETE FROM PRJM010032 WHERE location_id = par_location_id;
     
     IF EX = 1 THEN
 		SELECT MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010032";
@@ -3597,8 +3493,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_material_delete`(
-	par_material_id int(11),
-    par_user_id int(11)
+	par_material_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -3608,10 +3503,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
   
-	SET @sql = CONCAT('UPDATE PRJM010023  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010023  ');
 	SET @sql = CONCAT(@sql,' WHERE material_id = ',par_material_id,';');
 	
 	#SELECT @sql;
@@ -3863,8 +3755,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_nobreak_delete`(
-	par_nobreak_id int(11),
-    par_user_id int(11)
+	par_nobreak_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -3874,10 +3765,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
    
-    SET @sql = CONCAT('UPDATE PRJM010017  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+    SET @sql = CONCAT('DELETE FROM PRJM010017  ');
 	SET @sql = CONCAT(@sql,' WHERE nobreak_id = ',par_nobreak_id,';');
 	
 	#SELECT @sql;
@@ -4224,8 +4112,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_person_delete`(
-	par_person_id int(11),
-    par_user_id int(11)
+	par_person_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -4235,12 +4122,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010001 
-    SET
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE person_id = par_person_id;
+    DELETE FROM PRJM010001 WHERE person_id = par_person_id;
         
     IF EX = 1 THEN
 		SELECT MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010001";
@@ -4456,8 +4338,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_purifier_delete`(
-	par_purifier_id int(11),
-    par_user_id int(11)
+	par_purifier_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -4467,26 +4348,14 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-    UPDATE PRJM010020  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE purifier_id = par_purifier_id;
+    DELETE FROM PRJM010020 WHERE purifier_id = par_purifier_id;
 	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Purificador";
 	ELSE
 		SET MESSAGE = "SUCCESS: Registro excluído Extintor com sucesso!!" ;
 	END IF;
-    
-	UPDATE PRJM010021  
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE purifier_id = par_purifier_id;
-	
+    	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela de Histórico";
 	ELSE
@@ -4729,8 +4598,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_residual_delete`(
-	par_residual_id int(11),
-    par_user_id int(11)
+	par_residual_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -4740,10 +4608,7 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
     
-	SET @sql = CONCAT('UPDATE PRJM010015  ');
-	SET @sql = CONCAT(@sql,' SET situation = 1,');
-	SET @sql = CONCAT(@sql,' user_id_deleted = ',par_user_id,',');
-	SET @sql = CONCAT(@sql,' dt_deleted = ','"',now(),'"');
+	SET @sql = CONCAT('DELETE FROM PRJM010015  ');
 	SET @sql = CONCAT(@sql,' WHERE residual_id = ',par_residual_id,';');
 	
 	#SELECT @sql;
@@ -5097,9 +4962,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `prc_visitant_delete`(
-	par_visitant_id int(11),
-    par_user_id int(11),
-    par_person_id int(11)
+	par_visitant_id int(11)
 )
 BEGIN
 	DECLARE MESSAGE varchar(1000);
@@ -5109,19 +4972,12 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR SQLSTATE '23000' SELECT 'ERROR: Erro no código SQL.' AS MESSAGE;
     START TRANSACTION;
    	
-    CALL prc_person_delete(par_person_id, par_user_id);
+    CALL prc_person_delete(par_person_id);
     
     IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010001";
 	END IF;
     
-	UPDATE PRJM010014
-	SET 
-		situation = 1,
-		user_id_deleted = par_user_id,
-		dt_deleted = now()
-	WHERE visitant_id = par_visitant_id;
-	
 	IF EX = 1 THEN
 		SET MESSAGE = "ERROR: Erro ao excluir registro na tabela PRJM010014";
 	END IF;
@@ -5408,4 +5264,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  7:46:16
+-- Dump completed on 2021-08-03 17:35:24

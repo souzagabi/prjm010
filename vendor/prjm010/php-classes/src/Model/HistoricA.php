@@ -31,7 +31,8 @@
                 ":historic_id"=>(int)$historic_id
             ));
            
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $results = Metodo::convertDateToView($results);
+             
             $this->setData($results[0]);
                      
         }
@@ -39,11 +40,12 @@
         public function save()
         {
             $sql = new Sql();
-           
-            $results = $sql->select("CALL prc_historicA_save(:airconditioning_id,:inmonth,:daydate)", array(
+            
+            $results = $sql->select("CALL prc_historicA_save(:airconditioning_id,:inmonth,:daydate,:dtnextmanager)", array(
                 ":airconditioning_id"   => $this->getairconditioning_id(),
                 ":inmonth"              => $this->getinmonth(),
-                ":daydate"              => $this->getdaydate()
+                ":daydate"              => $this->getdaydate(),
+                ":dtnextmanager"        => $this->getdtnextmanager()
                 
             ));
            
@@ -56,12 +58,13 @@
         {
             
             $sql = new Sql();
-            
-            $results = $sql->select("CALL prc_historicA_update(:historic_id,:airconditioning_id,:inmonth,:daydate)", array(
+                        
+            $results = $sql->select("CALL prc_historicA_update(:historic_id,:airconditioning_id,:inmonth,:daydate,:dtnextmanager)", array(
                 ":historic_id"          => $this->gethistoric_id(),
                 ":airconditioning_id"   => $this->getairconditioning_id(),
                 ":inmonth"              => $this->getinmonth(),
-                ":daydate"              => $this->getdaydate()
+                ":daydate"              => $this->getdaydate(),
+                ":dtnextmanager"        => $this->getdtnextmanager()
             ));
 
             $this->setData($results);
@@ -74,9 +77,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_historicA_delete(:historic_id, :user_id)", array(
-                ":historic_id"  =>(int)$this->gethistoric_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_historicA_delete(:historic_id)", array(
+                ":historic_id"  =>(int)$this->gethistoric_id()
             ));
         
             $this->setData($results);

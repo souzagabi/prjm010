@@ -92,9 +92,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_nobreak_delete(:nobreak_id, :user_id)", array(
-                ":nobreak_id"  =>(int)$this->getnobreak_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_nobreak_delete(:nobreak_id)", array(
+                ":nobreak_id"  =>(int)$this->getnobreak_id()
             ));
         
             $this->setData($results);

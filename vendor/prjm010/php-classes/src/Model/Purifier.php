@@ -83,9 +83,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_purifier_delete(:purifier_id, :user_id)", array(
-                ":purifier_id"  => $this->getpurifier_id(),
-                ":user_id"      => $this->getuser_id()
+            $results = $sql->select("CALL prc_purifier_delete(:purifier_id)", array(
+                ":purifier_id"  => $this->getpurifier_id()
             ));
         
             $this->setData($results);

@@ -89,9 +89,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_material_delete(:material_id, :user_id)", array(
-                ":material_id"  =>(int)$this->getmaterial_id(),
-                ":user_id"      =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_material_delete(:material_id)", array(
+                ":material_id"  =>(int)$this->getmaterial_id()
             ));
         
             $this->setData($results);

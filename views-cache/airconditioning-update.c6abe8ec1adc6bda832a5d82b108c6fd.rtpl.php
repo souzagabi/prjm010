@@ -50,6 +50,18 @@
                         </select>
                     </div>
                 </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                      <label for="brand">Marca </label>
+                      <input type="text" class="form-control" id="brand" name="brand" value="<?php echo htmlspecialchars( $airconditioning["brand"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(brand)" >
+                  </div>
+                </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                      <label for="serialnumber">Nº de Séria </label>
+                      <input type="text" class="form-control" id="serialnumber" name="serialnumber" value="<?php echo htmlspecialchars( $airconditioning["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" >
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
               <div class="box-footer">

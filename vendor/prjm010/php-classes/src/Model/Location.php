@@ -72,9 +72,8 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_location_delete(:location_id,:user_id)", array(
-                ":location_id"  =>(int)$this->getlocation_id(),
-                ":user_id"  =>(int)$this->getuser_id()
+            $results = $sql->select("CALL prc_location_delete(:location_id)", array(
+                ":location_id"  =>(int)$this->getlocation_id()
             ));
         
             $this->setData($results);

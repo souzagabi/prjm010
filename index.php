@@ -2163,10 +2163,11 @@
 		} 
 		
 		$historic	= Metodo::selectRegister($company, "HistoricA");
+
 		if ($historic[0] == NULL) {
 			$historic[0][0] = ["airconditioning_id"=>$_GET["airconditioning_id"],"historic_id"=> NULL ];
 		}
-
+// var_dump($historic);exit;
 		$page = new PageHistoricA();
 		
 		$page->setTpl("historic", array(
@@ -2239,7 +2240,7 @@
 		
 		$airconditioning = new HistoricA();
 		
-		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"],"dtnextmanager"=>$_POST["dtnextmanager"]]);
 		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -2283,7 +2284,7 @@
 		}
 
 		$historic = new HistoricA();
-		$historic->getbyid($historic_id);
+		$historic->getById($historic_id);
 		
 		$page = new PageHistoricA();
 		
@@ -2297,10 +2298,11 @@
 		User::verifyLogin();
 		$historic = new HistoricA();
 		$historic->getbyid($historic_id);
+		
 		$airconditioning_id = $_POST['airconditioning_id'];
 
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"],"dtnextmanager"=>$_POST["dtnextmanager"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -2461,7 +2463,7 @@
 			$_GET["msg"] = '';
 		}
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"]]);
+			$ppost = Metodo::convertDateToDataBase(["dthydraulic"=>$_POST["dthydraulic"],"dteletric"=>$_POST["dteletric"],"dtbuilding"=>$_POST["dtbuilding"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -3046,7 +3048,10 @@
 		User::verifyLogin();
 		
 		$generalcontrol = new GeneralControl();
-
+		$ppost = Metodo::convertDateToDataBase(["dthydraulic"=>$_POST["dthydraulic"],"dteletric"=>$_POST["dteletric"],"dtbuilding"=>$_POST["dtbuilding"]]);
+		foreach ($ppost as $key => $value) {
+			$_POST[$key] = $value;
+		}	
 		$generalcontrol->setData($_POST);
 		
 		$msg = $generalcontrol->save();
@@ -3056,7 +3061,79 @@
 
 	});
 
+	$app->get("/generalcontrol/:generalcontrol_id/delete", function ($generalcontrol_id){
+		User::verifyLogin();
+		
+		$generalcontrol = new GeneralControl();
+		$generalcontrol->getById($generalcontrol_id);
+		
+		$user_id["user_id"] = $_SESSION["User"]["user_id"];
+		$generalcontrol->setdata($user_id);
+		
+		$msg = $generalcontrol->delete();
+		
+		header("Location: /generalcontrol?msg=".$msg);
+		exit;
+	});
 
+	$app->get('/generalcontrol/:generalcontrol_id', function($generalcontrol_id) {
+		User::verifyLogin();
+		
+		$company["generalcontrol"]		= NULL;
+		$company["daydate"]	    	= NULL;
+		$company["search"] 			= NULL;
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+
+		$locais			= Metodo::selectRegister($company, "Local");
+		$locations		= Metodo::selectRegister($company, "Location");
+		
+		$generalcontrol = new GeneralControl();
+		$generalcontrol->getById($generalcontrol_id);
+
+		$page = new PageGeneralControl();
+		$page->setTpl('generalcontrol-update', array(
+			"generalcontrol" =>$generalcontrol->getValues()[0],
+			"locations"=>$locations[0],
+			"locais"=>$locais[0],
+			"msg"=>$msg
+		));
+	});
+
+	$app->post('/anualplan/:anualplan_id', function($anualplan_id) {
+		User::verifyLogin();
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
+			$mess = explode(':', $_GET["msg"]);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$_GET["msg"] = '';
+		}
+		if (isset($_POST)) {
+			$ppost = Metodo::convertDateToDataBase(["dthydraulic"=>$_POST["dthydraulic"],"dteletric"=>$_POST["dteletric"],"dtbuilding"=>$_POST["dtbuilding"]]);
+			foreach ($ppost as $key => $value) {
+				$_POST[$key] = $value;
+			}
+			$_POST["user_id"] = $_SESSION["User"]["user_id"];
+		}
+
+		$anualplan = new AnualPlan();
+		$anualplan->getByIdA($anualplan_id);
+		
+		$anualplan->setData($_POST);
+		$msg = $anualplan->updateA();
+		
+		header("Location: /anualplan?msg=".$msg);
+		exit;
+		
+	});
 
 
 /*======================================================================================*/

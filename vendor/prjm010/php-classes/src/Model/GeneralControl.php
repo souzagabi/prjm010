@@ -31,7 +31,7 @@
             $results = $sql->select("CALL prc_generalcontrol_sel_byid(:generalcontrol_id)", array(
                 ":generalcontrol_id"=>(int)$generalcontrol_id
             ));
-            $results[0] = Metodo::convertDateToView($results);
+            $results = Metodo::convertDateToView($results);
             
             $this->setData($results[0]);
                      
@@ -58,9 +58,9 @@
         {
             
             $sql = new Sql();
-            
+           
             $results = $sql->select("CALL prc_generalcontrol_update(:generalcontrol_id,:location_id,:local_id,:dthydraulic,:dteletric,:dtbuilding)", array(
-                ":generalcontrol_id"    => $this->getgeneralcontrol_id(),
+                ":generalcontrol_id"     => $this->getgeneralcontrol_id(),
                 ":location_id"           => $this->getlocation_id(),
                 ":local_id"              => $this->getlocal_id(),
                 ":dthydraulic"           => $this->getdthydraulic(),

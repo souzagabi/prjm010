@@ -2167,7 +2167,7 @@
 		if ($historic[0] == NULL) {
 			$historic[0][0] = ["airconditioning_id"=>$_GET["airconditioning_id"],"historic_id"=> NULL ];
 		}
-// var_dump($historic);exit;
+	
 		$page = new PageHistoricA();
 		
 		$page->setTpl("historic", array(
@@ -3099,14 +3099,14 @@
 
 		$page = new PageGeneralControl();
 		$page->setTpl('generalcontrol-update', array(
-			"generalcontrol" =>$generalcontrol->getValues()[0],
+			"generalcontrol" =>$generalcontrol->getValues(),
 			"locations"=>$locations[0],
 			"locais"=>$locais[0],
 			"msg"=>$msg
 		));
 	});
 
-	$app->post('/anualplan/:anualplan_id', function($anualplan_id) {
+	$app->post('/generalcontrol/:generalcontrol_id', function($generalcontrol_id) {
 		User::verifyLogin();
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
@@ -3124,13 +3124,14 @@
 			$_POST["user_id"] = $_SESSION["User"]["user_id"];
 		}
 
-		$anualplan = new AnualPlan();
-		$anualplan->getByIdA($anualplan_id);
+		$generalcontrol = new GeneralControl();
+		$generalcontrol->getById($generalcontrol_id);
 		
-		$anualplan->setData($_POST);
-		$msg = $anualplan->updateA();
+		$generalcontrol->setData($_POST);
 		
-		header("Location: /anualplan?msg=".$msg);
+		$msg = $generalcontrol->update();
+		
+		header("Location: /generalcontrol?msg=".$msg);
 		exit;
 		
 	});

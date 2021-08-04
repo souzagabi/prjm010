@@ -2167,7 +2167,7 @@
 		if ($historic[0] == NULL) {
 			$historic[0][0] = ["airconditioning_id"=>$_GET["airconditioning_id"],"historic_id"=> NULL ];
 		}
-// var_dump($historic);exit;
+
 		$page = new PageHistoricA();
 		
 		$page->setTpl("historic", array(

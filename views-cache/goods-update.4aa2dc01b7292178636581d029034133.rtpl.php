@@ -39,13 +39,13 @@
             </div>
             <div class="col col-md-4">
               <div class="form-group">
-                <label for="goods">goods</label>
+                <label for="goods">Mercadoria</label>
                 <input type="text" class="form-control" name="goods" id="goods" value="<?php echo htmlspecialchars( $goods["goods"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(goods)" autofocus>
               </div>
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                <label for="qtde">Local</label>
+                <label for="qtde">Quantidade</label>
                 <input type="text" class="form-control" name="qtde" id="qtde" value="<?php echo htmlspecialchars( $goods["qtde"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(location)">
               </div>
             </div>

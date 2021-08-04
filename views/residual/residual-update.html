@@ -22,7 +22,7 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/residual/{$residual.person_id}" method="post" enctype="multipart/form-data">
+        <form role="form" action="/residual/{$residual.residual_id}" method="post" enctype="multipart/form-data">
           
           <div class="box-body">
             <div class="col col-md-2">
@@ -45,24 +45,25 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                  <label for="location_id">Localização</label>
-                  <select class="form-control" name="location_id" id="location_id" required>
-                    {loop="$locations"}
-                    <option value="{$value.location_id}" >{$value.deslocation}</option>
-                    {/loop}
-                  </select>
+                <label for="location_id">Localização</label>
+                <select class="form-control" name="location_id" id="location_id" required>
+                  {loop="$locations"}
+                  <option value="{$value.location_id}" {if="$value.location_id == $residual.location_id"}selected{/if}>{$value.deslocation}</option>
+                  {/loop}
+                </select>
               </div>
             </div>
             <div class="col col-md-3">
-                <div class="form-group">
-                    <label for="local_id">Local</label>
-                    <select class="form-control" name="local_id" id="local_id" required>
-                      {loop="$locais"}
-                      <option value="{$value.local_id}" >{$value.deslocal}</option>
-                      {/loop}
-                    </select>
-                </div>
+              <div class="form-group">
+                <label for="local_id">Local</label>
+                <select class="form-control" name="local_id" id="local_id" required>
+                  {loop="$locais"}
+                  <option value="{$value.local_id}" {if="$value.local_id == $residual.local_id"}selected{/if}>{$value.deslocal}</option>
+                  {/loop}
+                </select>
+              </div>
             </div>
+            
           </div>
           <div class="box-body">
             <div class="col col-md-4">
@@ -71,10 +72,14 @@
                 <input type="text" class="form-control" name="warehouse" id="warehouse" value="{$residual.warehouse}" onKeyUp="convertLowToUpper(warehouse)">
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
-                <label for="name_person">Nome</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" value="{$residual.name_person}" required>
+                  <label for="person_id">Responsável</label>
+                  <select class="form-control" name="person_id" id="person_id" required>
+                    {loop="$responsables"}
+                    <option value="{$value.person_id}" {if="$residual.person_id == $value.person_id"}selected{/if}>{$value.responsable}</option>
+                    {/loop}
+                  </select>
               </div>
             </div>
           </div>

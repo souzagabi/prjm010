@@ -22,7 +22,7 @@
                             <div class="col col-md-4">
                                 <div class="form-group">
                                 <label for="desequipament">Nome</label>
-                                <input type="text" class="form-control" name="desequipament" id="desequipament" value="<?php echo htmlspecialchars( $equipament["desequipament"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="convertLowToUpper(name_person)" autofocus="autofocus" required>
+                                <input type="text" class="form-control" name="desequipament" id="desequipament" value="<?php echo htmlspecialchars( $equipament["desequipament"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="convertLowToUpper(desequipament)" autofocus="autofocus" required>
                                 </div>
                             </div>
                         </div>

@@ -79,10 +79,15 @@
                 <input type="text" class="form-control" name="warehouse" id="warehouse" onKeyUp="convertLowToUpper(warehouse)" required>
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
-                <label for="name_person">Responsável</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" value="{$residual.name_person}" required readonly>
+                  <label for="person_id">Responsável</label>
+                  <select class="form-control" name="person_id" id="person_id" required>
+                    <option value=""></option>
+                    {loop="$responsables"}
+                    <option value="{$value.person_id}">{$value.responsable}</option>
+                    {/loop}
+                  </select>
               </div>
             </div>
            

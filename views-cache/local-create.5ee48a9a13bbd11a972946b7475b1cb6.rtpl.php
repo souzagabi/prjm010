@@ -26,7 +26,7 @@
                         <div class="box-body">
                             <div class="col col-md-4">
                                 <div class="form-group">
-                                <label for="deslocal">Local</label>
+                                <label for="deslocal">Local</label><strong class="obrigatorio"> *</strong>
                                 <input type="text" class="form-control" name="deslocal" id="deslocal" onkeyup="convertLowToUpper(deslocal)" autofocus="autofocus" required>
                                 </div>
                             </div>

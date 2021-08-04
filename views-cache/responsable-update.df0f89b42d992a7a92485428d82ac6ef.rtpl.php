@@ -28,19 +28,19 @@
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="rg_person">RG</label>
-                                <input type="text" class="form-control" name="rg_person" id="rg_person" value="<?php echo htmlspecialchars( $responsable["rg_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(rg_person)">
+                                <input type="text" class="form-control" name="rg_person" id="rg_person" maxlength="10" value="<?php echo htmlspecialchars( $responsable["rg_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(rg_person)">
                                 </div>
                             </div>
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="cpf_person">CPF</label>
-                                <input type="text" class="form-control" name="cpf_person" id="cpf_person" value="<?php echo htmlspecialchars( $responsable["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(cpf_person)">
+                                <input type="text" class="form-control" name="cpf_person" id="cpf_person" maxlength="11" value="<?php echo htmlspecialchars( $responsable["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(cpf_person)">
                                 </div>
                             </div>
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="phonenumber">Telefone</label>
-                                <input type="text" class="form-control" name="phonenumber" id="phonenumber" value="<?php echo htmlspecialchars( $responsable["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+                                <input type="text" class="form-control" name="phonenumber" id="phonenumber" maxlength="11" value="<?php echo htmlspecialchars( $responsable["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
                                 </div>
                             </div>
                             <div class="col col-md-3">

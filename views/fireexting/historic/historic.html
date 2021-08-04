@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Extintor
+        Histórico do Extintor {if="$fireextings[0]['fireexting_id'] != NULL"} {$fireextings[0]['tipo']}{/if}
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>

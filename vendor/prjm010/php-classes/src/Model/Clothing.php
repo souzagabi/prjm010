@@ -35,7 +35,7 @@
             $results = $sql->select("CALL prc_clothing_sel_byid(:clothing_id)", array(
                 ":clothing_id"=>(int)$clothing_id
             ));
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $result = Metodo::convertDateToView($results);
       
             $this->setData($results[0]);
                      

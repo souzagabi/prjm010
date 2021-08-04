@@ -22,14 +22,14 @@
             <div class="col-md-12">
                 <div class="box box-success">
                     <!-- form start -->
-                    <form role="form" action="/generalcontrol/create" method="post">
+                    <form role="form" action="/generalcontrol/<?php echo htmlspecialchars( $generalcontrol["generalcontrol_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
                         <div class="box-body">
                             <div class="col col-md-2">
                                 <div class="form-group">
                                     <label for="location_id">Localização</label>
                                     <select class="form-control" name="location_id" id="location_id" required>
                                       <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
-                                      <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["location_id"] == $value1["location_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                      <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["location_id"] == $generalcontrol["location_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                                       <?php } ?>
                                     </select>
                                 </div>
@@ -39,7 +39,7 @@
                                     <label for="local_id">Local</label>
                                     <select class="form-control" name="local_id" id="local_id" required>
                                       <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
-                                      <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["local_id"] == $value1["local_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                      <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["local_id"] == $generalcontrol["local_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
                                       <?php } ?>
                                     </select>
                                 </div>

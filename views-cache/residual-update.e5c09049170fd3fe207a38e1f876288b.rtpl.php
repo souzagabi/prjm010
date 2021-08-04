@@ -22,7 +22,7 @@
   		<div class="box box-success">
         <!-- form start -->
         
-        <form role="form" action="/residual/<?php echo htmlspecialchars( $residual["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
+        <form role="form" action="/residual/<?php echo htmlspecialchars( $residual["residual_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post" enctype="multipart/form-data">
           
           <div class="box-body">
             <div class="col col-md-2">
@@ -45,24 +45,25 @@
             </div>
             <div class="col col-md-2">
               <div class="form-group">
-                  <label for="location_id">Localização</label>
-                  <select class="form-control" name="location_id" id="location_id" required>
-                    <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
-                    <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                    <?php } ?>
-                  </select>
+                <label for="location_id">Localização</label>
+                <select class="form-control" name="location_id" id="location_id" required>
+                  <?php $counter1=-1;  if( isset($locations) && ( is_array($locations) || $locations instanceof Traversable ) && sizeof($locations) ) foreach( $locations as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["location_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["location_id"] == $residual["location_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="col col-md-3">
-                <div class="form-group">
-                    <label for="local_id">Local</label>
-                    <select class="form-control" name="local_id" id="local_id" required>
-                      <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
-                      <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
-                      <?php } ?>
-                    </select>
-                </div>
+              <div class="form-group">
+                <label for="local_id">Local</label>
+                <select class="form-control" name="local_id" id="local_id" required>
+                  <?php $counter1=-1;  if( isset($locais) && ( is_array($locais) || $locais instanceof Traversable ) && sizeof($locais) ) foreach( $locais as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["local_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $value1["local_id"] == $residual["local_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+                </select>
+              </div>
             </div>
+            
           </div>
           <div class="box-body">
             <div class="col col-md-4">
@@ -71,10 +72,14 @@
                 <input type="text" class="form-control" name="warehouse" id="warehouse" value="<?php echo htmlspecialchars( $residual["warehouse"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(warehouse)">
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
-                <label for="name_person">Nome</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" onkeyup="convertLowToUpper(name_person)" value="<?php echo htmlspecialchars( $residual["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required>
+                  <label for="person_id">Responsável</label>
+                  <select class="form-control" name="person_id" id="person_id" required>
+                    <?php $counter1=-1;  if( isset($responsables) && ( is_array($responsables) || $responsables instanceof Traversable ) && sizeof($responsables) ) foreach( $responsables as $key1 => $value1 ){ $counter1++; ?>
+                    <option value="<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" <?php if( $residual["person_id"] == $value1["person_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                    <?php } ?>
+                  </select>
               </div>
             </div>
           </div>

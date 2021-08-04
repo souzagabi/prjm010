@@ -56,7 +56,7 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="phonenumber">Telefone</label>
-                <input type="text" class="form-control" name="phonenumber" id="phonenumber">
+                <input type="text" class="form-control" name="phonenumber" id="phonenumber" maxlength="11">
               </div>
             </div>
             <div class="col col-md-4">

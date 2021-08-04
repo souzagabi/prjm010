@@ -27,7 +27,7 @@
                             <div class="col col-md-4">
                                 <div class="form-group">
                                 <label for="desequipament">Equipamento</label>
-                                <input type="text" class="form-control" name="desequipament" id="desequipament" onkeyup="convertLowToUpper(desequipament)" autofocus="autofocus" required>
+                                <input type="text" class="form-control" name="desequipament" id="desequipament"  onKeyUp="convertLowToUpper(desequipament)" autofocus="autofocus" required>
                                 </div>
                             </div>
                         </div>

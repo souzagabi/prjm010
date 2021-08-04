@@ -93,16 +93,20 @@
             <div class="col col-md-2">
               <div class="form-group">
                 <label for="serialnumber">Número de Série</label>
-                <input type="text" class="form-control" name="serialnumber" id="serialnumber" required >
+                <input type="text" class="form-control" name="serialnumber" id="serialnumber" onkeyup="convertLowToUpper(serialnumber)" required >
               </div>
             </div>
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <div class="form-group">
-                <label for="name_person">Responsável</label>
-                <input type="text" class="form-control" name="name_person" id="name_person" value="<?php echo htmlspecialchars( $nobreak["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required readonly>
+                <label for="person_id">Responsável</label>
+                <select class="form-control" name="person_id" id="person_id" required>
+                  <option value=""></option>
+                  <?php $counter1=-1;  if( isset($responsables) && ( is_array($responsables) || $responsables instanceof Traversable ) && sizeof($responsables) ) foreach( $responsables as $key1 => $value1 ){ $counter1++; ?>
+                  <option value="<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
-           
           </div>
           <!-- /.box-body -->
           <div class="box-footer">

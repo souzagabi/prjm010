@@ -43,7 +43,7 @@
             $results = $sql->select("CALL prc_visitant_sel_byid(:visitant_id)", array(
                 ":visitant_id"=>(int)$visitant_id
             ));
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $results = Metodo::convertDateToView($results);
             
             $this->setData($results[0]);
         }

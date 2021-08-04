@@ -33,19 +33,19 @@
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="rg_person">RG</label>
-                                <input type="text" class="form-control" name="rg_person" id="rg_person" onKeyUp="convertLowToUpper(rg_person)">
+                                <input type="text" class="form-control" name="rg_person" id="rg_person" maxlength="10" onKeyUp="convertLowToUpper(rg_person)">
                                 </div>
                             </div>
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="cpf_person">CPF</label>
-                                <input type="text" class="form-control" name="cpf_person" id="cpf_person" onKeyUp="convertLowToUpper(cpf_person)">
+                                <input type="text" class="form-control" name="cpf_person" id="cpf_person" maxlength="11" onKeyUp="convertLowToUpper(cpf_person)">
                                 </div>
                             </div>
                             <div class="col col-md-2">
                                 <div class="form-group">
                                 <label for="phonenumber">Telefone</label>
-                                <input type="text" class="form-control" name="phonenumber" id="phonenumber">
+                                <input type="text" class="form-control" name="phonenumber" id="phonenumber" maxlength="11">
                                 </div>
                             </div>
                             <div class="col col-md-3">

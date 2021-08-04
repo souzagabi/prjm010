@@ -37,7 +37,7 @@
                 ":residual_id"=>(int)$residual_id
             ));
             
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $results = Metodo::convertDateToView($results);
             $this->setData($results[0]);
                      
         }
@@ -46,11 +46,10 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_residual_save(:person_id,:daydate,:dayhour,:name_person,:material,:location_id,:local_id,:warehouse)", array(
+            $results = $sql->select("CALL prc_residual_save(:person_id,:daydate,:dayhour,:material,:location_id,:local_id,:warehouse)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":dayhour"          => $this->getdayhour(),
-                ":name_person"      => $this->getname_person(),    
                 ":material"         => $this->getmaterial(),
                 ":location_id"      => $this->getlocation_id(),
                 ":local_id"         => $this->getlocal_id(),    
@@ -66,16 +65,15 @@
         {
             
             $sql = new Sql();
-            
-            $results = $sql->select("CALL prc_residual_update(:residual_id,:person_id,:daydate,:dayhour,:name_person,:material,:location_id,:local_id,:warehouse,:situation)", array(
+         
+            $results = $sql->select("CALL prc_residual_update(:residual_id,:person_id,:daydate,:dayhour,:material,:location_id,:local_id,:warehouse,:situation)", array(
                 ":residual_id"  => $this->getresidual_id(),    
                 ":person_id"    => $this->getperson_id(),    
                 ":daydate"      => $this->getdaydate(),    
                 ":dayhour"      => $this->getdayhour(),    
-                ":name_person"  => $this->getname_person(),    
                 ":material"     => $this->getmaterial(),
-                ":location_id"      => $this->getlocation_id(),
-                ":local_id"         => $this->getlocal_id(),    
+                ":location_id"  => $this->getlocation_id(),
+                ":local_id"     => $this->getlocal_id(),    
                 ":warehouse"    => $this->getwarehouse(),    
                 ":situation"    => $this->getsituation()
             ));

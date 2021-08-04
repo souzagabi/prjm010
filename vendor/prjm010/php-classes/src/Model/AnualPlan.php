@@ -41,9 +41,6 @@
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            if ($list["start"] == 1) {
-                $list["start"] = 0;
-            }
             $results =  $sql->select("CALL prc_responsable_sel(:start, :limit)", array(
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]

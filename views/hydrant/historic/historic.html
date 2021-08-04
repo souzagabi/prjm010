@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Hidrante
+        Histórico do Hidrante {if="$hydrants[0]['hydrant_id'] != NULL"} {$hydrants[0]['tipe']} - {$hydrants[0]['idnumber']}{/if}
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>

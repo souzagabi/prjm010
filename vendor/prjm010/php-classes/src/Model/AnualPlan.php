@@ -90,7 +90,7 @@
             $results = $sql->select("CALL prc_anualplan_sel_byid(:anualplan_id)", array(
                 ":anualplan_id"=>(int)$anualplan_id
             ));
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $results = Metodo::convertDateToView($results);
       
             $this->setData($results[0]);
                      
@@ -112,7 +112,7 @@
         public function saveA()
         {
             $sql = new Sql();
-           
+            
             $results = $sql->select("CALL prc_anualplan_save(:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
                 ":yyear"            => $this->getyyear(),
                 ":equipament_id"    => $this->getequipament_id(),

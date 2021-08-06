@@ -14,7 +14,7 @@
       <div class="box box-primary">
         <div class="col form-control top">
           <div class="row">
-            <div class="col col-md-4">
+            <div class="col col-md-6">
               <form action="/location/create" method="get">
                 <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastrar Localização">
                 <a href="/anualplan?limit=10" class="btn btn-warning">Voltar</a>

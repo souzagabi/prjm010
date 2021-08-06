@@ -157,13 +157,13 @@
                                         <label for="rstatus">Execução</label>
                                     </div>
                                     <div class="col col-md-4">
-                                        <input type="radio" name="rstatus" id="rstatus" value="0" onclick="insertcolor(dtprevision,rstatus)"> Programado
+                                        <input type="radio" name="rstatus" id="rstatus" value="0" onclick="insertcolor(dtprevision,rstatus)" required> Programado
                                     </div>
                                     <div class="col col-md-3">
-                                        <input type="radio" name="rstatus" id="rstatus" value="1" onclick="insertcolor(dtprevision,rstatus)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="rstatus" id="rstatus" value="1" onclick="insertcolor(dtprevision,rstatus)" required> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </div>
                                     <div class="col col-md-3">
-                                        <input type="radio" name="rstatus" id="rstatus" value="2" onclick="insertcolor(dtprevision,rstatus)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="rstatus" id="rstatus" value="2" onclick="insertcolor(dtprevision,rstatus)" required> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </div>
                                 </div>
                             </div>

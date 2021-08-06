@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Extintor
+        Histórico do Extintor <?php if( $historics["0"]['fireexting_id'] != NULL ){ ?> <?php echo htmlspecialchars( $historics["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -18,7 +18,7 @@
               <form action="/historicE/create" method="get">
                 <input type="submit" name="btnfireexting" class="btn btn-success" value="Cadastrar Histórico">
                 <a href="/fireexting?pg=1" class="btn btn-warning">Voltar</a>
-                <input type="text" name="fireexting_id" value="<?php if( $fireextings != NULL ){ ?><?php echo htmlspecialchars( $fireextings["0"]['fireexting_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
+                <input type="text" name="fireexting_id" value="<?php if( $historics != NULL ){ ?><?php echo htmlspecialchars( $historics["0"]['fireexting_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
               </form>
             </div>
          
@@ -30,7 +30,7 @@
             <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
         <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
       </div>
-      <div class="box box-primary" <?php if( $fireextings["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $historics["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="row">
           <div class="col col-md-12">
             <nav aria-label="Page navigation">
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary" <?php if( $fireextings["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $historics["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -68,21 +68,21 @@
               </tr>
             </thead>
             <tbody>
-              <?php if( $fireextings["0"]['historic_id'] != NULL ){ ?>
+              <?php if( $historics["0"]['historic_id'] != NULL ){ ?>
               <tr>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['weight'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['capacity'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $fireextings["0"]['rechargedate'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['deslocation'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['deslocal'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['weight'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['capacity'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $historics["0"]['rechargedate'], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               </tr>
               <?php } ?>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="box box-primary" <?php if( $fireextings["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $historics["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -98,8 +98,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php if( $fireextings["0"]['historic_id'] != NULL ){ ?>
-              <?php $counter1=-1;  if( isset($fireextings) && ( is_array($fireextings) || $fireextings instanceof Traversable ) && sizeof($fireextings) ) foreach( $fireextings as $key1 => $value1 ){ $counter1++; ?>
+              <?php if( $historics["0"]['historic_id'] != NULL ){ ?>
+              <?php $counter1=-1;  if( isset($historics) && ( is_array($historics) || $historics instanceof Traversable ) && sizeof($historics) ) foreach( $historics as $key1 => $value1 ){ $counter1++; ?>
               <tr>
                 <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php if( $value1["htrigger"] == 0 ){ ?>OK<?php }else{ ?>NÃO OK<?php } ?></td>
@@ -109,8 +109,8 @@
                 <td><?php if( $value1["hydrostatic"] == 0 ){ ?>OK<?php }else{ ?>NÃO OK<?php } ?></td>
                 <td><?php echo htmlspecialchars( $value1["hothers"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
-                  <a href="/historicE/<?php if( $fireextings["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
-                  <a href="/historicE/<?php if( $fireextings["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>
+                  <a href="/historicE/<?php if( $historics["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
+                  <a href="/historicE/<?php if( $historics["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
               <?php } ?><?php } ?>
@@ -118,7 +118,7 @@
           </table>
         </div>
       </div>
-      <div class="box box-primary" <?php if( $fireextings["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $historics["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="row">
           <div class="col col-md-12">
             <nav aria-label="Page navigation">

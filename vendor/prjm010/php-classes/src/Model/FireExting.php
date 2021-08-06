@@ -32,7 +32,7 @@
                 ":fireexting_id"=>(int)$fireexting_id
             ));
             
-            $results[0] = Metodo::convertDateToView($results[0]);
+            $results = Metodo::convertDateToView($results);
             $this->setData($results[0]);
                      
         }

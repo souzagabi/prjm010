@@ -77,10 +77,14 @@
             $results = $sql->select("CALL prc_airconditioning_delete(:airconditioning_id)", array(
                 ":airconditioning_id"  =>(int)$this->getairconditioning_id()
             ));
+            // $results = $sql->select("CALL p(:airconditioning_id)", array(
+            //          ":airconditioning_id"  =>(int)$this->getairconditioning_id()
+            // ));
         
             $this->setData($results);
             
-            return $results[0]["MESSAGE"];
+            // return $results[0]["MESSAGE"];
+            return $results[0];
         }
 
     }

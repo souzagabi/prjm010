@@ -948,33 +948,16 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
-		} 
-		
-		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-		{
-			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
+		$historics	= Metodo::selectRegister($company, "HistoricE");
+		if ($historics[0] == NULL) {
+			$historics[0][0] = ["fireexting_id"=>$_GET["fireexting_id"],"historic_id"=> NULL ];
 		}
 		
-		$historic	= Metodo::selectRegister($company, "HistoricE");
-		if ($historic[0] == NULL) {
-			$historic[0][0] = ["fireexting_id"=>$_GET["fireexting_id"],"historic_id"=> NULL ];
-		}
-	
 		$page = new PageHistoricE();
 		
 		$page->setTpl("historic", array(
-			"fireextings"=>$historic[0],
-			"pgs"=>$historic[1],
+			"historics"=>$historics[0],
+			"pgs"=>$historics[1],
 			"msg"=>$msg
 		));
 		
@@ -2022,11 +2005,15 @@
 		$company["airconditioning"]	= NULL;
 
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			if (count($mess) == 2) {
+				$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com sucesso!'];
+			} else {
+				$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2].' '.$mess[3]];
+			}
 			$_GET["msg"] = '';
 		} 
 		
@@ -2094,8 +2081,8 @@
 		$airconditioning->setdata($user_id);
 		
 		$msg = $airconditioning->delete();
-
-		header("Location: /airconditioning?msg=".$msg."&daydate=&date_fim=&search=Search");
+		
+		header("Location: /airconditioning?msg=".$msg["MESSAGE"]."&daydate=&date_fim=&search=Search");
 		exit;
 	});
 
@@ -2159,11 +2146,17 @@
 		$company["search"] 			= NULL;
 		$company["airconditioning_id"]	= $_GET["airconditioning_id"];
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			var_dump($mess);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
+			// if (count($mess) == 2) {
+			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com sucesso!'];
+			// } else {
+			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
+			// }
 			$_GET["msg"] = '';
 		} 
 		
@@ -2447,7 +2440,7 @@
 		}
 
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
-		$locais		= Metodo::selectRegister($company, "Local");
+		$locais			= Metodo::selectRegister($company, "Local");
 		$locations		= Metodo::selectRegister($company, "Location");
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 
@@ -2476,7 +2469,7 @@
 			$_GET["msg"] = '';
 		}
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["dthydraulic"=>$_POST["dthydraulic"],"dteletric"=>$_POST["dteletric"],"dtbuilding"=>$_POST["dtbuilding"]]);
+			$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}

@@ -11,9 +11,15 @@
     </section>
     <!-- Main content -->
     <section class="content">
+      <div class="box box-warning">
+        <div class="col form-control alert-warning">
+          <div class="row col col-md-12" style="color:#f60606; font-size: 16px;"><strong>Para cadastrar o plano anual de manutenção 
+                            é necessário estar cadastro "Equipamento", "Localização", "Local", "Responsável".</strong></div>
+          <div class="row">
+        </div>
+      </div>
       <div class="box box-primary">
         <div class="col form-control top">
-          <div class="row">
             <div class="col col-md-2">
               <form action="/equipament" method="get">
                 <label for="btnequipament" class="alert-warning">1</label>
@@ -85,6 +91,7 @@
               <tr class="alert-warning">
                 <th>Ano</th>
                 <th>Equipamento</th>
+                <th>Localização</th>
                 <th>Local</th>
                 <th>Responsável</th>
                 <th>Prev. Manutenção</th>
@@ -96,6 +103,7 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["yyear"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["desequipament"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["deslocal"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["dtprevision"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

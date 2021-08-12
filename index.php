@@ -2003,21 +2003,20 @@
 		$company["date_fim"]    = NULL;
 		$company["search"] 		= NULL;
 		$company["airconditioning"]	= NULL;
-
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			if (count($mess) == 2) {
-				$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com sucesso!'];
-			} else {
-				$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2].' '.$mess[3]];
-			}
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
-		
 		$airconditioning	= Metodo::selectRegister($company, "AirConditioning");
+		
+		if (isset($airconditioning[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($airconditioning[0][0]["MESSAGE"]);
+		} else {
+			$airconditioning[0][0]["MESSAGE"] = 'VAZIO';
+		}
 		
 		$page = new PageAirConditioning();
 		$page->setTpl("airconditioning", array(
@@ -2038,10 +2037,21 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];		
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
+			if (count($mess) > 2 ) {
+				for ($i=1; $i > count($mess) ; $i++) { 
+					$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[$i + 1]];
+				}
+			}
+			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
+			// } else {
+			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
+			// }
 			$_GET["msg"] = '';
 		} 
 
@@ -2097,16 +2107,18 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
 		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
+		
 		$airconditioning = new AirConditioning();
 		$airconditioning->getById($airconditioning_id);
+
+		if (isset($airconditioning->getValues()["MESSAGE"])) {
+			header("Location: /airconditioning?msg=".$airconditioning->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$airconditioning->setData(['MESSAGE'=> 'VAZIO']);
+		}
 		
 		$page = new PageAirConditioning();
 		
@@ -2152,8 +2164,12 @@
 			$mess = explode(':', $_GET["msg"]);
 			var_dump($mess);
 			$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
-			// if (count($mess) == 2) {
-			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com sucesso!'];
+			if (count($mess) > 2 ) {
+				for ($i=1; $i > count($mess) ; $i++) { 
+					$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[$i + 1]];
+				}
+			}
+			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
 			// } else {
 			// 	$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> $mess[2]];
 			// }

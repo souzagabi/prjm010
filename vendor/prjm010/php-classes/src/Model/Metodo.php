@@ -108,6 +108,26 @@
             return $pgs;
         }
 
+        public function divideMessage($message)
+        {
+            $mess = explode(':', $message);
+			$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com Sucesso!'];
+            $num = count($mess);
+            var_dump($num);
+            $msg["state"]   = $mess[1];
+            $msg["msg"]     = $mess[1];
+			if($num >= 2 ) {
+                for ($i=1; $i > count($mess) ; $i++) { 
+                    $msg["err"] = $mess[$i + 1];
+                    var_dump($msg);
+				}
+			}
+            var_dump($msg);exit;
+            
+			$message = '';
+            return $msg;
+        }
+
         public function selectRegister($act = array(), $model)
         {
             $classModel = "";

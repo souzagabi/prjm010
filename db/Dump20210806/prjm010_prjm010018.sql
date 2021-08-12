@@ -18,34 +18,42 @@ USE `prjm010`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `prjm010027`
+-- Table structure for table `prjm010018`
 --
 
-DROP TABLE IF EXISTS `prjm010027`;
+DROP TABLE IF EXISTS `prjm010018`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `prjm010027` (
-  `historic_id` int NOT NULL AUTO_INCREMENT,
-  `airconditioning_id` int NOT NULL,
-  `inmonth` varchar(15) DEFAULT NULL,
-  `daydate` date DEFAULT NULL,
-  `dtnextmanager` date DEFAULT NULL,
+CREATE TABLE `prjm010018` (
+  `fireexting_id` int NOT NULL AUTO_INCREMENT,
+  `person_id` int NOT NULL,
+  `location_id` int NOT NULL,
+  `local_id` int NOT NULL,
+  `daydate` date NOT NULL,
+  `dayhour` time NOT NULL,
+  `tipe` varchar(20) DEFAULT NULL,
+  `weight` varchar(10) DEFAULT NULL,
+  `capacity` varchar(10) DEFAULT NULL,
+  `rechargedate` date DEFAULT NULL,
   `situation` char(1) DEFAULT '0',
   `dtregister` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`historic_id`),
-  KEY `FK_prjm010027_PRJM010026_idx` (`airconditioning_id`),
-  CONSTRAINT `fk_prjm010027_PRJM010026` FOREIGN KEY (`airconditioning_id`) REFERENCES `prjm010026` (`airconditioning_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`fireexting_id`),
+  KEY `FK_prjm010018_PRJM010001_idx` (`person_id`),
+  KEY `fk_prjm010018_PRJM010032_idx` (`location_id`),
+  KEY `fk_prjm010018_PRJM010029_idx` (`local_id`),
+  CONSTRAINT `fk_prjm010018_PRJM010001` FOREIGN KEY (`person_id`) REFERENCES `prjm010001` (`person_id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_prjm010018_PRJM010029` FOREIGN KEY (`local_id`) REFERENCES `prjm010029` (`local_id`),
+  CONSTRAINT `fk_prjm010018_PRJM010032` FOREIGN KEY (`location_id`) REFERENCES `prjm010032` (`location_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `prjm010027`
+-- Dumping data for table `prjm010018`
 --
 
-LOCK TABLES `prjm010027` WRITE;
-/*!40000 ALTER TABLE `prjm010027` DISABLE KEYS */;
-INSERT INTO `prjm010027` VALUES (6,1,'AGOSTO','2021-04-25','2021-05-20','0','2021-08-06 20:43:40');
-/*!40000 ALTER TABLE `prjm010027` ENABLE KEYS */;
+LOCK TABLES `prjm010018` WRITE;
+/*!40000 ALTER TABLE `prjm010018` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prjm010018` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

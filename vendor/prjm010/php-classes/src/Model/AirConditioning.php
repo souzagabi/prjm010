@@ -14,12 +14,14 @@
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             $list["start"] = ($pg - 1) * $list["limit"];
        
-            return  $sql->select("CALL prc_airconditioning_sel(:daydate, :date_fim,:start, :limit)", array(
+            $results =  $sql->select("CALL prc_airconditioning_sel(:daydate, :date_fim,:start, :limit)", array(
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
+
+            return $results;
         }
 
         public function getById($airconditioning_id) 

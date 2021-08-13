@@ -110,20 +110,26 @@
 
         public function divideMessage($message)
         {
-            $mess = explode(':', $message);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1], "err"=> 'Processado com Sucesso!'];
-            $num = count($mess);
-            var_dump($num);
-            $msg["state"]   = $mess[1];
-            $msg["msg"]     = $mess[1];
-			if($num >= 2 ) {
-                for ($i=1; $i > count($mess) ; $i++) { 
-                    $msg["err"] = $mess[$i + 1];
-                    var_dump($msg);
-				}
-			}
-            var_dump($msg);exit;
             
+            $mgg = explode(':', $message);
+            
+            $msg["state"]   = $mgg[0];
+            $msg["msg"]     = $mgg[1];
+            $j= 0;
+            $text= '';
+            
+            if(count($mgg) > 2) {
+                foreach ($mgg as $key => $value) {
+                    if($j > 1) {
+                        $text = $text.$value;
+                    }
+                    $j++;
+                    $msg["err"] = $text;
+                }
+            } else {
+                $msg["err"]     = 'Processado com Sucesso!';
+            }
+           
 			$message = '';
             return $msg;
         }

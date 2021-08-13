@@ -21,13 +21,15 @@
                 $list["start"] = 0;
             }
             
-            return  $sql->select("CALL prc_visitant_sel(:name_person, :date_save, :date_fim, :start, :limit)", array(
+            $results =  $sql->select("CALL prc_visitant_sel(:name_person, :date_save, :date_fim, :start, :limit)", array(
                 ":name_person"  => $list["name_person"],   
                 ":date_save"    => $list["date_save"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
+
+            return $results;
         }
 
         public static function listClassification()

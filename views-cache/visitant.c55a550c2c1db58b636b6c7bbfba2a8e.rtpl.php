@@ -43,6 +43,7 @@
           class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
           <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
       <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+      <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
     </div>
     <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
       <div class="row">
@@ -69,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" <?php if( !$visitants ){ ?>hidden<?php } ?>>
+    <div class="box box-primary" <?php if( $visitants["0"]['visitant_id'] == NULL ){ ?>hidden<?php } ?>>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -77,8 +78,6 @@
               <th>Código</th>
               <th>Nome</th>
               <th>RG</th>
-              <!-- <th>CPF</th>
-              <th>Telefone</th> -->
               <th>Empresa</th>
               <th>Motivo</th>
               <th>Data Visita</th>
@@ -92,8 +91,6 @@
               <th><?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?></th>
               <td><?php echo htmlspecialchars( $value1["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["rg_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <!-- <td><?php echo htmlspecialchars( $value1["cpf_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-              <td><?php echo htmlspecialchars( $value1["phonenumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td> -->
               <td><?php echo htmlspecialchars( $value1["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["reason"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>

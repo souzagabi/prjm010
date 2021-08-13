@@ -43,6 +43,7 @@
           class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
           {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
       <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+      <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
     </div>
     <div class="box box-primary" {if="!$pgs"}hidden{/if}>
       <div class="row">
@@ -69,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" {if="!$visitants"}hidden{/if}>
+    <div class="box box-primary" {if="$visitants[0]['visitant_id'] == NULL"}hidden{/if}>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -77,8 +78,6 @@
               <th>Código</th>
               <th>Nome</th>
               <th>RG</th>
-              <!-- <th>CPF</th>
-              <th>Telefone</th> -->
               <th>Empresa</th>
               <th>Motivo</th>
               <th>Data Visita</th>
@@ -92,8 +91,6 @@
               <th>{$value.person_id}</th>
               <td>{$value.name_person}</td>
               <td>{$value.rg_person}</td>
-              <!-- <td>{$value.cpf_person}</td>
-              <td>{$value.phonenumber}</td> -->
               <td>{$value.company}</td>
               <td>{$value.reason}</td>
               <td>{$value.daydate}</td>

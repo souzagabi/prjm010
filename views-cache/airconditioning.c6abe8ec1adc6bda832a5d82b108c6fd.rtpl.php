@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary" <?php if( $airconditionings["0"]['MESSAGE'] != 'VAZIO' ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $airconditionings["0"]['airconditioning_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">

@@ -55,7 +55,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" onload="insertcolor(dtprevision,dtexecution,rstatus)">
 <div class="wrapper">
 
   <!-- Main Header -->

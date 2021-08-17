@@ -134,6 +134,69 @@
             return $msg;
         }
 
+        public function insertcolor($element,$elementCompare,$elementStatus)
+        {
+            $elem = '#eff5a1';
+            if ($elementCompare != null) {
+                $d2 = Metodo::compareDate($element, $elementCompare);
+                
+                if ($elementStatus == '0') 
+                {
+                    if ($d2 === "menor") 
+                    {
+                        $elem = '#f5a1a1';
+                    } else if ($d2 === "maior") 
+                    {
+                        $elem = '#eff5a1';
+                    } 
+                    
+                }
+                if ($elementStatus == '1') 
+                {
+                    if ($d2 === "menor") 
+                    {
+                        $elem = '#f5a1a1';
+                    } 
+                    if ($d2 === "igual") 
+                    {
+                        $elem = '#a8f5a1';
+                    } 
+                    if ($d2 === "maior") 
+                    {
+                        $elem = '#a1c5f5';
+                    }
+                }
+                if ($elementStatus == '2') {
+                    $elem = '#f5d5a1';
+                }
+            }
+            return $elem;
+        }
+    
+        private function compareDate($datePrevision,$dateExecution)
+        {
+            $viewdatePre = explode('-',$datePrevision);
+            $viewdateExe = explode('-',$dateExecution);
+            
+            $p = $viewdatePre[2].'-'.$viewdatePre[1].'-'.$viewdatePre[0];
+            $e = $viewdateExe[2].'-'.$viewdateExe[1].'-'.$viewdateExe[0];
+            $d1     =date("Y-m-d", strToTime($p));
+            $dta    =date("Y-m-d", strToTime($e));
+        
+            $d2 = '';
+            if ($d1 > $dta)  
+            { 
+                $d2 = 'maior';
+            } else if ($d1 < $dta)  
+            { 
+                $d2 = 'menor';
+            } else 
+            { 
+                $d2 = 'igual';
+            } 
+            return $d2;
+        }
+
         public function selectRegister($act = array(), $model)
         {
             $classModel = "";

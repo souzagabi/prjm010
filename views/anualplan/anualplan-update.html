@@ -15,6 +15,12 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+                        class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+                        {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+                    <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
+                    <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
+                </div>
                 <div class="box box-success">
                     <!-- form start -->
                     <form role="form" action="/anualplan/{$anualplan.anualplan_id}" method="post">
@@ -61,6 +67,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+                                        class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+                                        {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+                                    <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
+                                    <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
                                 </div>
                                 <div class="box box-success">
                                     <div class="box-body">
@@ -145,7 +157,13 @@
                                         <div class="col col-md-2">
                                             <div class="form-group">
                                                 <label for="dtprevision">Data Previsão</label>
-                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="{$anualplan.dtprevision}" onkeyup="replaceSlash(dtprevision)" onChange="insertcolor(dtprevision,rstatus)" >
+                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="{$anualplan.dtprevision}" style="background-color: {$status};" onkeyup="replaceSlash(dtprevision)">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <div class="form-group">
+                                                <label for="dtexecution">Data Execução</label>
+                                                <input type="text" class="form-control" name="dtexecution" id="dtexecution" value="{$anualplan.dtexecution}" onkeyup="replaceSlash(dtexecution)">
                                             </div>
                                         </div>
                                     </div>
@@ -156,13 +174,13 @@
                                                     <label for="rstatus">Execução</label>
                                                 </div>
                                                 <div class="col col-md-4">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="0" {if="$anualplan.rstatus == 0"}checked{/if} onclick="insertcolor(dtprevision,rstatus)"> Programado
+                                                    <input type="radio" name="rstatus" id="rstatus" value="0" {if="$anualplan.rstatus == 0"}checked{/if} onclick="insertcolor(dtprevision,dtexecution,0)"> Programado
                                                 </div>
                                                 <div class="col col-md-3">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="1" {if="$anualplan.rstatus == 1"}checked{/if} onclick="insertcolor(dtprevision,rstatus)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="radio" name="rstatus" id="rstatus" value="1" {if="$anualplan.rstatus == 1"}checked{/if} onclick="insertcolor(dtprevision,dtexecution,1)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                                 <div class="col col-md-3">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="2" {if="$anualplan.rstatus == 2"}checked{/if} onclick="insertcolor(dtprevision,rstatus)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="radio" name="rstatus" id="rstatus" value="2" {if="$anualplan.rstatus == 2"}checked{/if} onclick="insertcolor(dtprevision,dtexecution,2)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
                                         </div>

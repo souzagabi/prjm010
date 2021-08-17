@@ -43,7 +43,7 @@
         public function save()
         {
             $sql = new Sql();
-           
+            
             $results = $sql->select("CALL prc_purifier_save(:person_id, :daydate, :serialnumber, :location_id, :local_id, :nextmanager)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),

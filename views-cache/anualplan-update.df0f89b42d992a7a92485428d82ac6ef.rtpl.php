@@ -15,6 +15,12 @@
     <section class="content">
         <div class="row">
             <div class="col-md-12">
+                <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+                        class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                        <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+                    <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+                    <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
+                </div>
                 <div class="box box-success">
                     <!-- form start -->
                     <form role="form" action="/anualplan/<?php echo htmlspecialchars( $anualplan["anualplan_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" method="post">
@@ -61,6 +67,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+                                        class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                                        <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+                                    <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+                                    <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
                                 </div>
                                 <div class="box box-success">
                                     <div class="box-body">
@@ -145,7 +157,13 @@
                                         <div class="col col-md-2">
                                             <div class="form-group">
                                                 <label for="dtprevision">Data Previsão</label>
-                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="<?php echo htmlspecialchars( $anualplan["dtprevision"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="replaceSlash(dtprevision)" onChange="insertcolor(dtprevision,rstatus)" >
+                                                <input type="text" class="form-control" name="dtprevision" id="dtprevision" value="<?php echo htmlspecialchars( $anualplan["dtprevision"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" style="background-color: <?php echo htmlspecialchars( $status, ENT_COMPAT, 'UTF-8', FALSE ); ?>;" onkeyup="replaceSlash(dtprevision)">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-2">
+                                            <div class="form-group">
+                                                <label for="dtexecution">Data Execução</label>
+                                                <input type="text" class="form-control" name="dtexecution" id="dtexecution" value="<?php echo htmlspecialchars( $anualplan["dtexecution"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onkeyup="replaceSlash(dtexecution)">
                                             </div>
                                         </div>
                                     </div>
@@ -156,13 +174,13 @@
                                                     <label for="rstatus">Execução</label>
                                                 </div>
                                                 <div class="col col-md-4">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="0" <?php if( $anualplan["rstatus"] == 0 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,rstatus)"> Programado
+                                                    <input type="radio" name="rstatus" id="rstatus" value="0" <?php if( $anualplan["rstatus"] == 0 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,dtexecution,0)"> Programado
                                                 </div>
                                                 <div class="col col-md-3">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="1" <?php if( $anualplan["rstatus"] == 1 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,rstatus)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="radio" name="rstatus" id="rstatus" value="1" <?php if( $anualplan["rstatus"] == 1 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,dtexecution,1)"> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                                 <div class="col col-md-3">
-                                                    <input type="radio" name="rstatus" id="rstatus" value="2" <?php if( $anualplan["rstatus"] == 2 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,rstatus)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <input type="radio" name="rstatus" id="rstatus" value="2" <?php if( $anualplan["rstatus"] == 2 ){ ?>checked<?php } ?> onclick="insertcolor(dtprevision,dtexecution,2)"> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
                                         </div>

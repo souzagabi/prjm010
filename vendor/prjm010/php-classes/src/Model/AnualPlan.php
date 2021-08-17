@@ -151,7 +151,7 @@
             
             $sql = new Sql();
  
-            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
+            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:dtexecution,:rstatus)", array(
                 ":anualplan_id"     => $this->getanualplan_id(),
                 ":yyear"            => $this->getyyear(),
                 ":equipament_id"    => $this->getequipament_id(),
@@ -161,6 +161,7 @@
                 ":frequency"        => $this->getfrequency(),
                 ":amonth"           => $this->getamonth(),
                 ":dtprevision"      => $this->getdtprevision(),
+                ":dtexecution"      => $this->getdtexecution(),
                 ":rstatus"          => $this->getrstatus()
             ));
            

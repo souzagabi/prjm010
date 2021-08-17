@@ -26,9 +26,10 @@
         </div>
       </div>
       <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-          class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-          {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-      <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
+        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
       </div>
       <div class="box box-primary" {if="$purifiers[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="row">

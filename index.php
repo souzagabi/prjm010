@@ -246,7 +246,8 @@
 		$page ->setTpl("visitant-update", array(
 			"visitant"		=>$visitant->getValues(),
 			"j"				=>$j,
-			"classifications"=>$classifications
+			"classifications"=>$classifications,
+			"msg"=>$msg
 		));
 		
 	});
@@ -284,6 +285,8 @@
 		exit;
 	});
 
+/******************************************************************************************/
+
 /*======================================================================================*/
 /*										Rotas dos Resíduos								*/
 /*======================================================================================*/
@@ -296,6 +299,7 @@
 		$company["date_fim"]    = NULL;
 		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
+		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -464,6 +468,7 @@
 		header("Location: /residual?msg=".$msg);
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas dos Goods									*/
@@ -477,11 +482,11 @@
 		$company["date_fim"]    = NULL;
 		$company["receiver"] 	= NULL;
 		$company["search"] 		= NULL;
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -503,6 +508,16 @@
 		
 		$goods	= Metodo::selectRegister($company, "Goods");
 		
+		if ($goods[0] == NULL) {
+			$goods[0][0] = ["goods_id"=>NULL ];
+		}
+		
+		if (isset($goods[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($goods[0][0]["MESSAGE"]);
+		} else {
+			$goods[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageGoods();
 		$page->setTpl("goods", array(
 			"goods"=>$goods[0],
@@ -517,11 +532,10 @@
 
 		$company["goods"]	= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -587,11 +601,21 @@
 		
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($goods->getValues()["MESSAGE"])) {
+			header("Location: /goods?msg=".$goods->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$goods->setData(['MESSAGE'=> 'VAZIO']);
+		}
+		
 		$page = new PageGoods();
 		
 		$page ->setTpl("goods-update", array(
 			"goods"=>$goods->getValues(),
-			"responsables"=>$responsables[0]
+			"responsables"=>$responsables[0],
+			"msg"=>$msg
 		));
 	});
 
@@ -614,6 +638,7 @@
 		header("Location: /goods?msg=".$msg);
 		exit;
 	});	
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas dos Nobreak								*/
@@ -627,11 +652,11 @@
 		$company["date_fim"]    = NULL;
 		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -654,6 +679,16 @@
 		
 		$nobreak	= Metodo::selectRegister($company, "Nobreak");
 		
+		if ($nobreak[0] == NULL) {
+			$nobreak[0][0] = ["nobreak_id"=>NULL ];
+		}
+		
+		if (isset($nobreak[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($nobreak[0][0]["MESSAGE"]);
+		} else {
+			$nobreak[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageNobreak();
 		$page->setTpl("nobreak", array(
 			"nobreaks"=>$nobreak[0],
@@ -672,11 +707,10 @@
 		$company["name_person"] = NULL;
 		$company["search"] 		= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -753,6 +787,14 @@
 		$nobreak = new Nobreak();
 		$nobreak->getById($nobreak_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($nobreak->getValues()["MESSAGE"])) {
+			header("Location: /nobreak?msg=".$nobreak->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$nobreak->setData(['MESSAGE'=> 'VAZIO']);
+		}
 
 		$page = new PageNobreak();
 		
@@ -760,7 +802,8 @@
 			"nobreak"=>$nobreak->getValues(),
 			"locations"=>$locations,
 			"responsables"=>$responsables[0],
-			"locais"=>$locais
+			"locais"=>$locais,
+			"msg"=>$msg
 		));
 	});
 
@@ -784,7 +827,7 @@
 		header("Location: /nobreak?msg=".$msg);
 		exit;
 	});
-
+/******************************************************************************************/
 	
 /*======================================================================================*/
 /*										Rotas do Extintor								*/
@@ -798,11 +841,10 @@
 		$company["date_fim"]    = NULL;
 		$company["search"] 		= NULL;
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -825,6 +867,16 @@
 		
 		$fireexting	= Metodo::selectRegister($company, "FireExting");
 		
+		if ($fireexting[0] == NULL) {
+			$fireexting[0][0] = ["fireexting_id"=>NULL ];
+		}
+		
+		if (isset($fireexting[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($fireexting[0][0]["MESSAGE"]);
+		} else {
+			$fireexting[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageFireExting();
 		$page->setTpl("fireexting", array(
 			"fireextings"=>$fireexting[0],
@@ -841,11 +893,10 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -921,13 +972,23 @@
 		$fireexting = new FireExting();
 		$fireexting->getById($fireexting_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($fireexting->getValues()["MESSAGE"])) {
+			header("Location: /fireexting?msg=".$fireexting->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$fireexting->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageFireExting();
 		
 		$page ->setTpl("fireexting-update", array(
 			"fireexting"=>$fireexting->getValues(),
 			"msg"=>$msg,
 			"locations"=>$locations,
-			"locais"=>$locais
+			"locais"=>$locais,
+			"msg"=>$msg
 		));
 	});
 
@@ -951,6 +1012,7 @@
 		header("Location: /fireexting?msg=".$msg);
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*								Rotas do Histórico do Extintor							*/
@@ -965,11 +1027,10 @@
 		$company["search"] 			= NULL;
 		$company["fireexting_id"]	= $_GET["fireexting_id"];
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -994,10 +1055,10 @@
 			$fireexting_id = $_GET["fireexting_id"];
 		}
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1072,6 +1133,15 @@
 		$historic = new HistoricE();
 		$historic->getbyid($historic_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($historic->getValues()["MESSAGE"])) {
+			header("Location: /historicE?msg=".$historic->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$historic->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageHistoricE();
 		
 		$page ->setTpl("historic-update", array(
@@ -1101,6 +1171,7 @@
 		header("Location: /historicE?pg=1&msg=$msg&fireexting_id=$fireexting_id");
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas do Purificado								*/
@@ -1113,11 +1184,10 @@
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1140,6 +1210,16 @@
 		
 		$purifiers	= Metodo::selectRegister($company, "Purifier");
 		
+		if ($purifiers[0] == NULL) {
+			$purifiers[0][0] = ["purifier_id"=>NULL ];
+		}
+		
+		if (isset($purifiers[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($purifiers[0][0]["MESSAGE"]);
+		} else {
+			$purifiers[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PagePurifier();
 		
 		$page->setTpl("purifier", array(
@@ -1161,11 +1241,10 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -1235,12 +1314,22 @@
 		$purifier = new Purifier();
 		$purifier->getById($purifier_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($purifier->getValues()["MESSAGE"])) {
+			header("Location: /purifier?msg=".$purifier->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$purifier->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PagePurifier();
 		
 		$page ->setTpl("purifier-update", array(
 			"purifier"=>$purifier->getValues(),
 			"locations"=>$locations,
-			"locais"=>$locais
+			"locais"=>$locais,
+			"msg"=>$msg
 		));
 	});
 
@@ -1264,6 +1353,7 @@
 		header("Location: /purifier?msg=".$msg);
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*								Rotas do Histórico do Purificador						*/
@@ -1282,11 +1372,10 @@
 			$company["purifier_id"]		= $purifier_id[0];
 		}
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1312,6 +1401,13 @@
 		if ($historic[0] == NULL) {
 			$historic[0][0] = ["purifier_id"=>$purifier_id[0],"serialnumber"=> $purifier_id[1],"historic_id"=> NULL ];
 		}
+		
+		if (isset($historic[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($historic[0][0]["MESSAGE"]);
+		} else {
+			$historic[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 
 		$page = new PageHistoricP();
 		
@@ -1331,10 +1427,10 @@
 			$purifier_id = explode('_',$_GET["purifier_id"]);
 		}
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1407,16 +1503,18 @@
 	$app->get('/historicP/:historic_id', function($historic_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$historic = new HistoricP();
 		$historic->getbyid($historic_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($historic->getValues()["MESSAGE"])) {
+			header("Location: /historicP?msg=".$historic->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$historic->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageHistoricP();
 		
 		$page ->setTpl("historic-update", array(
@@ -1448,6 +1546,8 @@
 		exit;
 	});
 
+/******************************************************************************************/
+	
 /*======================================================================================*/
 /*										Rotas da Roupa									*/
 /*======================================================================================*/
@@ -1603,6 +1703,8 @@
 		exit;
 	});	
 
+/******************************************************************************************/
+
 /*======================================================================================*/
 /*										Rotas dos Material								*/
 /*======================================================================================*/
@@ -1615,11 +1717,11 @@
 		$company["date_fim"]    = NULL;
 		$company["receiver"] 	= NULL;
 		$company["search"] 		= NULL;
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -1641,6 +1743,16 @@
 		
 		$material	= Metodo::selectRegister($company, "Material");
 		
+		if ($material[0] == NULL) {
+			$material[0][0] = ["material_id"=>NULL ];
+		}
+		
+		if (isset($material[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($material[0][0]["MESSAGE"]);
+		} else {
+			$material[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageMaterial();
 		$page->setTpl("material", array(
 			"material"=>$material[0],
@@ -1652,11 +1764,11 @@
 
 	$app->get('/material/create', function() {
 		User::verifyLogin();
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
@@ -1714,10 +1826,20 @@
 		$material = new Material();
 		$material->getById($material_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($material->getValues()["MESSAGE"])) {
+			header("Location: /material?msg=".$material->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$material->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageMaterial();
 		
 		$page ->setTpl("material-update", array(
-			"material"=>$material->getValues()
+			"material"=>$material->getValues(),
+			"msg"=>$msg
 		));
 	});
 
@@ -1740,6 +1862,7 @@
 		header("Location: /material?msg=".$msg);
 		exit;
 	});	
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas do Hidrante								*/
@@ -1751,16 +1874,25 @@
 		$company["hydrant"]	= NULL;
 		$company["search"] 		= NULL;
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
 		$hydrant	= Metodo::selectRegister($company, "Hydrant");
 		
+		if ($hydrant[0] == NULL) {
+			$hydrant[0][0] = ["hydrant_id"=>NULL ];
+		}
+		
+		if (isset($hydrant[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($hydrant[0][0]["MESSAGE"]);
+		} else {
+			$hydrant[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageHydrant();
 		$page->setTpl("hydrant", array(
 			"hydrants"=>$hydrant[0],
@@ -1777,10 +1909,10 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 	
@@ -1833,24 +1965,27 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
 		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$hydrant = new Hydrant();
 		$hydrant->getById($hydrant_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($hydrant->getValues()["MESSAGE"])) {
+			header("Location: /hydrant?msg=".$hydrant->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$hydrant->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageHydrant();
 		
 		$page ->setTpl("hydrant-update", array(
 			"hydrant"=>$hydrant->getValues(),
 			"msg"=>$msg,
 			"locations"=>$locations,
-			"locais"=>$locais
+			"locais"=>$locais,
+			"msg"=>$msg
 		));
 	});
 
@@ -1870,6 +2005,7 @@
 		header("Location: /hydrant?msg=".$msg);
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*								Rotas do Histórico do Hidrante							*/
@@ -1884,11 +2020,10 @@
 		$company["search"] 			= NULL;
 		$company["hydrant_id"]		= $_GET["hydrant_id"];
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1911,9 +2046,15 @@
 		
 		$historic	= Metodo::selectRegister($company, "HistoricH");
 		if ($historic[0] == NULL) {
-			$historic[0][0] = ["hydrant_id"=>$_GET["hydrant_id"],"historic_id"=> NULL ];
+			$historic[0][0]["historic_id"] = NULL;
 		}
+		$historic[0][0]["hydrant_id"] = $_GET["hydrant_id"];
 
+		if (isset($historic[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($historic[0][0]["MESSAGE"]);
+		} else {
+			$historic[0][0]["MESSAGE"] = 'VAZIO';
+		}
 		$page = new PageHistoricH();
 		
 		$page->setTpl("historic", array(
@@ -1931,10 +2072,10 @@
 			$hydrant_id = $_GET["hydrant_id"];
 		}
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -1999,16 +2140,19 @@
 
 	$app->get('/historicH/:historic_id', function($historic_id) {
 		User::verifyLogin();
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
+		
 		$historic = new HistoricH();
 		$historic->getbyid($historic_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($historic->getValues()["MESSAGE"])) {
+			header("Location: /historicH?msg=".$historic->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$historic->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageHistoricH();
 		
 		$page ->setTpl("historic-update", array(
@@ -2038,6 +2182,7 @@
 		header("Location: /historicH?pg=1&msg=$msg&hydrant_id=$hydrant_id");
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*								Rotas do Ar Condicionado								*/
@@ -2183,6 +2328,7 @@
 		header("Location: /airconditioning?msg=".$msg);
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*						Rotas do Histórico do Ar Condicionado							*/
@@ -2215,6 +2361,12 @@
 
 		if ($historic[0] == NULL) {
 			$historic[0][0] = ["airconditioning_id"=>$_GET["airconditioning_id"],"historic_id"=> NULL ];
+		}
+		
+		if (isset($historic[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($historic[0][0]["MESSAGE"]);
+		} else {
+			$historic[0][0]["MESSAGE"] = 'VAZIO';
 		}
 	
 		$page = new PageHistoricA();
@@ -2359,6 +2511,7 @@
 		header("Location: /historicA?pg=1&msg=$msg&airconditioning_id=$airconditioning_id");
 		exit;
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*					Rotas do Plano Anual de Manutenção Preventiva						*/
@@ -2371,11 +2524,10 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 		
@@ -2388,6 +2540,16 @@
 		} 
 		
 		$anualplan	= Metodo::selectRegister($company, "AnualPlan");
+
+		if ($anualplan[0] == NULL) {
+			$anualplan[0][0] = ["anualplan_id"=>NULL ];
+		}
+		
+		if (isset($anualplan[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($anualplan[0][0]["MESSAGE"]);
+		} else {
+			$anualplan[0][0]["MESSAGE"] = 'VAZIO';
+		}
 
 		$page = new PageAnualPlan();
 		$page->setTpl("anualplan", array(
@@ -2404,11 +2566,10 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -2467,15 +2628,7 @@
 		$company["anualplan"]		= NULL;
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
-
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
+	
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
 		$locais			= Metodo::selectRegister($company, "Local");
 		$locations		= Metodo::selectRegister($company, "Location");
@@ -2484,6 +2637,16 @@
 		$anualplan = new AnualPlan();
 		$anualplan->getByIdA($anualplan_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($anualplan->getValues()["MESSAGE"])) {
+			header("Location: /anualplan?msg=".$anualplan->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$anualplan->setData(['MESSAGE'=> 'VAZIO']);
+			$status = Metodo::insertcolor($anualplan->getdtprevision(),$anualplan->getdtexecution(),$anualplan->getrstatus());
+		}
+
 		$page = new PageAnualPlan();
 		$page->setTpl('anualplan-update', array(
 			"anualplan" =>$anualplan->getValues(),
@@ -2491,7 +2654,8 @@
 			"locations"=>$locations[0],
 			"locais"=>$locais[0],
 			"responsables"=>$responsables[0],
-			"msg"=>$msg
+			"msg"=>$msg,
+			"status"=>$status
 		));
 	});
 
@@ -2506,7 +2670,7 @@
 			$_GET["msg"] = '';
 		}
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"]]);
+			$ppost = Metodo::convertDateToDataBase(["dtprevision"=>$_POST["dtprevision"],"dtexecution"=>$_POST["dtexecution"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -2523,6 +2687,7 @@
 		exit;
 		
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*									Rotas do Equipamento								*/
@@ -2535,16 +2700,25 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
 		$equipaments	= Metodo::selectRegister($company, "Equipament");
 		
+		if ($equipaments[0] == NULL) {
+			$equipaments[0][0] = ["equipament_id"=>NULL ];
+		}
+		
+		if (isset($equipaments[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($equipaments[0][0]["MESSAGE"]);
+		} else {
+			$equipaments[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageAnualPlan();
 		
 		$page->setTpl("equipament", array(
@@ -2557,11 +2731,10 @@
 	$app->get('/equipament/create', function() {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -2602,17 +2775,18 @@
 	$app->get('/equipament/:equipament_id', function($equipament_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$equipament = new AnualPlan();
 		$equipament->getByIdE($equipament_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($equipament->getValues()["MESSAGE"])) {
+			header("Location: /equipament?msg=".$equipament->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$equipament->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageAnualPlan();
 		$page->setTpl('equipament-update', array(
 			"equipament" =>$equipament->getValues(),
@@ -2640,6 +2814,7 @@
 		exit;
 		
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas da Local									*/
@@ -2652,16 +2827,25 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
 		$locais	= Metodo::selectRegister($company, "Local");
 		
+		if ($locais[0] == NULL) {
+			$locais[0][0] = ["local_id"=>NULL ];
+		}
+		
+		if (isset($locais[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($locais[0][0]["MESSAGE"]);
+		} else {
+			$locais[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageLocal();
 		
 		$page->setTpl("local", array(
@@ -2674,11 +2858,10 @@
 	$app->get('/local/create', function() {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -2719,17 +2902,18 @@
 	$app->get('/local/:local_id', function($local_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$local = new Local();
 		$local->getById($local_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($local->getValues()["MESSAGE"])) {
+			header("Location: /local?msg=".$local->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$local->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageLocal();
 		$page->setTpl('local-update', array(
 			"local" =>$local->getValues(),
@@ -2740,13 +2924,13 @@
 	$app->post('/local/:local_id', function($local_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
+
 		$local = new Local();
 		$local->getById($local_id);
 		
@@ -2757,6 +2941,7 @@
 		exit;
 		
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*									Rotas do Responsável								*/
@@ -2769,16 +2954,25 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
 		$responsables	= Metodo::selectRegister($company, "Responsable");
 		
+		if ($responsables[0] == NULL) {
+			$responsables[0][0] = ["responsable_id"=>NULL ];
+		}
+		
+		if (isset($responsables[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($responsables[0][0]["MESSAGE"]);
+		} else {
+			$responsables[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageAnualPlan();
 		
 		$page->setTpl("responsable", array(
@@ -2792,11 +2986,10 @@
 		User::verifyLogin();
 		$classification = Visitant::listClassification();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -2857,17 +3050,18 @@
 		User::verifyLogin();
 		$classification = Visitant::listClassification();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$responsable = new User();
 		$responsable->get($responsable_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($responsable->getValues()["MESSAGE"])) {
+			header("Location: /responsable?msg=".$responsable->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$responsable->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageAnualPlan();
 		$page->setTpl('responsable-update', array(
 			"responsable" =>$responsable->getValues(),
@@ -2922,16 +3116,25 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
 		$locations	= Metodo::selectRegister($company, "Location");
 		
+		if ($locations[0] == NULL) {
+			$locations[0][0] = ["location_id"=>NULL ];
+		}
+		
+		if (isset($locations[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($locations[0][0]["MESSAGE"]);
+		} else {
+			$locations[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageLocation();
 		
 		$page->setTpl("location", array(
@@ -2944,11 +3147,10 @@
 	$app->get('/location/create', function() {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -2989,17 +3191,18 @@
 	$app->get('/location/:location_id', function($location_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$location = new Location();
 		$location->getById($location_id);
 		
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($location->getValues()["MESSAGE"])) {
+			header("Location: /location?msg=".$location->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$location->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageLocation();
 		$page->setTpl('location-update', array(
 			"location" =>$location->getValues(),
@@ -3027,10 +3230,7 @@
 		exit;
 		
 	});
-
-
-
-
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*								Rotas do Controle Geral									*/
@@ -3043,16 +3243,26 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
 
 		$generalcontrols	= Metodo::selectRegister($company, "GeneralControl");
 		
+		if ($generalcontrols[0] == NULL) {
+			$generalcontrols[0][0] = ["generalcontrol_id"=>NULL ];
+		}
+		
+		if (isset($generalcontrols[0][0]["MESSAGE"])) {
+			$msg = Metodo::divideMessage($generalcontrols[0][0]["MESSAGE"]);
+			$generalcontrols[0][0]["generalcontrol_id"] = NULL;
+		} else {
+			$generalcontrols[0][0]["MESSAGE"] = 'VAZIO';
+		}
+
 		$page = new PageGeneralControl();
 		
 		$page->setTpl("generalcontrol", array(
@@ -3071,11 +3281,10 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
 
@@ -3126,19 +3335,20 @@
 		$company["daydate"]	    	= NULL;
 		$company["search"] 			= NULL;
 
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
-		
-		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			$_GET["msg"] = '';
-		}
-
 		$locais			= Metodo::selectRegister($company, "Local");
 		$locations		= Metodo::selectRegister($company, "Location");
 		
 		$generalcontrol = new GeneralControl();
 		$generalcontrol->getById($generalcontrol_id);
+
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($generalcontrol->getValues()["MESSAGE"])) {
+			header("Location: /generalcontrol?msg=".$generalcontrol->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$generalcontrol->setData(['MESSAGE'=> 'VAZIO']);
+		}
 
 		$page = new PageGeneralControl();
 		$page->setTpl('generalcontrol-update', array(
@@ -3152,13 +3362,13 @@
 	$app->post('/generalcontrol/:generalcontrol_id', function($generalcontrol_id) {
 		User::verifyLogin();
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		}
+
 		if (isset($_POST)) {
 			$ppost = Metodo::convertDateToDataBase(["dthydraulic"=>$_POST["dthydraulic"],"dteletric"=>$_POST["dteletric"],"dtbuilding"=>$_POST["dtbuilding"]]);
 			foreach ($ppost as $key => $value) {
@@ -3178,7 +3388,7 @@
 		exit;
 		
 	});
-
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas do Admin									*/
@@ -3190,11 +3400,10 @@
 		if ($_SESSION["User"]["inadmin"] == '1') {
 			$users = User::listAll();
 
-			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];		
-			
+			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-				$mess = explode(':', $_GET["msg"]);
-				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+				$msg = Metodo::divideMessage($_GET["msg"]);
 				$_GET["msg"] = '';
 			} 
 
@@ -3212,11 +3421,11 @@
 
 	$app->get('/admin/login', function() {
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
+			$_GET["msg"] = '';
 		}
 
 		$page = new PageAdmin([
@@ -3247,11 +3456,11 @@
 	});
 
 	$app->get("/admin/forgot", function(){
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
+			$_GET["msg"] = '';
 		}
 
 		$page = new PageAdmin([
@@ -3264,11 +3473,11 @@
 	});
 
 	$app->post("/admin/forgot", function(){
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
+			$_GET["msg"] = '';
 		}
 		
 		$user = User::getForgot($_POST["email"]);
@@ -3278,11 +3487,11 @@
 
 	$app->get("/admin/forgot/sent", function(){
 		
-		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-			$mess = explode(':', $_GET["msg"]);
-			$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+			$msg = Metodo::divideMessage($_GET["msg"]);
+			$_GET["msg"] = '';
 		}
 
 		$page = new PageAdmin([
@@ -3324,7 +3533,7 @@
 		]);
 		$page->setTpl("forgot-reset-success");
 	});
-
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*										Rotas do Users									*/
@@ -3336,13 +3545,11 @@
 		if ($_SESSION["User"]["inadmin"] == '1') {
 			$users = User::listAll();
 			
-			$msg= '';
-			
+			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
+		
 			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-				$mess = explode(':', $_GET["msg"]);
-				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
-			} else {
-				$msg = ["state"=>'', "msg"=> ''];
+				$msg = Metodo::divideMessage($_GET["msg"]);
+				$_GET["msg"] = '';
 			}
 
 			$page = new PageUser();
@@ -3360,11 +3567,10 @@
 		
 		User::verifyLogin();
 		if ($_SESSION["User"]["inadmin"] == '1') {
-			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO'];
+			$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 			if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
-				$mess = explode(':', $_GET["msg"]);
-				$msg = ["state"=>$mess[0], "msg"=> $mess[1]];
+				$msg = Metodo::divideMessage($_GET["msg"]);
 				$_GET["msg"] = '';
 			}
 			$page = new PageUser();
@@ -3430,10 +3636,20 @@
  
 		$user->get((int)$person_id);
 			
+		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];	
+		
+		if (isset($user->getValues()["MESSAGE"])) {
+			header("Location: /users?msg=".$user->getValues()["MESSAGE"]);
+			exit;
+		} else {
+			$user->setData(['MESSAGE'=> 'VAZIO']);
+		}
+
 		$page = new PageUser();
 		
 		$page ->setTpl("users-update", array(
-			"user"=>$user->getValues()
+			"user"=>$user->getValues(),
+			"msg"=>$msg
 		));
 	});
 	
@@ -3452,6 +3668,7 @@
 		exit;
 		
 	});
+/******************************************************************************************/
 
 /*======================================================================================*/
 /*									Execução do aplicativo								*/

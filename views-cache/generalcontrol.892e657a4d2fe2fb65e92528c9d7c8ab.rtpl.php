@@ -14,7 +14,7 @@
       <div class="box box-primary">
         <div class="col form-control top">
           <div class="row">
-            <div class="col col-md-4">
+            <div class="col col-md-6">
               <form action="/generalcontrol/create" method="get">
                 <input type="submit" name="btngeneralcontrol" class="btn btn-success" value="Cadastrar Controle Geral">
                 <a href="/generalcontrol?limit=10" class="btn btn-warning">Voltar</a>
@@ -27,7 +27,8 @@
       <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
             class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
             <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
       </div>
       <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
         <div class="row">
@@ -53,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary" <?php if( !$generalcontrols ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( $generalcontrols["0"]['generalcontrol_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">

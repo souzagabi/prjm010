@@ -20,7 +20,21 @@
               <input type="text" name="goods" value="goods" hidden>
             </form>
           </div>
-  
+          <form action="/goods" method="get" <?php if( !$goods ){ ?>hidden<?php } ?>>
+            <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+            <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+            <div class="col col-md-1"><label for="limit">Qtde</label>
+              <select name="limit" id="limit" class="form-control">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+          </form>
         </div>
       </div>
     </div>

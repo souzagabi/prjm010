@@ -20,6 +20,21 @@
                 <input type="text" name="clothing" value="clothing" hidden>
               </form>
             </div>
+            <form action="/clothing" method="get" {if="!$clothings"}hidden{/if}>
+              <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+              <div class="col col-md-2"><label for="dateout">Data Saída</label><input type="text" name="dateout" id="dateout" class="form-control" onChange="replaceSlash(dateout)"></div>
+              <div class="col col-md-2"><label for="datein">Data Entrada</label><input type="text" name="datein" id="datein" class="form-control" onChange="replaceSlash(datein)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>

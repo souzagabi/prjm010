@@ -14,12 +14,28 @@
     <div class="box box-primary">
       <div class="col form-control top">
         <div class="row">
-          <div class="col col-md-4">
+          <div class="col col-md-2">
             <form action="/nobreak/create" method="get">
               <input type="submit" name="btnnobreak" class="btn btn-success" value="Cadastrar Nobreak">
               <input type="text" name="nobreak" value="nobreak" hidden>
             </form>
           </div>
+          <form action="/nobreak" method="get" {if="!$nobreaks"}hidden{/if}>
+            <div class="col col-md-2"><label for="location">Localização</label><input type="text" name="location" id="location" class="form-control"></div>
+            <div class="col col-md-2"><label for="serialnumber">Nº Serial</label><input type="text" name="serialnumber" id="serialnumber" class="form-control"></div>
+            <div class="col col-md-2"><label for="daydate">Data Início</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+            <div class="col col-md-1"><label for="limit">Qtde</label>
+              <select name="limit" id="limit" class="form-control">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+          </form>
         </div>
       </div>
     </div>
@@ -41,7 +57,7 @@
               </li>
               {$i = 1}
               {loop="$pgs"}
-              <li><a href="nobreak?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">
@@ -96,7 +112,7 @@
               </li>
               {$i = 1}
               {loop="$pgs"}
-              <li><a href="nobreak?pg={$i}{if="$pgs.list.name_person"}&name_person={$pgs.list.name_person}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+              <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
               {/loop}
               <li>
                 <a href="#" aria-label="Next">

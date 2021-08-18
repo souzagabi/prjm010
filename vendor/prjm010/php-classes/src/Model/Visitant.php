@@ -20,10 +20,10 @@
             if ($list["start"] == 1) {
                 $list["start"] = 0;
             }
-            
-            $results =  $sql->select("CALL prc_visitant_sel(:name_person, :date_save, :date_fim, :start, :limit)", array(
+
+            $results =  $sql->select("CALL prc_visitant_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
                 ":name_person"  => $list["name_person"],   
-                ":date_save"    => $list["date_save"],
+                ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]

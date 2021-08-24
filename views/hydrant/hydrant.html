@@ -20,7 +20,21 @@
                 <input type="text" name="hydrant" value="hydrant" hidden>
               </form>
             </div>
-           
+            <form action="/hydrant" method="get" {if="!$hydrants"}hidden{/if}>
+              <div class="col col-md-2"><label for="deslocation">Localização</label><input type="text" name="deslocation" id="deslocation" class="form-control"></div>
+              <div class="col col-md-2"><label for="tipe">Tipo</label><input type="text" name="tipe" id="tipe" class="form-control"></div>
+              <div class="col col-md-2"><label for="idnumber">Número</label><input type="text" name="idnumber" id="idnumber" class="form-control"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>

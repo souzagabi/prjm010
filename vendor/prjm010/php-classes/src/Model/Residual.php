@@ -21,8 +21,9 @@
                 $list["start"] = 0;
             }
             
-            return  $sql->select("CALL prc_residual_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
-                ":name_person"  => $list["name_person"],   
+            return  $sql->select("CALL prc_residual_sel(:deslocation,:material, :daydate, :date_fim, :start, :limit)", array(
+                ":deslocation"  => $list["deslocation"],   
+                ":material"     => $list["material"],
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],

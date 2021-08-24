@@ -105,6 +105,7 @@
 				$company[$key] = $value;
 			}
 		}
+
 		$firstday 	= '1';
 		$lastday 	= date('t');
 		$year 		= date('Y');
@@ -307,7 +308,8 @@
 		User::verifyLogin();
 		
 		$company["residual"]	= NULL;
-		$company["name_person"] = NULL;
+		$company["material"] 	= NULL;
+		$company["deslocation"] = NULL;
 		$company["search"] 		= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -338,14 +340,16 @@
 			}
 		}
 		
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		if ((!isset($_GET["deslocation"]) || $_GET["deslocation"] == '') && (!isset($_GET["material"]) || $_GET["material"] == '') ) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 
 		$residual	= Metodo::selectRegister($company, "Residual");
@@ -503,10 +507,9 @@
 		User::verifyLogin();
 		
 		$company["goods"]	= NULL;
-		$company["daydate"]	    = NULL;
-		$company["date_fim"]    = NULL;
-		$company["receiver"] 	= NULL;
-		$company["search"] 		= NULL;
+		$company["daydate"]	= NULL;
+		$company["date_fim"]= NULL;
+		$company["search"]	= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
@@ -536,14 +539,16 @@
 			}
 		}
 		
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		if ((!isset($_GET["goods"]) || $_GET["goods"] == '')) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 		
 		$goods	= Metodo::selectRegister($company, "Goods");
@@ -720,14 +725,17 @@
 				$company[$key] = $value;
 			}
 		}
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+
+		if ((!isset($_GET["location"]) || $_GET["location"] == '') && (!isset($_GET["serialnumber"]) || $_GET["serialnumber"] == '')) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 		
 		$nobreak	= Metodo::selectRegister($company, "Nobreak");
@@ -891,7 +899,9 @@
 		User::verifyLogin();
 		
 		$company["fireexting"]	= NULL;
-		$company["daydate"]	    = NULL;
+		$company["deslocation"]	= NULL;
+		$company["tipe"]    	= NULL;
+		$company["daydate"]		= NULL;
 		$company["date_fim"]    = NULL;
 		$company["search"] 		= NULL;
 		
@@ -902,20 +912,37 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+	
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
 			}
-		} 
-		
-		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+		}
+		if ( (!isset($_GET["deslocation"]) || $_GET["deslocation"] == '') && (!isset($_GET["tipe"]) || $_GET["tipe"] == ''))
 		{
-			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
 			}
 		}
 		
@@ -1266,14 +1293,16 @@
 				$company[$key] = $value;
 			}
 		}
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		if ((!isset($_GET["location"]) || $_GET["location"] == '') && (!isset($_GET["serialnumber"]) || $_GET["serialnumber"] == '')) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 		
 		$purifiers	= Metodo::selectRegister($company, "Purifier");
@@ -1624,6 +1653,7 @@
 		User::verifyLogin();
 		
 		$company["clothing"]	= NULL;
+		$company["company"]	= NULL;
 		$company["search"] 		= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -1654,14 +1684,16 @@
 			}
 		}
 		
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["dateout"]) || ($_GET["dateout"] == '') ) && (!isset($_GET["datein"]) || ($_GET["datein"] == ''))) {
-			$company["dateout"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["datein"] 	= $year.'-'.$month.'-'.$lastday;
+		if ((!isset($_GET["company"]) || $_GET["company"] == '')) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["dateout"]) || ($_GET["dateout"] == '') ) && (!isset($_GET["datein"]) || ($_GET["datein"] == ''))) {
+				$company["dateout"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["datein"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 
 		$clothings	= Metodo::selectRegister($company, "Clothing");
@@ -1794,7 +1826,8 @@
 		User::verifyLogin();
 		
 		$company["material"]	= NULL;
-		$company["receiver"] 	= NULL;
+		$company["daydate"] 	= NULL;
+		$company["date_fim"] 	= NULL;
 		$company["search"] 		= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -1824,15 +1857,17 @@
 				$company[$key] = $value;
 			}
 		}
-		
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		if ( (!isset($_GET["material"]) || $_GET["material"] == ''))
+		{
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 		
 		$material	= Metodo::selectRegister($company, "Material");
@@ -1965,7 +2000,10 @@
 	$app->get('/hydrant', function() {
 		User::verifyLogin();
 		
-		$company["hydrant"]	= NULL;
+		$company["hydrant"]		= NULL;
+		$company["deslocation"]	= NULL;
+		$company["tipe"]		= NULL;
+		$company["idnumber"]	= NULL;
 		$company["search"] 		= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -1975,6 +2013,12 @@
 			$_GET["msg"] = '';
 		} 
 		
+		if (isset($_GET["search"])) {
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
+			}
+		}
+
 		$hydrant	= Metodo::selectRegister($company, "Hydrant");
 		
 		if ($hydrant[0] == NULL) {
@@ -2625,7 +2669,9 @@
 		User::verifyLogin();
 		
 		$company["anualplan"]		= NULL;
+		$company["deslocation"]   	= NULL;
 		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -2635,13 +2681,38 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
 			}
-		} 
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
+			}
+		}
+		
+		if (!isset($_GET["deslocation"]) || $_GET["deslocation"] == '' ) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			} 
+		}
 		
 		$anualplan	= Metodo::selectRegister($company, "AnualPlan");
 
@@ -3344,7 +3415,9 @@
 		User::verifyLogin();
 
 		$company["generalcontrol"]	= NULL;
+		$company["deslocation"]    	= NULL;
 		$company["daydate"]	    	= NULL;
+		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -3353,6 +3426,40 @@
 			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
 		} 
+
+		if (isset($_GET["search"])) {
+			
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			}
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
+			}
+		}
+		
+		if (!isset($_GET["deslocation"]) || $_GET["deslocation"] == '' ) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
+		}
 
 		$generalcontrols	= Metodo::selectRegister($company, "GeneralControl");
 		

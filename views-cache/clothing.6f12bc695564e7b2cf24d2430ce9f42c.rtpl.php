@@ -21,7 +21,7 @@
               </form>
             </div>
             <form action="/clothing" method="get" <?php if( !$clothings ){ ?>hidden<?php } ?>>
-              <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+              <div class="col col-md-2"><label for="company">Empresa</label><input type="text" name="company" id="company" class="form-control"></div>
               <div class="col col-md-2"><label for="dateout">Data Saída</label><input type="text" name="dateout" id="dateout" class="form-control" onChange="replaceSlash(dateout)"></div>
               <div class="col col-md-2"><label for="datein">Data Entrada</label><input type="text" name="datein" id="datein" class="form-control" onChange="replaceSlash(datein)"></div>
               <div class="col col-md-1"><label for="limit">Qtde</label>
@@ -56,7 +56,7 @@
                 </li>
                 <?php $i = 1; ?>
                 <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["company"] ){ ?>&company=<?php echo htmlspecialchars( $pgs["list"]["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                 <?php } ?>
                 <li>
                   <a href="#" aria-label="Next">
@@ -113,7 +113,7 @@
                 </li>
                 <?php $i = 1; ?>
                 <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["company"] ){ ?>&company=<?php echo htmlspecialchars( $pgs["list"]["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                 <?php } ?>
                 <li>
                   <a href="#" aria-label="Next">

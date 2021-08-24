@@ -21,7 +21,7 @@
               </form>
             </div>
             <form action="/clothing" method="get" {if="!$clothings"}hidden{/if}>
-              <div class="col col-md-2"><label for="name_person">Nome</label><input type="text" name="name_person" id="name_person" class="form-control"></div>
+              <div class="col col-md-2"><label for="company">Empresa</label><input type="text" name="company" id="company" class="form-control"></div>
               <div class="col col-md-2"><label for="dateout">Data Saída</label><input type="text" name="dateout" id="dateout" class="form-control" onChange="replaceSlash(dateout)"></div>
               <div class="col col-md-2"><label for="datein">Data Entrada</label><input type="text" name="datein" id="datein" class="form-control" onChange="replaceSlash(datein)"></div>
               <div class="col col-md-1"><label for="limit">Qtde</label>
@@ -56,7 +56,7 @@
                 </li>
                 {$i = 1}
                 {loop="$pgs"}
-                <li><a href="clothing?pg={$i}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                <li><a href="clothing?pg={$i}{if="$pgs.list.company"}&company={$pgs.list.company}{/if}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
                 {/loop}
                 <li>
                   <a href="#" aria-label="Next">
@@ -113,7 +113,7 @@
                 </li>
                 {$i = 1}
                 {loop="$pgs"}
-                <li><a href="clothing?pg={$i}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                <li><a href="clothing?pg={$i}{if="$pgs.list.company"}&company={$pgs.list.company}{/if}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
                 {/loop}
                 <li>
                   <a href="#" aria-label="Next">

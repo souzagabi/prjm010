@@ -54,6 +54,26 @@
         </div>
       </div>
     </div>
+    <div class="box box-primary">
+      <div class="col form-control top">
+        <form action="/anualplan" method="get" <?php if( !$anualplans ){ ?>hidden<?php } ?>>
+          <div class="col col-md-2"></div>
+          <div class="col col-md-2"><label for="deslocation">Localização</label><input type="text" name="deslocation" id="deslocation" class="form-control"></div>
+          <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+          <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+          <div class="col col-md-2"><label for="limit">Qtde</label>
+            <select name="limit" id="limit" class="form-control">
+              <option value="10" selected>10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+        </form>
+      </div>
+    </div>
     <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
           class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
           <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>

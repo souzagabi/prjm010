@@ -64,8 +64,11 @@
             if ($list["start"] == 1) {
                 $list["start"] = 0;
             }
-            
-            $results =  $sql->select("CALL prc_anualplan_sel(:start, :limit)", array(
+
+            $results =  $sql->select("CALL prc_anualplan_sel(:deslocation,:daydate,:date_fim,:start, :limit)", array(
+                ":deslocation"  => $list["deslocation"],
+                ":daydate"      => $list["daydate"],
+                ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));

@@ -16,8 +16,11 @@
             if (($pg - 1) * $list["limit"] > 0) {
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
-                     
-            $results =  $sql->select("CALL prc_generalcontrol_sel(:start, :limit)", array(
+      
+            $results =  $sql->select("CALL prc_generalcontrol_sel(:deslocation,:daydate,:date_fim,:start, :limit)", array(
+                ":deslocation"  => $list["deslocation"],
+                ":daydate"      => $list["daydate"],
+                ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));

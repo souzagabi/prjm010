@@ -85,7 +85,7 @@
                 <div class="col col-md-2">
                   <div class="form-group">
                     <label for="capacity">Capacidade</label>
-                    <input type="text" class="form-control" name="capacity" id="capacity" required>
+                    <input type="text" class="form-control" name="capacity" id="capacity" maxlength="10" required>
                   </div>
                 </div>
                 <div class="col col-md-2">

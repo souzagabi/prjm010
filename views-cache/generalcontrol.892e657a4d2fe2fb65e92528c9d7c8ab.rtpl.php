@@ -14,13 +14,28 @@
       <div class="box box-primary">
         <div class="col form-control top">
           <div class="row">
-            <div class="col col-md-6">
+            <div class="col col-md-3">
               <form action="/generalcontrol/create" method="get">
                 <input type="submit" name="btngeneralcontrol" class="btn btn-success" value="Cadastrar Controle Geral">
                 <a href="/generalcontrol?limit=10" class="btn btn-warning">Voltar</a>
                 <input type="text" name="generalcontrol" value="generalcontrol" hidden>
               </form>
             </div>
+            <form action="/generalcontrol" method="get" <?php if( !$generalcontrols ){ ?>hidden<?php } ?>>
+              <div class="col col-md-2"><label for="deslocation">Localização</label><input type="text" name="deslocation" id="deslocation" class="form-control"></div>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-2"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>

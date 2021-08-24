@@ -21,7 +21,8 @@
                 $list["start"] = 0;
             }
     
-            return  $sql->select("CALL prc_clothing_sel(:dateout, :datein,:start, :limit)", array(
+            return  $sql->select("CALL prc_clothing_sel(:company,:dateout, :datein,:start, :limit)", array(
+                ":company"      => $list["company"],
                 ":dateout"      => $list["dateout"],
                 ":datein"       => $list["datein"],
                 ":start"        => $list["start"],

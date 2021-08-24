@@ -21,8 +21,8 @@
                 $list["start"] = 0;
             }
             
-            return  $sql->select("CALL prc_goods_sel(:receiver, :daydate, :date_fim, :start, :limit)", array(
-                ":receiver"     => $list["receiver"],   
+            return  $sql->select("CALL prc_goods_sel(:goods, :daydate, :date_fim, :start, :limit)", array(
+                ":goods"        => $list["goods"],   
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],

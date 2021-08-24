@@ -22,8 +22,8 @@
                 $list["start"] = 0;
             }
             
-            return  $sql->select("CALL prc_material_sel(:receiver, :daydate, :date_fim, :start, :limit)", array(
-                ":receiver"     => $list["receiver"],   
+            return  $sql->select("CALL prc_material_sel(:material, :daydate, :date_fim, :start, :limit)", array(
+                ":material"     => $list["material"],   
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],

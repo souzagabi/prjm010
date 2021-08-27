@@ -91,7 +91,7 @@
                 <td><?php echo htmlspecialchars( $value1["observation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/hydrant/<?php echo htmlspecialchars( $value1["hydrant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
-                  <a href="/historicH?hydrant_id=<?php echo htmlspecialchars( $value1["hydrant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
+                  <a href="/historicH?hydrant_id=<?php echo htmlspecialchars( $value1["hydrant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $value1["idnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $value1["tipe"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
                   <a href="/hydrant/<?php echo htmlspecialchars( $value1["hydrant_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Extintor"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>

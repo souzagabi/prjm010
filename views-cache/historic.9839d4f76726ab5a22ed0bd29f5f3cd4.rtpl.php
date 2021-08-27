@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Extintor <?php if( $historics["0"]['fireexting_id'] != NULL ){ ?> <?php echo htmlspecialchars( $historics["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>
+        Histórico do Extintor <?php if( $historics["0"]['fireexting_id'] != NULL ){ ?> <?php echo htmlspecialchars( $historics["0"]['capacity'], ENT_COMPAT, 'UTF-8', FALSE ); ?> - <?php echo htmlspecialchars( $historics["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,7 +21,24 @@
                 <input type="text" name="fireexting_id" value="<?php if( $historics != NULL ){ ?><?php echo htmlspecialchars( $historics["0"]['fireexting_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
               </form>
             </div>
-         
+            <form action="/historicE" method="get" <?php if( !$historics ){ ?>hidden<?php } ?>>
+              <div class="col col-md-2"></div>
+              <input type="text" name="fireexting_id" value="<?php if( $historics != NULL ){ ?><?php echo htmlspecialchars( $historics["0"]['fireexting_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
+              <input type="text" name="capacity"   value="<?php if( $historics != NULL ){ ?><?php echo htmlspecialchars( $historics["0"]['capacity'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
+              <input type="text" name="tipe"       value="<?php if( $historics != NULL ){ ?><?php echo htmlspecialchars( $historics["0"]['tipe'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>

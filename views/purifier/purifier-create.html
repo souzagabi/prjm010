@@ -68,16 +68,15 @@
                 </div>
               </div>
               <div class="box-body">
-                <div class="col col-md-2">
-                  <div class="form-group">
-                    <label for="nextmanager">Data de Recarga</label>
-                    <input type="text" class="form-control" name="nextmanager" id="nextmanager" onChange="replaceSlash(nextmanager)" required>
-                  </div>
-                </div>
                 <div class="col col-md-4">
                   <div class="form-group">
-                    <label for="responsable">Responsável</label>
-                    <input type="text" class="form-control" name="responsable" id="responsable" onKeyUp="convertLowToUpper(responsable)" value="{$purifier.name_person}" required readonly>
+                    <label for="person_id">Responsável</label>
+                    <select class="form-control" name="person_id" id="person_id" required>
+                      <option value=""></option>
+                      {loop="$responsables"}
+                      <option value="{$value.person_id}">{$value.responsable}</option>
+                      {/loop}
+                    </select>
                   </div>
                 </div>
               </div>

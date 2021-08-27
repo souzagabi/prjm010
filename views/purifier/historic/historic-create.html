@@ -31,6 +31,12 @@
             <form role="form" action="/historicP/create?{if="$purifier != NULL"}{$purifier}{/if}" method="post" enctype="multipart/form-data">
               <input type="text" name="purifier_id" value="{$purifier}" hidden>
               <div class="box-body">
+                <div class="col col-md-4">
+                  <div class="form-group">
+                    <label for="serialnumber">Nº Serial</label>
+                    <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                  </div>
+                </div>
                 <div class="col col-md-2">
                   <div class="form-group">
                     <label for="daydate">Data da Manutenção</label>
@@ -39,10 +45,12 @@
                     {/loop}
                   </div>
                 </div>
-                <div class="col col-md-4">
+                <div class="col col-md-3">
                   <div class="form-group">
-                    <label for="serialnumber">Nº Serial</label>
-                    <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                    <label for="nextmanager">Data Próxima Manutenção</label>
+                    {loop="$date"}
+                    <input type="text" class="form-control" id="nextmanager" name="nextmanager" value="{$date.date}" onChange="replaceSlash(nextmanager)" >
+                    {/loop}
                   </div>
                 </div>
                                

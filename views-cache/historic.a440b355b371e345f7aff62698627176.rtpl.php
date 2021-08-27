@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Purificador
+        Histórico do Purificador <?php if( $purifiers["0"]['historic_id'] != NULL ){ ?> <?php echo htmlspecialchars( $purifiers["0"]['serialnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,14 +21,30 @@
                 <input type="text" name="purifier_id" value="<?php if( $purifiers != NULL ){ ?><?php echo htmlspecialchars( $purifiers["0"]["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $purifiers["0"]["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
               </form>
             </div>
-         
+            <form action="/historicP" method="get" <?php if( !$purifiers ){ ?>hidden<?php } ?>>
+              <div class="col col-md-2"></div>
+              <input type="text" name="purifier_id" value="<?php if( $purifiers != NULL ){ ?><?php echo htmlspecialchars( $purifiers["0"]['purifier_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>
       <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
-          class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
-          <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-      <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
+            class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+            <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+        <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
       </div>
       <div class="box box-primary" <?php if( $purifiers["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="row">
@@ -80,6 +96,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Nº Série</th>
+                <th>Data da Manutenção</th>
                 <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
@@ -90,6 +107,7 @@
               <tr>
                 <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                <td><?php echo htmlspecialchars( $value1["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/historicP/<?php if( $purifiers["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
                   <a href="/historicP/<?php if( $purifiers["0"]['historic_id'] ){ ?><?php echo htmlspecialchars( $value1["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>

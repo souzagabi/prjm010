@@ -19,6 +19,12 @@
     
       <div class="row">
           <div class="col-md-12">
+            <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+                  class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                  <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+              <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+              <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
+            </div>
             <div class="box box-success">
             <!-- form start -->
             
@@ -26,16 +32,22 @@
                 <input type="text" name="purifier_id" value="<?php echo htmlspecialchars( $historic["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
                 <input type="text" name="historic_id" value="<?php echo htmlspecialchars( $historic["historic_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" hidden>
                 <div class="box-body">
+                  <div class="col col-md-4">
+                    <div class="form-group">
+                      <label for="serialnumber">Nº Serial</label>
+                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $historic["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                    </div>
+                  </div>
                   <div class="col col-md-2">
                     <div class="form-group">
                       <label for="daydate">Data da Manutenção</label>
                       <input type="text" class="form-control" id="daydate" name="daydate" value="<?php echo htmlspecialchars( $historic["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(daydate)" >
                     </div>
                   </div>
-                  <div class="col col-md-4">
+                  <div class="col col-md-3">
                     <div class="form-group">
-                      <label for="serialnumber">Nº Serial</label>
-                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="<?php echo htmlspecialchars( $historic["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                      <label for="nextmanager">Data da Próxima Manutenção</label>
+                      <input type="text" class="form-control" id="nextmanager" name="nextmanager" value="<?php echo htmlspecialchars( $historic["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(nextmanager)" >
                     </div>
                   </div>
                                 

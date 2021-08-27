@@ -78,7 +78,6 @@
                 <th>Nº de Séria</th>
                 <th>Localização</th>
                 <th>Responsável</th>
-                <th>Data Recarga</th>
                 <th>Ação</th>
               </tr>
             </thead>
@@ -89,7 +88,6 @@
                 <td><?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["deslocation"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                <td><?php echo htmlspecialchars( $value1["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td>
                   <a href="/purifier/<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs" title="Editar Purificador"><i class="fa fa-edit"></i></a>
                   <a href="/historicP?purifier_id=<?php echo htmlspecialchars( $value1["purifier_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>_<?php echo htmlspecialchars( $value1["serialnumber"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>

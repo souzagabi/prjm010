@@ -46,13 +46,12 @@
         {
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_purifier_save(:person_id, :daydate, :serialnumber, :location_id, :local_id, :nextmanager)", array(
+            $results = $sql->select("CALL prc_purifier_save(:person_id, :daydate, :serialnumber, :location_id, :local_id)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":serialnumber"     => $this->getserialnumber(),
                 ":location_id"      => $this->getlocation_id(),
-                ":local_id"         => $this->getlocal_id(),   
-                ":nextmanager"      => $this->getnextmanager()
+                ":local_id"         => $this->getlocal_id()
             ));
             
             $this->setData($results);
@@ -65,14 +64,13 @@
             
             $sql = new Sql();
          
-            $results = $sql->select("CALL prc_purifier_update(:purifier_id,:person_id,:daydate,:serialnumber,:location_id,:local_id,:nextmanager)", array(
+            $results = $sql->select("CALL prc_purifier_update(:purifier_id,:person_id,:daydate,:serialnumber,:location_id,:local_id)", array(
                 ":purifier_id"      => $this->getpurifier_id(),    
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":serialnumber"     => $this->getserialnumber(),
                 ":location_id"      => $this->getlocation_id(),
-                ":local_id"         => $this->getlocal_id(),   
-                ":nextmanager"      => $this->getnextmanager()
+                ":local_id"         => $this->getlocal_id()
             ));
 
             $this->setData($results);

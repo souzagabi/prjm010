@@ -91,7 +91,7 @@
                 <td>{$value.observation}</td>
                 <td>
                   <a href="/hydrant/{$value.hydrant_id}" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
-                  <a href="/historicH?hydrant_id={$value.hydrant_id}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
+                  <a href="/historicH?hydrant_id={$value.hydrant_id}_{$value.idnumber}_{$value.tipe}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
                   <a href="/hydrant/{$value.hydrant_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Extintor"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>

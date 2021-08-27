@@ -32,16 +32,22 @@
                 <input type="text" name="purifier_id" value="{$historic.purifier_id}" hidden>
                 <input type="text" name="historic_id" value="{$historic.historic_id}" hidden>
                 <div class="box-body">
+                  <div class="col col-md-4">
+                    <div class="form-group">
+                      <label for="serialnumber">Nº Serial</label>
+                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                    </div>
+                  </div>
                   <div class="col col-md-2">
                     <div class="form-group">
                       <label for="daydate">Data da Manutenção</label>
                       <input type="text" class="form-control" id="daydate" name="daydate" value="{$historic.daydate}" onChange="replaceSlash(daydate)" >
                     </div>
                   </div>
-                  <div class="col col-md-4">
+                  <div class="col col-md-3">
                     <div class="form-group">
-                      <label for="serialnumber">Nº Serial</label>
-                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
+                      <label for="nextmanager">Data da Próxima Manutenção</label>
+                      <input type="text" class="form-control" id="nextmanager" name="nextmanager" value="{$historic.nextmanager}" onChange="replaceSlash(nextmanager)" >
                     </div>
                   </div>
                                 

@@ -14,9 +14,10 @@
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             $list["start"] = ($pg - 1) * $list["limit"];
             
-            $results =  $sql->select("CALL prc_historicA_sel(:airconditioning_id,:daydate,:start, :limit)", array(
+            $results =  $sql->select("CALL prc_historicA_sel(:airconditioning_id,:daydate,:date_fim,:start, :limit)", array(
                 ":airconditioning_id"   => $list["airconditioning_id"],
                 ":daydate"              => $list["daydate"],
+                ":date_fim"             => $list["date_fim"],
                 ":start"                => $list["start"],
                 ":limit"                => $list["limit"]
             ));

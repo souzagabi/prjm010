@@ -68,16 +68,15 @@
                 </div>
               </div>
               <div class="box-body">
-                <div class="col col-md-2">
-                  <div class="form-group">
-                    <label for="nextmanager">Data de Recarga</label>
-                    <input type="text" class="form-control" name="nextmanager" id="nextmanager" onChange="replaceSlash(nextmanager)" required>
-                  </div>
-                </div>
                 <div class="col col-md-4">
                   <div class="form-group">
-                    <label for="responsable">Responsável</label>
-                    <input type="text" class="form-control" name="responsable" id="responsable" onKeyUp="convertLowToUpper(responsable)" value="<?php echo htmlspecialchars( $purifier["name_person"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" required readonly>
+                    <label for="person_id">Responsável</label>
+                    <select class="form-control" name="person_id" id="person_id" required>
+                      <option value=""></option>
+                      <?php $counter1=-1;  if( isset($responsables) && ( is_array($responsables) || $responsables instanceof Traversable ) && sizeof($responsables) ) foreach( $responsables as $key1 => $value1 ){ $counter1++; ?>
+                      <option value="<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                      <?php } ?>
+                    </select>
                   </div>
                 </div>
               </div>

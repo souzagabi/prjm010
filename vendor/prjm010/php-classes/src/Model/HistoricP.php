@@ -41,10 +41,11 @@
         {
             $sql = new Sql();
           
-            $results = $sql->select("CALL prc_historicP_save(:purifier_id,:daydate,:serialnumber)", array(
+            $results = $sql->select("CALL prc_historicP_save(:purifier_id,:daydate,:serialnumber,:nextmanager)", array(
                 ":purifier_id"   => $this->getpurifier_id(),
                 ":daydate"       => $this->getdaydate(),
-                ":serialnumber"  => $this->getserialnumber()
+                ":serialnumber"  => $this->getserialnumber(),   
+                ":nextmanager"      => $this->getnextmanager()
             ));
            
             $this->setData($results);
@@ -57,11 +58,12 @@
             
             $sql = new Sql();
             
-            $results = $sql->select("CALL prc_historicP_update(:historic_id,:purifier_id,:daydate,:serialnumber)", array(
+            $results = $sql->select("CALL prc_historicP_update(:historic_id,:purifier_id,:daydate,:serialnumber,:nextmanager)", array(
                 ":historic_id"    => $this->gethistoric_id(),
                 ":purifier_id"    => $this->getpurifier_id(),
                 ":daydate"        => $this->getdaydate(),
-                ":serialnumber"   => $this->getserialnumber()
+                ":serialnumber"   => $this->getserialnumber(),   
+                ":nextmanager"      => $this->getnextmanager()
                 
             ));
 

@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Histórico do Purificador
+        Histórico do Purificador {if="$purifiers[0]['historic_id'] != NULL"} {$purifiers[0]['serialnumber']}{/if}
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -21,7 +21,22 @@
                 <input type="text" name="purifier_id" value="{if="$purifiers != NULL"}{$purifiers[0].purifier_id}_{$purifiers[0].serialnumber}{/if}" hidden>
               </form>
             </div>
-         
+            <form action="/historicP" method="get" {if="!$purifiers"}hidden{/if}>
+              <div class="col col-md-2"></div>
+              <input type="text" name="purifier_id" value="{if="$purifiers != NULL"}{$purifiers[0]['purifier_id']}{/if}" hidden>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>
@@ -81,6 +96,7 @@
             <thead class="thead-dark">
               <tr class="alert-warning">
                 <th>Nº Série</th>
+                <th>Data da Manutenção</th>
                 <th>Data Próxima Manutenção</th>
                 <th>Ação</th>
               </tr>
@@ -91,6 +107,7 @@
               <tr>
                 <td>{$value.serialnumber}</td>
                 <td>{$value.daydate}</td>
+                <td>{$value.nextmanager}</td>
                 <td>
                   <a href="/historicP/{if="$purifiers[0]['historic_id']"}{$value.historic_id}{/if}" class="btn btn-primary btn-xs" title="Editar Histórico"><i class="fa fa-edit"></i></a>
                   <a href="/historicP/{if="$purifiers[0]['historic_id']"}{$value.historic_id}_{$value.serialnumber}{/if}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Histórico"><i class="fa fa-trash"></i></a>

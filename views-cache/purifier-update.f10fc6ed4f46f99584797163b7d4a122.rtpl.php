@@ -19,6 +19,12 @@
     
         <div class="row">
             <div class="col-md-12">
+                <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
+                        class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
+                        <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
+                    <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
+                    <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
+                </div>
                 <div class="box box-success">
             <!-- form start -->
             
@@ -59,18 +65,17 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <div class="col col-md-2">
-                                <div class="form-group">
-                                    <label for="nextmanager">Data de Recarga</label>
-                                    <input type="text" class="form-control" name="nextmanager" id="nextmanager" value="<?php echo htmlspecialchars( $purifier["nextmanager"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onChange="replaceSlash(nextmanager)" required>
-                                </div>
-                            </div>
                             <div class="col col-md-4">
                                 <div class="form-group">
-                                    <label for="responsable">Responsável</label>
-                                    <input type="text" class="form-control" name="responsable" id="responsable" value="<?php echo htmlspecialchars( $purifier["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" onKeyUp="convertLowToUpper(responsable)" required readonly>
+                                  <label for="person_id">Responsável</label>
+                                  <select class="form-control" name="person_id" id="person_id" required>
+                                    <option value=""></option>
+                                    <?php $counter1=-1;  if( isset($responsables) && ( is_array($responsables) || $responsables instanceof Traversable ) && sizeof($responsables) ) foreach( $responsables as $key1 => $value1 ){ $counter1++; ?>
+                                    <option value="<?php echo htmlspecialchars( $value1["person_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>"<?php if( $value1["person_id"] == $purifier["person_id"] ){ ?>selected<?php } ?>><?php echo htmlspecialchars( $value1["responsable"], ENT_COMPAT, 'UTF-8', FALSE ); ?></option>
+                                    <?php } ?>
+                                  </select>
                                 </div>
-                            </div>
+                              </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">

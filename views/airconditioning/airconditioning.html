@@ -89,7 +89,7 @@
                 <td>{$value.serialnumber}</td>
                 <td>
                   <a href="/airconditioning/{$value.airconditioning_id}" class="btn btn-primary btn-xs" title="Editar Extintor"><i class="fa fa-edit"></i></a>
-                  <a href="/historicA?airconditioning_id={$value.airconditioning_id}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
+                  <a href="/historicA?airconditioning_id={$value.airconditioning_id}_{$value.serialnumber}_{$value.brand}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>
                   <a href="/airconditioning/{$value.airconditioning_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs" title="Excluir Ar Condicionado"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>

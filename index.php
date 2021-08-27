@@ -74,6 +74,8 @@
 
 		$company["name_person"]	= NULL;
 		$company["visitants"]	= NULL;
+		$company["daydate"]		= NULL;
+		$company["date_fim"]	= NULL;
 		$company["search"]		= NULL;
 
 		
@@ -106,14 +108,16 @@
 			}
 		}
 
-		$firstday 	= '1';
-		$lastday 	= date('t');
-		$year 		= date('Y');
-		$month 		= date('m');
-		
-		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		if ((!isset($_GET["name_person"]) || $_GET["name_person"] == '')) {
+			$firstday 	= '1';
+			$lastday 	= date('t');
+			$year 		= date('Y');
+			$month 		= date('m');
+			
+			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+			}
 		}
 		
 		$company["visitants"]	= "visitants";
@@ -1106,25 +1110,72 @@
 		$company["daydate"]	    	= NULL;
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
-		$company["fireexting_id"]	= $_GET["fireexting_id"];
+		$company["tipe"] 			= NULL;
+		$company["capacity"]		= NULL;
+		$company["fireexting_id"]	= NULL;
+		
+		if (isset($_GET["fireexting_id"])) {
+			$fireexting_id = explode('_',$_GET["fireexting_id"]);
+			
+			$company["fireexting_id"]	= $fireexting_id[0];
+			if (count($fireexting_id) > 1) {
+				$company["capacity"]= $fireexting_id[1];
+				$company["tipe"]	= $fireexting_id[2];
+			}
+		}
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
 			$msg = Metodo::divideMessage($_GET["msg"]);
 			$_GET["msg"] = '';
-		} 
+		}
+
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+	
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
+			}
+		}
 		
-		$historics	= Metodo::selectRegister($company, "HistoricE");
-		if ($historics[0] == NULL) {
-			$historics[0][0] = ["fireexting_id"=>$_GET["fireexting_id"],"historic_id"=> NULL ];
+		$firstday 	= '1';
+		$lastday 	= date('t');
+		$year 		= date('Y');
+		$month 		= date('m');
+		
+		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		}
+		$historic	= Metodo::selectRegister($company, "HistoricE");
+		if ($historic[0] == NULL) {
+			
+			$historic[0][0] = ["fireexting_id"=>$company["fireexting_id"],
+			"capacity"=> $company["capacity"],
+			"tipe"=> $company["tipe"],
+			"historic_id"=> NULL ];
 		}
 		
 		$page = new PageHistoricE();
 		
 		$page->setTpl("historic", array(
-			"historics"=>$historics[0],
-			"pgs"=>$historics[1],
+			"historics"=>$historic[0],
+			"pgs"=>$historic[1],
 			"msg"=>$msg
 		));
 		
@@ -1347,14 +1398,14 @@
 
 		$date = explode(" ",date('d-m-Y H:i'));
 		$dt["date"]		= $date[0];
-		$responsable["name_person"] = $_SESSION["User"]["name_person"];
+		$responsables	= Metodo::selectRegister($company, "Responsable");
 
 		$page = new PagePurifier();
 
 		$page->setTpl("purifier-create",array(
 			"msg"=>$msg,
 			"date"=>$dt,
-			"purifier"=>$responsable,
+			"responsables"=>$responsables[0],
 			"locations"=>$locations,
 			"locais"=>$locais
 		));
@@ -1366,7 +1417,7 @@
 		
 		$purifier = new Purifier();
 		
-		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -1408,6 +1459,8 @@
 		$locations = Location::listAll($company);
 		$locais = Local::listAll($company);
 
+		$responsables	= Metodo::selectRegister($company, "Responsable");
+
 		$purifier = new Purifier();
 		$purifier->getById($purifier_id);
 		
@@ -1425,6 +1478,7 @@
 		$page ->setTpl("purifier-update", array(
 			"purifier"=>$purifier->getValues(),
 			"locations"=>$locations,
+			"responsables"=>$responsables[0],
 			"locais"=>$locais,
 			"msg"=>$msg
 		));
@@ -1436,7 +1490,7 @@
 		$purifier->getById($purifier_id);
 		
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -1463,10 +1517,13 @@
 		$company["daydate"]	    	= NULL;
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
+		$company["purifier_id"]		= NULL;
+		$company["serialnumber"]	= NULL;
 		
 		if (isset($_GET["purifier_id"])) {
 			$purifier_id = explode('_',$_GET["purifier_id"]);
 			$company["purifier_id"]		= $purifier_id[0];
+			$company["serialnumber"]		= $purifier_id[1];
 		}
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -1476,27 +1533,42 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
-		} 
-		
-		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-		{
-			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+	
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
 			}
 		}
 		
+		$firstday 	= '1';
+		$lastday 	= date('t');
+		$year 		= date('Y');
+		$month 		= date('m');
+		
+		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		}
+	
 		$historic	= Metodo::selectRegister($company, "HistoricP");
 
 		if ($historic[0] == NULL) {
-			$historic[0][0] = ["purifier_id"=>$purifier_id[0],"serialnumber"=> $purifier_id[1],"historic_id"=> NULL ];
+			$historic[0][0] = ["purifier_id"=>$company["purifier_id"],"serialnumber"=> $company["serialnumber"],"historic_id"=> NULL ];
 		}
 		
 		if (isset($historic[0][0]["MESSAGE"])) {
@@ -1504,7 +1576,6 @@
 		} else {
 			$historic[0][0]["MESSAGE"] = 'VAZIO';
 		}
-
 
 		$page = new PageHistoricP();
 		
@@ -1558,7 +1629,7 @@
 		
 		$purifier = new HistoricP();
 		
-		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+		$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
 		
 		foreach ($ppost as $key => $value) {
 			$_POST[$key] = $value;
@@ -1628,7 +1699,7 @@
 		$purifier_id = $_POST['purifier_id'];
 
 		if (isset($_POST)) {
-			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"]]);
+			$ppost = Metodo::convertDateToDataBase(["daydate"=>$_POST["daydate"], "nextmanager"=>$_POST["nextmanager"]]);
 			foreach ($ppost as $key => $value) {
 				$_POST[$key] = $value;
 			}
@@ -2156,7 +2227,19 @@
 		$company["daydate"]	    	= NULL;
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
-		$company["hydrant_id"]		= $_GET["hydrant_id"];
+		$company["hydrant_id"]		= NULL;
+		$company["tipe"]			= NULL;
+		$company["idnumber"]		= NULL;
+
+		if (isset($_GET["hydrant_id"])) {
+			$hydrant_id = explode('_',$_GET["hydrant_id"]);
+			
+			$company["hydrant_id"]	= $hydrant_id[0];
+			if (count($hydrant_id) > 1) {
+				$company["idnumber"]= $hydrant_id[1];
+				$company["tipe"]	= $hydrant_id[2];
+			}
+		}
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
@@ -2165,34 +2248,54 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+	
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
 			}
-		} 
+		}
 		
-		if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
-		{
-			$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
-			}
+		$firstday 	= '1';
+		$lastday 	= date('t');
+		$year 		= date('Y');
+		$month 		= date('m');
+		
+		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
 		}
 		
 		$historic	= Metodo::selectRegister($company, "HistoricH");
+		
 		if ($historic[0] == NULL) {
-			$historic[0][0]["historic_id"] = NULL;
-		}
-		$historic[0][0]["hydrant_id"] = $_GET["hydrant_id"];
 
+			$historic[0][0] = ["hydrant_id"=>$company["hydrant_id"],
+								"idnumber"=> $company["idnumber"],
+								"tipe"=> $company["tipe"],
+								"historic_id"=> NULL ];
+		}
+		
 		if (isset($historic[0][0]["MESSAGE"])) {
 			$msg = Metodo::divideMessage($historic[0][0]["MESSAGE"]);
 		} else {
 			$historic[0][0]["MESSAGE"] = 'VAZIO';
 		}
+
 		$page = new PageHistoricH();
 		
 		$page->setTpl("historic", array(
@@ -2485,11 +2588,24 @@
 	$app->get('/historicA', function() {
 		User::verifyLogin();
 		
-		$company["historic"]		= NULL;
-		$company["daydate"]	    	= NULL;
-		$company["search"] 			= NULL;
-		$company["airconditioning_id"]	= $_GET["airconditioning_id"];
-
+		$company["historic"]			= NULL;
+		$company["daydate"]	    		= NULL;
+		$company["date_fim"]    		= NULL;
+		$company["search"] 				= NULL;
+		$company["brand"] 				= NULL;
+		$company["airconditioning_id"]	= NULL;
+		$company["serialnumber"]		= NULL;
+		
+		if (isset($_GET["airconditioning_id"])) {
+			$aircond_id = explode('_',$_GET["airconditioning_id"]);
+			
+			$company["airconditioning_id"]	= $aircond_id[0];
+			if (count($aircond_id) > 1) {
+				$company["serialnumber"]	= $aircond_id[1];
+				$company["brand"]			= $aircond_id[2];
+			}
+		}
+		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO',"err"=> 'VAZIO'];		
 
 		if ((isset($_GET["msg"]) && $_GET["msg"] != '')) {
@@ -2497,18 +2613,46 @@
 			$_GET["msg"] = '';
 		} 
 		
-		if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
-			$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
-
-			foreach ($gget as $key => $value) {
-				$_GET[$key] = $value;
+		if (isset($_GET["search"])) {
+			if ((isset($_GET["daydate"]) && $_GET["daydate"] != '')) {
+				$gget = Metodo::convertDateToDataBase(["daydate"=>$_GET["daydate"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+			if ( (isset($_GET["date_fim"]) && $_GET["date_fim"] != '')) 
+			{
+				$gget = Metodo::convertDateToDataBase(["date_fim"=>$_GET["date_fim"]]);
+	
+				foreach ($gget as $key => $value) {
+					$_GET[$key] = $value;
+				}
+			} 
+	
+			foreach ($_GET as $key => $value) {
+				$company[$key] = $value;
 			}
-		} 
+		}
+		
+		$firstday 	= '1';
+		$lastday 	= date('t');
+		$year 		= date('Y');
+		$month 		= date('m');
+		
+		if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
+			$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
+			$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
+		}
 		
 		$historic	= Metodo::selectRegister($company, "HistoricA");
-
+		
 		if ($historic[0] == NULL) {
-			$historic[0][0] = ["airconditioning_id"=>$_GET["airconditioning_id"],"historic_id"=> NULL ];
+			
+			$historic[0][0] = ["airconditioning_id"=>$company["airconditioning_id"],
+								"serialnumber"=> $company["serialnumber"],
+								"brand"=> $company["brand"],
+								"historic_id"=> NULL ];
 		}
 		
 		if (isset($historic[0][0]["MESSAGE"])) {
@@ -2516,7 +2660,7 @@
 		} else {
 			$historic[0][0]["MESSAGE"] = 'VAZIO';
 		}
-	
+		
 		$page = new PageHistoricA();
 		
 		$page->setTpl("historic", array(

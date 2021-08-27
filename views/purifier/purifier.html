@@ -78,7 +78,6 @@
                 <th>Nº de Séria</th>
                 <th>Localização</th>
                 <th>Responsável</th>
-                <th>Data Recarga</th>
                 <th>Ação</th>
               </tr>
             </thead>
@@ -89,7 +88,6 @@
                 <td>{$value.serialnumber}</td>
                 <td>{$value.deslocation}</td>
                 <td>{$value.responsable}</td>
-                <td>{$value.nextmanager}</td>
                 <td>
                   <a href="/purifier/{$value.purifier_id}" class="btn btn-primary btn-xs" title="Editar Purificador"><i class="fa fa-edit"></i></a>
                   <a href="/historicP?purifier_id={$value.purifier_id}_{$value.serialnumber}" class="btn btn-success btn-xs" title="Cadastrar Histórico"><i class="fa fa-save"></i></a>

@@ -108,99 +108,39 @@
             return $pgs;
         }
 
-        public function divideMessage($message)
-        {
-            
-            $mgg = explode(':', $message);
-            
-            $msg["state"]   = $mgg[0];
-            $msg["msg"]     = $mgg[1];
-            $j= 0;
-            $text= '';
-            
-            if(count($mgg) > 2) {
-                foreach ($mgg as $key => $value) {
-                    if($j > 1) {
-                        $text = $text.$value;
-                    }
-                    $j++;
-                    $msg["err"] = $text;
-                }
-            } else {
-                $msg["err"]     = 'Processado com Sucesso!';
-            }
-           
-			$message = '';
-            return $msg;
-        }
-
-        public function insertcolor($element,$elementCompare,$elementStatus)
-        {
-            $elem = '#eff5a1';
-            if ($elementCompare != null) {
-                $d2 = Metodo::compareDate($element, $elementCompare);
-                
-                if ($elementStatus == '0') 
-                {
-                    if ($d2 === "menor") 
-                    {
-                        $elem = '#f5a1a1';
-                    } else if ($d2 === "maior") 
-                    {
-                        $elem = '#eff5a1';
-                    } 
-                    
-                }
-                if ($elementStatus == '1') 
-                {
-                    if ($d2 === "menor") 
-                    {
-                        $elem = '#f5a1a1';
-                    } 
-                    if ($d2 === "igual") 
-                    {
-                        $elem = '#a8f5a1';
-                    } 
-                    if ($d2 === "maior") 
-                    {
-                        $elem = '#a1c5f5';
-                    }
-                }
-                if ($elementStatus == '2') {
-                    $elem = '#f5d5a1';
-                }
-            }
-            return $elem;
-        }
-    
-        private function compareDate($datePrevision,$dateExecution)
-        {
-            $viewdatePre = explode('-',$datePrevision);
-            $viewdateExe = explode('-',$dateExecution);
-            
-            $p = $viewdatePre[2].'-'.$viewdatePre[1].'-'.$viewdatePre[0];
-            $e = $viewdateExe[2].'-'.$viewdateExe[1].'-'.$viewdateExe[0];
-            $d1     =date("Y-m-d", strToTime($p));
-            $dta    =date("Y-m-d", strToTime($e));
-        
-            $d2 = '';
-            if ($d1 > $dta)  
-            { 
-                $d2 = 'maior';
-            } else if ($d1 < $dta)  
-            { 
-                $d2 = 'menor';
-            } else 
-            { 
-                $d2 = 'igual';
-            } 
-            return $d2;
-        }
-
         public function selectRegister($act = array(), $model)
         {
             $classModel = "";
             $pgs        = [];
+//====================================================================================================\\
+//                     Início de verificar limite do filtro e período do filtro                       \\
+//====================================================================================================\\
+            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
+            
+            $act["limit"] = (isset($act["limit"]) && $act["limit"] != '') ? $act["limit"] : 20;
+            
+            if (!isset($act["start"]) || $act["start"] == "") {
+                $act["start"] = ($pg - 1) * $act["limit"];
+            }
+      
+            $dataInicio = Date('Y')."-".Date('m')."-"."01";
+            $dataFim    = Date('Y')."-".Date('m')."-".Date('t');
+   
+            if ((isset($act["daydate"]) && $act["daydate"] == "") || !isset($act["daydate"])) {
+                $act["daydate"] = $dataInicio;
+            }
+            
+            if ((isset($act["date_fim"]) && $act["date_fim"] == "") || !isset($act["date_fim"])) {
+                $act["date_fim"] = $dataFim;
+            }
+           
+//====================================================================================================\\            
+//                        Fim de verificar limite do filtro e período do filtro                       \\
+//====================================================================================================\\
+            
+
+
+
             if ($model == "Residual") {
                 $classModel = Residual::listAll($act);
             }
@@ -270,5 +210,14 @@
             }
             return [$classModel, $pgs];
         }
+        
+        public function divideMessage($msg){
+    
+            $m = explode(':',$msg);
+            $ms = ["state"=>$m[0], "msg"=> $m[1], "err"=>""];
+            
+            return $ms;
+        }
     }
+
 ?>

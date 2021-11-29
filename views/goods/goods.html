@@ -26,11 +26,11 @@
             <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
             <div class="col col-md-1"><label for="limit">Qtde</label>
               <select name="limit" id="limit" class="form-control">
-                <option value="10" selected>10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
+                <option value="20" selected>20</option>
                 <option value="25">25</option>
                 <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
               </select>
             </div>
             <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
@@ -41,8 +41,7 @@
     <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
           class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
           {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-      <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
-      <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
+      <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
     </div>
     <div class="box box-primary" {if="!$pgs"}hidden{/if}>
       <div class="row">
@@ -68,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" {if="$goods[0]['goods_id'] == NULL"}hidden{/if}>
+    <div class="box box-primary" {if="!$goods"}hidden{/if}>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -84,6 +83,7 @@
           </thead>
           <tbody>
             {loop="$goods"}
+            {if="$value.goods_id != ''"}
             <tr>
               <td>{$value.daydate}</td>
               <td>{$value.dayhour}</td>
@@ -96,6 +96,7 @@
                 <a href="/goods/{$value.goods_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
+            {/if}
             {/loop}
           </tbody>
         </table>

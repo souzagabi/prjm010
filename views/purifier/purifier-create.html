@@ -23,7 +23,6 @@
                   class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
                   {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
               <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
-              <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
             </div>
             <div class="box box-success">
             <!-- form start -->
@@ -68,15 +67,16 @@
                 </div>
               </div>
               <div class="box-body">
+                <div class="col col-md-2">
+                  <div class="form-group">
+                    <label for="nextmanager">Data de Recarga</label>
+                    <input type="text" class="form-control" name="nextmanager" id="nextmanager" onChange="replaceSlash(nextmanager)" required>
+                  </div>
+                </div>
                 <div class="col col-md-4">
                   <div class="form-group">
-                    <label for="person_id">Responsável</label>
-                    <select class="form-control" name="person_id" id="person_id" required>
-                      <option value=""></option>
-                      {loop="$responsables"}
-                      <option value="{$value.person_id}">{$value.responsable}</option>
-                      {/loop}
-                    </select>
+                    <label for="responsable">Responsável</label>
+                    <input type="text" class="form-control" name="responsable" id="responsable" onKeyUp="convertLowToUpper(responsable)" value="{$purifier.name_person}" required readonly>
                   </div>
                 </div>
               </div>

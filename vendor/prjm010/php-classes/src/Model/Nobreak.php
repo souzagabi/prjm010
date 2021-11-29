@@ -17,9 +17,8 @@
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            $results =  $sql->select("CALL prc_nobreak_sel(:location,:serialnumber, :daydate, :date_fim, :start, :limit)", array(
-                ":location"     => $list["location"],   
-                ":serialnumber" => $list["serialnumber"],   
+            $results =  $sql->select("CALL prc_nobreak_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
+                ":name_person"  => $list["name_person"],   
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],

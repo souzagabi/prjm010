@@ -21,16 +21,16 @@
               </form>
             </div>
             <form action="/clothing" method="get" <?php if( !$clothings ){ ?>hidden<?php } ?>>
-              <div class="col col-md-2"><label for="company">Empresa</label><input type="text" name="company" id="company" class="form-control"></div>
-              <div class="col col-md-2"><label for="dateout">Data Saída</label><input type="text" name="dateout" id="dateout" class="form-control" onChange="replaceSlash(dateout)"></div>
-              <div class="col col-md-2"><label for="datein">Data Entrada</label><input type="text" name="datein" id="datein" class="form-control" onChange="replaceSlash(datein)"></div>
+              <div class="col col-md-2"><label for="signcompany">Assinatura da Empresa</label><input type="text" name="signcompany" id="signcompany" class="form-control"></div>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
               <div class="col col-md-1"><label for="limit">Qtde</label>
                 <select name="limit" id="limit" class="form-control">
-                  <option value="10" selected>10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
+                  <option value="20" selected>20</option>
                   <option value="25">25</option>
                   <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
                 </select>
               </div>
               <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
@@ -42,7 +42,6 @@
             class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
             <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
         <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
-        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
       </div>
       <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
         <div class="row">
@@ -56,7 +55,7 @@
                 </li>
                 <?php $i = 1; ?>
                 <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["company"] ){ ?>&company=<?php echo htmlspecialchars( $pgs["list"]["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["signcompany"] ){ ?>&signcompany=<?php echo htmlspecialchars( $pgs["list"]["signcompany"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                 <?php } ?>
                 <li>
                   <a href="#" aria-label="Next">
@@ -68,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary"  <?php if( $clothings["0"]['clothing_id'] == NULL ){ ?>hidden<?php } ?>>
+      <div class="box box-primary" <?php if( !$clothings ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -84,6 +83,7 @@
             </thead>
             <tbody>
               <?php $counter1=-1;  if( isset($clothings) && ( is_array($clothings) || $clothings instanceof Traversable ) && sizeof($clothings) ) foreach( $clothings as $key1 => $value1 ){ $counter1++; ?>
+              <?php if( $value1["clothing_id"] != '' ){ ?>
               <tr>
                 <td><?php echo htmlspecialchars( $value1["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                 <td><?php echo htmlspecialchars( $value1["qtdeout"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -96,6 +96,7 @@
                   <a href="/clothing/<?php echo htmlspecialchars( $value1["clothing_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
+              <?php } ?>
               <?php } ?>
             </tbody>
           </table>
@@ -113,7 +114,7 @@
                 </li>
                 <?php $i = 1; ?>
                 <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["company"] ){ ?>&company=<?php echo htmlspecialchars( $pgs["list"]["company"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["dateout"] ){ ?>&dateout=<?php echo htmlspecialchars( $pgs["list"]["dateout"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["datein"] ){ ?>&datein=<?php echo htmlspecialchars( $pgs["list"]["datein"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+                <li><a href="clothing?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["signcompany"] ){ ?>&signcompany=<?php echo htmlspecialchars( $pgs["list"]["signcompany"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
                 <?php } ?>
                 <li>
                   <a href="#" aria-label="Next">

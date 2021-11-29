@@ -26,11 +26,11 @@
             <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
             <div class="col col-md-1"><label for="limit">Qtde</label>
               <select name="limit" id="limit" class="form-control">
-                <option value="10" selected>10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
+                <option value="20" selected>20</option>
                 <option value="25">25</option>
                 <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
               </select>
             </div>
             <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
@@ -41,8 +41,7 @@
     <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
           class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
           <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
-      <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" readonly ></div>
-      <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
+      <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
     </div>
     <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
       <div class="row">
@@ -68,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="box box-primary" <?php if( $goods["0"]['goods_id'] == NULL ){ ?>hidden<?php } ?>>
+    <div class="box box-primary" <?php if( !$goods ){ ?>hidden<?php } ?>>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
@@ -84,6 +83,7 @@
           </thead>
           <tbody>
             <?php $counter1=-1;  if( isset($goods) && ( is_array($goods) || $goods instanceof Traversable ) && sizeof($goods) ) foreach( $goods as $key1 => $value1 ){ $counter1++; ?>
+            <?php if( $value1["goods_id"] != '' ){ ?>
             <tr>
               <td><?php echo htmlspecialchars( $value1["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
               <td><?php echo htmlspecialchars( $value1["dayhour"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
@@ -96,6 +96,7 @@
                 <a href="/goods/<?php echo htmlspecialchars( $value1["goods_id"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
+            <?php } ?>
             <?php } ?>
           </tbody>
         </table>

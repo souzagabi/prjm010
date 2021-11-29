@@ -9,22 +9,10 @@
         {
             $sql = new Sql();
             
-            $list["start"] = 0;
-            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-          
-            $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-            if (($pg - 1) * $list["limit"] > 0) {
-                $list["start"] = ($pg - 1) * $list["limit"];
-            }
-            
-            if ($list["start"] == 1) {
-                $list["start"] = 0;
-            }
-    
-            return  $sql->select("CALL prc_clothing_sel(:company,:dateout, :datein,:start, :limit)", array(
-                ":company"      => $list["company"],
-                ":dateout"      => $list["dateout"],
-                ":datein"       => $list["datein"],
+            return  $sql->select("CALL prc_clothing_sel(:signcompany, :daydate, :date_fim,:start, :limit)", array(
+                ":signcompany"  => $list["signcompany"],
+                ":daydate"      => $list["daydate"],
+                ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
@@ -78,7 +66,9 @@
             ));
 
             $this->setData($results);
-            
+            echo '<pre>';
+            print_r($results[0]);
+            echo '</pre>';exit;
             return $results[0]["MESSAGE"];
             
         }

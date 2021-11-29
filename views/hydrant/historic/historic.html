@@ -21,32 +21,14 @@
                 <input type="text" name="hydrant_id" value="{if="$hydrants != NULL"}{$hydrants[0]['hydrant_id']}{/if}" hidden>
               </form>
             </div>
-            <form action="/historicH" method="get" {if="!$hydrants"}hidden{/if}>
-              <div class="col col-md-2"></div>
-              <input type="text" name="hydrant_id" value="{if="$hydrants != NULL"}{$hydrants[0]['hydrant_id']}{/if}" hidden>
-              <input type="text" name="idnumber"   value="{if="$hydrants != NULL"}{$hydrants[0]['idnumber']}{/if}" hidden>
-              <input type="text" name="tipe"       value="{if="$hydrants != NULL"}{$hydrants[0]['tipe']}{/if}" hidden>
-              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
-              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
-              <div class="col col-md-1"><label for="limit">Qtde</label>
-                <select name="limit" id="limit" class="form-control">
-                  <option value="10" selected>10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                </select>
-              </div>
-              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
-            </form>
+         
           </div>
         </div>
       </div>
       <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
             class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
             {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
-        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
+        <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
       </div>
       <div class="box box-primary" {if="$hydrants[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="row">

@@ -1,4 +1,4 @@
-<div class="content-wrapper" onload="insertcolor(dtprevision,rstatus)">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
@@ -14,10 +14,9 @@
     <!-- Main content -->
     <section class="content">
         <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-                class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-                {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-            <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
-            <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
+            class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+            {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+            <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
         </div>
          <!-- form start -->
          <form role="form" action="/anualplan/create" method="post">
@@ -147,7 +146,7 @@
                             <div class="col col-md-2">
                                 <div class="form-group">
                                     <label for="dtprevision">Data Previsão</label>
-                                    <input type="text" class="form-control" name="dtprevision" id="dtprevision" style="background-color: #eff5a1;" onkeyup="replaceSlash(dtprevision)" >
+                                    <input type="text" class="form-control" name="dtprevision" id="dtprevision" onkeyup="replaceSlash(dtprevision)" >
                                 </div>
                             </div>
                         </div>
@@ -158,14 +157,14 @@
                                         <label for="rstatus">Execução</label>
                                     </div>
                                     <div class="col col-md-4">
-                                        <input type="radio" name="rstatus" id="rstatus" value="0" onclick="insertcolor(dtprevision,rstatus)" checked required> Programado
+                                        <input type="radio" name="rstatus" id="rstatus" value="0" onclick="insertcolor(dtprevision,rstatus)" required> Programado
                                     </div>
-                                    <!-- <div class="col col-md-3">
+                                    <div class="col col-md-3">
                                         <input type="radio" name="rstatus" id="rstatus" value="1" onclick="insertcolor(dtprevision,rstatus)" required> SIM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     </div>
                                     <div class="col col-md-3">
                                         <input type="radio" name="rstatus" id="rstatus" value="2" onclick="insertcolor(dtprevision,rstatus)" required> NÃO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             

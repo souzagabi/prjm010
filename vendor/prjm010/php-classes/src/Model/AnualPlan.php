@@ -64,11 +64,8 @@
             if ($list["start"] == 1) {
                 $list["start"] = 0;
             }
-
-            $results =  $sql->select("CALL prc_anualplan_sel(:deslocation,:daydate,:date_fim,:start, :limit)", array(
-                ":deslocation"  => $list["deslocation"],
-                ":daydate"      => $list["daydate"],
-                ":date_fim"     => $list["date_fim"],
+            
+            $results =  $sql->select("CALL prc_anualplan_sel(:start, :limit)", array(
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
@@ -154,7 +151,7 @@
             
             $sql = new Sql();
  
-            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:dtexecution,:rstatus)", array(
+            $results = $sql->select("CALL prc_anualplan_update(:anualplan_id,:yyear,:equipament_id,:location_id,:local_id,:person_id,:frequency,:amonth,:dtprevision,:rstatus)", array(
                 ":anualplan_id"     => $this->getanualplan_id(),
                 ":yyear"            => $this->getyyear(),
                 ":equipament_id"    => $this->getequipament_id(),
@@ -164,7 +161,6 @@
                 ":frequency"        => $this->getfrequency(),
                 ":amonth"           => $this->getamonth(),
                 ":dtprevision"      => $this->getdtprevision(),
-                ":dtexecution"      => $this->getdtexecution(),
                 ":rstatus"          => $this->getrstatus()
             ));
            

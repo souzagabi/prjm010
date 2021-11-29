@@ -1,86 +1,82 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="box box-success title" style="background-color: #d5f8da;">
-      <h4>
-        Editção de Ar Condicionado
-      </h4>
-    </div>
-    <ol class="breadcrumb">
-      <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="/airconditioning">Ar Condicionado</a></li>
-      <li class="active"><a href="/airconditioning/create">Cadastrar</a></li>
-    </ol>
-  </section>
-  
-  <!-- Main content -->
-  <section class="content">
-  
-    <div class="row">
-      <div class="col-md-12">
-        <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-                class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-                {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-          <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
-          <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
-        </div>
-        <div class="box-footer"{if="$airconditioning.MESSAGE == 'VAZIO'"}hidden{/if}>
-          <a href="/airconditioning?limit=10" class="btn btn-warning">Voltar</a>
-        </div>
-        <div class="box box-success">
-          <!-- form start -->
-          <form role="form" action="/airconditioning/{if="$airconditioning.MESSAGE == 'VAZIO'"}{$airconditioning.airconditioning_id}{/if}" method="post" enctype="multipart/form-data">
-          
-            <div class="box-body" {if="$airconditioning.MESSAGE != 'VAZIO'"}hidden{/if}>
-              <div class="col col-md-2">
-                <div class="form-group">
-                    <label for="location_id">Localização</label>
-                    <select class="form-control" name="location_id" id="location_id" required>
-                      {loop="$locations"}
-                      <option value="{$value.location_id}" {if="$airconditioning.MESSAGE == 'VAZIO'"}{if="$value.location_id == $airconditioning.location_id"}selected{/if}{/if} >{$value.deslocation}</option>
-                      {/loop}
-                    </select>
-                </div>
-              </div>
-              <div class="col col-md-3">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="box box-success title" style="background-color: #d5f8da;">
+        <h4>
+          Editção de Ar Condicionado
+        </h4>
+      </div>
+      <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="/airconditioning">Ar Condicionado</a></li>
+        <li class="active"><a href="/airconditioning/create">Cadastrar</a></li>
+      </ol>
+    </section>
+    
+    <!-- Main content -->
+    <section class="content">
+    
+      <div class="row">
+          <div class="col-md-12">
+            <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
+                    class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
+                    {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
+                <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
+            </div>
+            <div class="box box-success">
+            <!-- form start -->
+            
+            <form role="form" action="/airconditioning/{$airconditioning.airconditioning_id}" method="post" enctype="multipart/form-data">
+             
+              <div class="box-body">
+                <div class="col col-md-2">
                   <div class="form-group">
-                      <label for="local_id">Local</label>
-                      <select class="form-control" name="local_id" id="local_id" required>
-                        {loop="$locais"}
-                        <option value="{$value.local_id}" {if="$airconditioning.MESSAGE == 'VAZIO'"}{if="$value.local_id == $airconditioning.local_id"}selected{/if}{/if} >{$value.deslocal}</option>
+                      <label for="location_id">Localização</label>
+                      <select class="form-control" name="location_id" id="location_id" required>
+                        {loop="$locations"}
+                        <option value="{$value.location_id}" {if="$value.location_id == $airconditioning.location_id"}selected{/if} >{$value.deslocation}</option>
                         {/loop}
                       </select>
                   </div>
-              </div>
-              <div class="col col-md-3">
-                <div class="form-group">
-                    <label for="brand">Marca </label>
-                    <input type="text" class="form-control" id="brand" name="brand" value="{$airconditioning.brand}" onKeyUp="convertLowToUpper(brand)" >
+                </div>
+                <div class="col col-md-3">
+                    <div class="form-group">
+                        <label for="local_id">Local</label>
+                        <select class="form-control" name="local_id" id="local_id" required>
+                          {loop="$locais"}
+                          <option value="{$value.local_id}" {if="$value.local_id == $airconditioning.local_id"}selected{/if} >{$value.deslocal}</option>
+                          {/loop}
+                        </select>
+                    </div>
+                </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                      <label for="brand">Marca </label>
+                      <input type="text" class="form-control" id="brand" name="brand" value="{$airconditioning.brand}" onKeyUp="convertLowToUpper(brand)" >
+                  </div>
+                </div>
+                <div class="col col-md-3">
+                  <div class="form-group">
+                      <label for="serialnumber">Nº de Séria </label>
+                      <input type="text" class="form-control" id="serialnumber" name="serialnumber" value="{$airconditioning.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" >
+                  </div>
                 </div>
               </div>
-              <div class="col col-md-3">
-                <div class="form-group">
-                    <label for="serialnumber">Nº de Séria </label>
-                    <input type="text" class="form-control" id="serialnumber" name="serialnumber" value="{$airconditioning.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" >
-                </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <input type="submit" id="airconditioning" class="btn btn-success" value="Atualizar Ar Condicionado">
+                
+                <a href="/airconditioning?limit=10" class="btn btn-warning">Voltar</a>
+                
               </div>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-              <input type="submit" id="airconditioning" class="btn btn-success" value="Atualizar Ar Condicionado">
-              
-              <a href="/airconditioning?limit=10" class="btn btn-warning">Voltar</a>
-              
-            </div>
-          </form>
-          
-        </div>
+            </form>
+          </div>
+          </div>
       </div>
-    </div>
     
-  </section>
-  <!-- /.content -->
-</div>
+    </section>
+    <!-- /.content -->
+    </div>
     <!-- /.content-wrapper -->
     

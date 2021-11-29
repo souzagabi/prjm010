@@ -14,15 +14,12 @@
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             $list["start"] = ($pg - 1) * $list["limit"];
        
-            $results =  $sql->select("CALL prc_airconditioning_sel(:location,:serialnumber,:brand,:start, :limit)", array(
-                ":location"     => $list["location"],
-                ":serialnumber" => $list["serialnumber"],
-                ":brand"        => $list["brand"],
+            return  $sql->select("CALL prc_airconditioning_sel(:daydate, :date_fim,:start, :limit)", array(
+                ":daydate"      => $list["daydate"],
+                ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
-
-            return $results;
         }
 
         public function getById($airconditioning_id) 
@@ -80,7 +77,7 @@
             $results = $sql->select("CALL prc_airconditioning_delete(:airconditioning_id)", array(
                 ":airconditioning_id"  =>(int)$this->getairconditioning_id()
             ));
-      
+        
             $this->setData($results);
             
             return $results[0]["MESSAGE"];

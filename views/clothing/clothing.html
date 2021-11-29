@@ -21,16 +21,16 @@
               </form>
             </div>
             <form action="/clothing" method="get" {if="!$clothings"}hidden{/if}>
-              <div class="col col-md-2"><label for="company">Empresa</label><input type="text" name="company" id="company" class="form-control"></div>
-              <div class="col col-md-2"><label for="dateout">Data Saída</label><input type="text" name="dateout" id="dateout" class="form-control" onChange="replaceSlash(dateout)"></div>
-              <div class="col col-md-2"><label for="datein">Data Entrada</label><input type="text" name="datein" id="datein" class="form-control" onChange="replaceSlash(datein)"></div>
+              <div class="col col-md-2"><label for="signcompany">Assinatura da Empresa</label><input type="text" name="signcompany" id="signcompany" class="form-control"></div>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
               <div class="col col-md-1"><label for="limit">Qtde</label>
                 <select name="limit" id="limit" class="form-control">
-                  <option value="10" selected>10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
+                  <option value="20" selected>20</option>
                   <option value="25">25</option>
                   <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
                 </select>
               </div>
               <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
@@ -42,7 +42,6 @@
             class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
             {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
         <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
-        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
       </div>
       <div class="box box-primary" {if="!$pgs"}hidden{/if}>
         <div class="row">
@@ -56,7 +55,7 @@
                 </li>
                 {$i = 1}
                 {loop="$pgs"}
-                <li><a href="clothing?pg={$i}{if="$pgs.list.company"}&company={$pgs.list.company}{/if}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                <li><a href="clothing?pg={$i}{if="$pgs.list.signcompany"}&signcompany={$pgs.list.signcompany}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
                 {/loop}
                 <li>
                   <a href="#" aria-label="Next">
@@ -68,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="box box-primary"  {if="$clothings[0]['clothing_id'] == NULL"}hidden{/if}>
+      <div class="box box-primary" {if="!$clothings"}hidden{/if}>
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
@@ -84,6 +83,7 @@
             </thead>
             <tbody>
               {loop="$clothings"}
+              {if="$value.clothing_id != ''"}
               <tr>
                 <td>{$value.dateout}</td>
                 <td>{$value.qtdeout}</td>
@@ -96,6 +96,7 @@
                   <a href="/clothing/{$value.clothing_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
+              {/if}
               {/loop}
             </tbody>
           </table>
@@ -113,7 +114,7 @@
                 </li>
                 {$i = 1}
                 {loop="$pgs"}
-                <li><a href="clothing?pg={$i}{if="$pgs.list.company"}&company={$pgs.list.company}{/if}{if="$pgs.list.dateout"}&dateout={$pgs.list.dateout}{/if}{if="$pgs.list.datein"}&datein={$pgs.list.datein}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+                <li><a href="clothing?pg={$i}{if="$pgs.list.signcompany"}&signcompany={$pgs.list.signcompany}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
                 {/loop}
                 <li>
                   <a href="#" aria-label="Next">

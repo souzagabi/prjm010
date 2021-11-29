@@ -8,28 +8,14 @@
         public static function listAll($list)
         {
             $sql = new Sql();
-            
-            $list["start"] = 0;
-            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
           
-            $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-            if (($pg - 1) * $list["limit"] > 0) {
-                $list["start"] = ($pg - 1) * $list["limit"];
-            }
-            
-            if ($list["start"] == 1) {
-                $list["start"] = 0;
-            }
-
-            $results =  $sql->select("CALL prc_visitant_sel(:name_person, :daydate, :date_fim, :start, :limit)", array(
-                ":name_person"  => $list["name_person"],   
+            return  $sql->select("CALL prc_visitant_sel(:empresa, :daydate, :date_fim, :start, :limit)", array(
+                ":empresa"      => $list["empresa"],   
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
-
-            return $results;
         }
 
         public static function listClassification()

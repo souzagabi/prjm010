@@ -17,9 +17,7 @@
                 $list["start"] = ($pg - 1) * $list["limit"];
             }
             
-            $results =  $sql->select("CALL prc_purifier_sel(:location,:serialnumber,:daydate, :date_fim, :start, :limit)", array(
-                ":location"     => $list["location"],
-                ":serialnumber" => $list["serialnumber"],
+            $results =  $sql->select("CALL prc_purifier_sel(:daydate, :date_fim, :start, :limit)", array(
                 ":daydate"      => $list["daydate"],
                 ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
@@ -45,13 +43,14 @@
         public function save()
         {
             $sql = new Sql();
-            
-            $results = $sql->select("CALL prc_purifier_save(:person_id, :daydate, :serialnumber, :location_id, :local_id)", array(
+           
+            $results = $sql->select("CALL prc_purifier_save(:person_id, :daydate, :serialnumber, :location_id, :local_id, :nextmanager)", array(
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":serialnumber"     => $this->getserialnumber(),
                 ":location_id"      => $this->getlocation_id(),
-                ":local_id"         => $this->getlocal_id()
+                ":local_id"         => $this->getlocal_id(),   
+                ":nextmanager"      => $this->getnextmanager()
             ));
             
             $this->setData($results);
@@ -64,13 +63,14 @@
             
             $sql = new Sql();
          
-            $results = $sql->select("CALL prc_purifier_update(:purifier_id,:person_id,:daydate,:serialnumber,:location_id,:local_id)", array(
+            $results = $sql->select("CALL prc_purifier_update(:purifier_id,:person_id,:daydate,:serialnumber,:location_id,:local_id,:nextmanager)", array(
                 ":purifier_id"      => $this->getpurifier_id(),    
                 ":person_id"        => $this->getperson_id(),    
                 ":daydate"          => $this->getdaydate(),
                 ":serialnumber"     => $this->getserialnumber(),
                 ":location_id"      => $this->getlocation_id(),
-                ":local_id"         => $this->getlocal_id()
+                ":local_id"         => $this->getlocal_id(),   
+                ":nextmanager"      => $this->getnextmanager()
             ));
 
             $this->setData($results);

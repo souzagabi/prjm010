@@ -9,19 +9,7 @@
         public static function listAll($list)
         {
             $sql = new Sql();
-            
-            $list["start"] = 0;
-            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-          
-            $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-            if (($pg - 1) * $list["limit"] > 0) {
-                $list["start"] = ($pg - 1) * $list["limit"];
-            }
-            
-            if ($list["start"] == 1) {
-                $list["start"] = 0;
-            }
-            
+                       
             return  $sql->select("CALL prc_material_sel(:material, :daydate, :date_fim, :start, :limit)", array(
                 ":material"     => $list["material"],   
                 ":daydate"      => $list["daydate"],

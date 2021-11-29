@@ -19,12 +19,6 @@
     
       <div class="row">
           <div class="col-md-12">
-            <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
-                  class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
-                  {if="$msg.state != 'SUCCESS' && $msg.state != 'ERROR'"}readonly hidden{/if}>
-              <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" readonly ></div>
-              <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" {if="$msg.err != NULL"}hidden{/if} readonly>{$msg.err}</textarea></div>
-            </div>
             <div class="box box-success">
             <!-- form start -->
             
@@ -32,22 +26,16 @@
                 <input type="text" name="purifier_id" value="{$historic.purifier_id}" hidden>
                 <input type="text" name="historic_id" value="{$historic.historic_id}" hidden>
                 <div class="box-body">
-                  <div class="col col-md-4">
-                    <div class="form-group">
-                      <label for="serialnumber">Nº Serial</label>
-                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
-                    </div>
-                  </div>
                   <div class="col col-md-2">
                     <div class="form-group">
                       <label for="daydate">Data da Manutenção</label>
                       <input type="text" class="form-control" id="daydate" name="daydate" value="{$historic.daydate}" onChange="replaceSlash(daydate)" >
                     </div>
                   </div>
-                  <div class="col col-md-3">
+                  <div class="col col-md-4">
                     <div class="form-group">
-                      <label for="nextmanager">Data da Próxima Manutenção</label>
-                      <input type="text" class="form-control" id="nextmanager" name="nextmanager" value="{$historic.nextmanager}" onChange="replaceSlash(nextmanager)" >
+                      <label for="serialnumber">Nº Serial</label>
+                      <input type="text" class="form-control" name="serialnumber" id="serialnumber" value="{$historic.serialnumber}" onKeyUp="convertLowToUpper(serialnumber)" required readonly>
                     </div>
                   </div>
                                 

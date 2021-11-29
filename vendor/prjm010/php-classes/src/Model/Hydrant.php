@@ -14,10 +14,7 @@
             $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
             $list["start"] = ($pg - 1) * $list["limit"];
             
-            $results =  $sql->select("CALL prc_hydrant_sel(:deslocation,:tipe,:idnumber,:start, :limit)", array(
-                ":deslocation"  => $list["deslocation"],
-                ":tipe"         => $list["tipe"],
-                ":idnumber"     => $list["idnumber"],
+            $results =  $sql->select("CALL prc_hydrant_sel(:start, :limit)", array(
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));

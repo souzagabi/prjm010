@@ -12,32 +12,29 @@
   <!-- Main content -->
   <section class="content">
     <div class="box box-primary">
-      <div class="col form-control top">
-        <div class="row">
-          <div class="col col-md-2">
-            <form action="/nobreak/create" method="get">
-              <input type="submit" name="btnnobreak" class="btn btn-success" value="Cadastrar Nobreak">
-              <input type="text" name="nobreak" value="nobreak" hidden>
-            </form>
-          </div>
-          <form action="/nobreak" method="get" {if="!$nobreaks"}hidden{/if}>
-            <div class="col col-md-2"><label for="location">Localização</label><input type="text" name="location" id="location" class="form-control"></div>
-            <div class="col col-md-2"><label for="serialnumber">Nº Serial</label><input type="text" name="serialnumber" id="serialnumber" class="form-control"></div>
-            <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
-            <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
-            <div class="col col-md-1"><label for="limit">Qtde</label>
-              <select name="limit" id="limit" class="form-control">
-                <option value="20" selected>20</option>
-                <option value="25">25</option>
-                <option value="30">30</option>
-                <option value="35">35</option>
-                <option value="40">40</option>
-              </select>
-            </div>
-            <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
-          </form>
-        </div>
+      <div class="col col-md-2">
+        <form action="/nobreak/create" method="get">
+          <input type="submit" name="btnnobreak" class="btn btn-success" value="Cadastrar Nobreak">
+          <input type="text" name="nobreak" value="nobreak" hidden>
+        </form>
       </div>
+      <form action="/nobreak" method="get" {if="!$nobreaks"}hidden{/if}>
+        <div class="col col-md-2"><input type="text" name="location" id="location" class="form-control form-control-sm" placeholder="Localização"></div>
+        <div class="col col-md-2"><input type="text" name="serialnumber" id="serialnumber" class="form-control form-control-sm" placeholder="Nº Serial"></div>
+        <div class="col col-md-2"><input type="text" name="daydate" id="daydate"    class="form-control form-control-sm" placeholder="Data Início" onChange="replaceSlash(daydate)"></div>
+        <div class="col col-md-2"><input type="text" name="date_fim" id="date_fim"  class="form-control form-control-sm" placeholder="Data Fim" onChange="replaceSlash(date_fim)"></div>
+        <div class="col col-md-1">
+          <select name="limit" id="limit" class="form-control">
+            <option value="20" selected>20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+      </form>
     </div>
     <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
           class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
@@ -45,34 +42,30 @@
       <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
     </div>
     <div class="box box-primary" {if="!$pgs"}hidden{/if}>
-      <div class="row">
-        <div class="col col-md-12">
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              {$i = 1}
-              {loop="$pgs"}
-              <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
-              {/loop}
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {$i = 1}
+          {loop="$pgs"}
+          <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+          {/loop}
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
     <div class="box box-primary" {if="!$nobreaks"}hidden{/if}>
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
-            <tr class="alert-warning">
+            <tr class="alert alert-warning">
               <th>Data</th>
               <th>Localização</th>
               <th>Modelo do NoBreak</th>
@@ -102,28 +95,24 @@
       </div>
     </div>
     <div class="box box-primary" {if="!$pgs"}hidden{/if}>
-      <div class="row">
-        <div class="col col-md-12">
-          <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li>
-                <a href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              {$i = 1}
-              {loop="$pgs"}
-              <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
-              {/loop}
-              <li>
-                <a href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {$i = 1}
+          {loop="$pgs"}
+          <li><a href="nobreak?pg={$i}{if="$pgs.list.location"}&location={$pgs.list.location}{/if}{if="$pgs.list.serialnumber"}&serialnumber={$pgs.list.serialnumber}{/if}{if="$pgs.list.daydate"}&daydate={$pgs.list.daydate}{/if}{if="$pgs.list.date_fim"}&date_fim={$pgs.list.date_fim}{/if}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+          {/loop}
+          <li>
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </section>
 </div>

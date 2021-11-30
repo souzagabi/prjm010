@@ -4,9 +4,6 @@ body{
 .col {
     height: 50px;
 }
-.top {
-    height: 80px;
-}
 .top .btn{
     margin: 15px 0;
 }
@@ -15,6 +12,9 @@ body{
 }
 .title h4{
     margin-left: 10px;
+}
+.box.box-primary{
+    padding: 10px;
 }
 .breadcrumb{
     margin-right: 20px;

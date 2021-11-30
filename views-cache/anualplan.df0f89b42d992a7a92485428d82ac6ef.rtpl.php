@@ -12,68 +12,61 @@
     <!-- Main content -->
     <section class="content">
       <div class="box box-warning">
-        <div class="col form-control alert-warning">
-          <div class="row" style="color:#f60606; font-size: 16px; padding-left: 20px;">
-            <p>Para cadastrar o plano anual de manutenção é necessário estar cadastro "Equipamento", "Localização", "Local", "Responsável".</p>
-          </div>
+        <div class="alert alert-warning">
+          <p>Para cadastrar o plano anual de manutenção é necessário estar cadastro "Equipamento", "Localização", "Local", "Responsável".</p>
         </div>
       </div>
       <div class="box box-primary">
-        <div class="col form-control top">
-          <div class="row">
-            <div class="col col-md-3">
-              <form action="/equipament" method="get">
-                <label for="btnequipament" class="alert-warning">1</label>
-                <input type="submit" name="btnequipament" class="btn btn-success" value="Cadastro Equipamento">
-              </form>
-            </div>
-            <div class="col col-md-3">
-              <form action="/location" method="get">
-                <label for="btnlocation" class="alert-warning">2</label>
-                <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastro Localização">
-              </form>
-            </div>
-            <div class="col col-md-3">
-              <form action="/local" method="get">
-                <label for="btnlocal" class="alert-warning">3</label>
-                <input type="submit" name="btnlocal" class="btn btn-success" value="Cadastro Local">
-              </form>
-            </div>
-            <div class="col col-md-3">
-              <form action="/responsable" method="get">
-                <label for="btnresponsable" class="alert-warning">4</label>
-                <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastro Responsável">
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="box box-primary">
-        <div class="col form-control top">
-          <div class="row">
-            <div class="col col-md-4">
-              <form action="/anualplan/create" method="get">
-                <label for="btnanualplan" class="alert-warning">5</label>
-                <input type="submit" name="btnanualplan" class="btn btn-primary" value="Cadastrar Plano">
-              </form>
-            </div>
-            <form action="/anualplan" method="get" <?php if( !$anualplans ){ ?>hidden<?php } ?>>
-              <div class="col col-md-2"><label for="location">Localização</label><input type="text" name="location" id="location" class="form-control"></div>
-              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
-              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
-              <div class="col col-md-1"><label for="limit">Qtde</label>
-                <select name="limit" id="limit" class="form-control">
-                  <option value="20" selected>20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                  <option value="35">35</option>
-                  <option value="40">40</option>
-                </select>
-              </div>
-              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+        <div class="row">
+          <div class="col col-md-3">
+            <form action="/equipament" method="get">
+              <label for="btnequipament" class="alert-warning">1</label>
+              <input type="submit" name="btnequipament" class="btn btn-success" value="Cadastro Equipamento">
             </form>
-          </div> 
+          </div>
+          <div class="col col-md-3">
+            <form action="/location" method="get">
+              <label for="btnlocation" class="alert-warning">2</label>
+              <input type="submit" name="btnlocation" class="btn btn-success" value="Cadastro Localização">
+            </form>
+          </div>
+          <div class="col col-md-3">
+            <form action="/local" method="get">
+              <label for="btnlocal" class="alert-warning">3</label>
+              <input type="submit" name="btnlocal" class="btn btn-success" value="Cadastro Local">
+            </form>
+          </div>
+          <div class="col col-md-3">
+            <form action="/responsable" method="get">
+              <label for="btnresponsable" class="alert-warning">4</label>
+              <input type="submit" name="btnresponsable" class="btn btn-success" value="Cadastro Responsável">
+            </form>
+          </div>
         </div>
+      </div>
+      <div class="box box-primary">
+        <div class="col col-md-2">
+          <form action="/anualplan/create" method="get">
+            <label for="btnanualplan" class="alert-warning">5</label>
+            <input type="submit" name="btnanualplan" class="btn btn-primary" value="Cadastrar Plano">
+          </form>
+        </div>
+        <form action="/anualplan" method="get" <?php if( !$anualplans ){ ?>hidden<?php } ?>>
+          <div class="col col-md-2"><input type="text" name="location" id="location" class="form-control form-control-sm" placeholder="Localização"></div>
+          <div class="col col-md-2"><input type="text" name="daydate" id="daydate"    class="form-control form-control-sm" placeholder="Data Início" onChange="replaceSlash(daydate)"></div>
+          <div class="col col-md-2"><input type="text" name="date_fim" id="date_fim"  class="form-control form-control-sm" placeholder="Data Fim" onChange="replaceSlash(date_fim)"></div>
+          <div class="col col-md-2">
+            <select name="limit" id="limit" class="form-control">
+              <option value="20" selected>20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+          <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+        </form>
       </div>
       <div id="msg<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>-danger<?php } ?>" 
             class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
@@ -81,28 +74,24 @@
         <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
       </div>
       <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
-        <div class="row">
-          <div class="col col-md-12">
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <?php $i = 1; ?>
-                <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="anualplan?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
-                <?php } ?>
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <?php $i = 1; ?>
+            <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
+            <li><a href="anualplan?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+            <?php } ?>
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div class="box box-primary" <?php if( !$anualplans ){ ?>hidden<?php } ?>>
         <div class="box-body no-padding">
@@ -140,28 +129,24 @@
         </div>
       </div>
       <div class="box box-primary" <?php if( !$pgs ){ ?>hidden<?php } ?>>
-        <div class="row">
-          <div class="col col-md-12">
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <?php $i = 1; ?>
-                <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
-                <li><a href="anualplan?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
-                <?php } ?>
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <?php $i = 1; ?>
+            <?php $counter1=-1;  if( isset($pgs) && ( is_array($pgs) || $pgs instanceof Traversable ) && sizeof($pgs) ) foreach( $pgs as $key1 => $value1 ){ $counter1++; ?>
+            <li><a href="anualplan?pg=<?php echo htmlspecialchars( $i, ENT_COMPAT, 'UTF-8', FALSE ); ?><?php if( $pgs["list"]["daydate"] ){ ?>&daydate=<?php echo htmlspecialchars( $pgs["list"]["daydate"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["date_fim"] ){ ?>&date_fim=<?php echo htmlspecialchars( $pgs["list"]["date_fim"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["limit"] ){ ?>&limit=<?php echo htmlspecialchars( $pgs["list"]["limit"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?><?php if( $pgs["list"]["search"] ){ ?>&search=<?php echo htmlspecialchars( $pgs["list"]["search"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>"><?php echo htmlspecialchars( $i++, ENT_COMPAT, 'UTF-8', FALSE ); ?></a></li>
+            <?php } ?>
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </section>
   </div>

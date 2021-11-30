@@ -64,7 +64,7 @@
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
-              <tr class="alert-warning">
+              <tr class="alert alert-warning">
                 <th>Localização</th>
                 <th>Local</th>
                 <th>Marca</th>

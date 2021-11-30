@@ -13,18 +13,11 @@
     <!-- Main content -->
     <section class="content">
       <div class="box box-primary">
-        <div class="col form-control top">
-          <div class="row">
-            <div class="col col-md-4">
-              <form action="/historicH/create" method="get">
-                <input type="submit" name="btnhydrant" class="btn btn-success" value="Cadastrar Histórico">
-                <a href="/hydrant?pg=1" class="btn btn-warning">Voltar</a>
-                <input type="text" name="hydrant_id" value="{if="$hydrants != NULL"}{$hydrants[0]['hydrant_id']}{/if}" hidden>
-              </form>
-            </div>
-         
-          </div>
-        </div>
+        <form action="/historicH/create" method="get">
+          <input type="submit" name="btnhydrant" class="btn btn-success" value="Cadastrar Histórico">
+          <a href="/hydrant?pg=1" class="btn btn-warning">Voltar</a>
+          <input type="text" name="hydrant_id" value="{if="$hydrants != NULL"}{$hydrants[0]['hydrant_id']}{/if}" hidden>
+        </form>
       </div>
       <div id="msg{if="$msg.state == 'SUCCESS'"}-success{else}-danger{/if}" 
             class="box box-{if="$msg.state == 'SUCCESS'"}-success{else}danger{/if}" 
@@ -32,28 +25,24 @@
         <div class="msg"><input type="text" class="form-control msg-{if="$msg.state == 'SUCCESS' "}success alert-success{else}danger alert-danger{/if}" name="msg" value="{$msg.msg}" ></div>
       </div>
       <div class="box box-primary" {if="$hydrants[0]['historic_id'] == NULL"}hidden{/if}>
-        <div class="row">
-          <div class="col col-md-12">
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                {$i = 1}
-                {loop="$pgs"}
-                <li><a href="hydrant?pg={$i}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
-                {/loop}
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            {$i = 1}
+            {loop="$pgs"}
+            <li><a href="hydrant?pg={$i}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+            {/loop}
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div class="box box-primary" {if="$hydrants[0]['historic_id'] == NULL"}hidden{/if}>
         <div class="box-body no-padding">
@@ -83,7 +72,7 @@
         <div class="box-body no-padding">
           <table class="table table-straped">
             <thead class="thead-dark">
-              <tr class="alert-warning">
+              <tr class="alert alert-warning">
                 <th>Data</th>
                 <th>Chave</th>
                 <th>Mangeuira</th>
@@ -124,28 +113,24 @@
         </div>
       </div>
       <div class="box box-primary" {if="$hydrants[0]['historic_id'] == NULL"}hidden{/if}>
-        <div class="row">
-          <div class="col col-md-12">
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li>
-                  <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                {$i = 1}
-                {loop="$pgs"}
-                <li><a href="hydrant?pg={$i}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
-                {/loop}
-                <li>
-                  <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li>
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            {$i = 1}
+            {loop="$pgs"}
+            <li><a href="hydrant?pg={$i}{if="$pgs.list.limit"}&limit={$pgs.list.limit}{/if}{if="$pgs.list.search"}&search={$pgs.list.search}{/if}">{$i++}</a></li>
+            {/loop}
+            <li>
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </section>
 </div>

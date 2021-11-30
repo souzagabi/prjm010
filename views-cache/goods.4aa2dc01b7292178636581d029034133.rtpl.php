@@ -64,7 +64,7 @@
       <div class="box-body no-padding">
         <table class="table table-straped">
           <thead class="thead-dark">
-            <tr class="alert-warning">
+            <tr class="alert alert-warning">
               <th>Data</th>
               <th>Hora</th>
               <th>Mercadoria</th>

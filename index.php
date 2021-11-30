@@ -2060,9 +2060,8 @@
 		User::verifyLogin();
 		
 		$company["hydrant"]		= NULL;
-		$company["deslocation"]	= NULL;
+		$company["location"]	= NULL;
 		$company["tipe"]		= NULL;
-		$company["idnumber"]	= NULL;
 		$company["search"] 		= NULL;
 		
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
@@ -2800,11 +2799,11 @@
 	$app->get('/anualplan', function() {
 		User::verifyLogin();
 		
-		$company["anualplan"]		= NULL;
-		$company["deslocation"]   	= NULL;
-		$company["daydate"]	    	= NULL;
-		$company["date_fim"]    	= NULL;
-		$company["search"] 			= NULL;
+		$company["anualplan"]	= NULL;
+		$company["location"]	= NULL;
+		$company["daydate"]		= NULL;
+		$company["date_fim"]	= NULL;
+		$company["search"]		= NULL;
 
 		$msg = ["state"=>'VAZIO', "msg"=> 'VAZIO', "err"=>"VAZIO"];		
 		
@@ -2833,19 +2832,7 @@
 				$company[$key] = $value;
 			}
 		}
-		
-		if (!isset($_GET["deslocation"]) || $_GET["deslocation"] == '' ) {
-			$firstday 	= '1';
-			$lastday 	= date('t');
-			$year 		= date('Y');
-			$month 		= date('m');
-			
-			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
-			} 
-		}
-		
+
 		$anualplan	= Metodo::selectRegister($company, "AnualPlan");
 
 		if ($anualplan[0] == NULL) {
@@ -3548,7 +3535,7 @@
 		User::verifyLogin();
 
 		$company["generalcontrol"]	= NULL;
-		$company["deslocation"]    	= NULL;
+		$company["location"]    	= NULL;
 		$company["daydate"]	    	= NULL;
 		$company["date_fim"]    	= NULL;
 		$company["search"] 			= NULL;
@@ -3579,18 +3566,6 @@
 			}
 			foreach ($_GET as $key => $value) {
 				$company[$key] = $value;
-			}
-		}
-		
-		if (!isset($_GET["deslocation"]) || $_GET["deslocation"] == '' ) {
-			$firstday 	= '1';
-			$lastday 	= date('t');
-			$year 		= date('Y');
-			$month 		= date('m');
-			
-			if ((!isset($_GET["daydate"]) || ($_GET["daydate"] == '') ) && (!isset($_GET["date_fim"]) || ($_GET["date_fim"] == ''))) {
-				$company["daydate"] 	= $year.'-'.$month.'-'.$firstday;
-				$company["date_fim"] 	= $year.'-'.$month.'-'.$lastday;
 			}
 		}
 

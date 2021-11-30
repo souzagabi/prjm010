@@ -6,7 +6,8 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="/airconditioning">Ar Condicionadoes</a></li>
+        <li><a href="/airconditioning">Ar Condicionados</a></li>
+        <li class="active">Histórico</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -21,24 +22,7 @@
                 <input type="text" name="airconditioning_id" value="<?php if( $airconditionings != NULL ){ ?><?php echo htmlspecialchars( $airconditionings["0"]['airconditioning_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
               </form>
             </div>
-            <form action="/historicA" method="get" <?php if( !$airconditionings ){ ?>hidden<?php } ?>>
-              <div class="col col-md-2"></div>
-              <input type="text" name="airconditioning_id" value="<?php if( $airconditionings != NULL ){ ?><?php echo htmlspecialchars( $airconditionings["0"]['airconditioning_id'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
-              <input type="text" name="serialnumber"           value="<?php if( $airconditionings != NULL ){ ?><?php echo htmlspecialchars( $airconditionings["0"]['serialnumber'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
-              <input type="text" name="brand"               value="<?php if( $airconditionings != NULL ){ ?><?php echo htmlspecialchars( $airconditionings["0"]['brand'], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" hidden>
-              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
-              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
-              <div class="col col-md-1"><label for="limit">Qtde</label>
-                <select name="limit" id="limit" class="form-control">
-                  <option value="10" selected>10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                  <option value="30">30</option>
-                </select>
-              </div>
-              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
-            </form>
+         
           </div>
         </div>
       </div>
@@ -46,7 +30,6 @@
             class="box box-<?php if( $msg["state"] == 'SUCCESS' ){ ?>-success<?php }else{ ?>danger<?php } ?>" 
             <?php if( $msg["state"] != 'SUCCESS' && $msg["state"] != 'ERROR' ){ ?>readonly hidden<?php } ?>>
         <div class="msg"><input type="text" class="form-control msg-<?php if( $msg["state"] == 'SUCCESS'  ){ ?>success alert-success<?php }else{ ?>danger alert-danger<?php } ?>" name="msg" value="<?php echo htmlspecialchars( $msg["msg"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" ></div>
-        <div class="msg"><textarea class="form-control" name="err" id="err" rows="3" <?php if( $msg["err"] != NULL ){ ?>hidden<?php } ?> readonly><?php echo htmlspecialchars( $msg["err"], ENT_COMPAT, 'UTF-8', FALSE ); ?></textarea></div>
       </div>
       <div class="box box-primary" <?php if( $airconditionings["0"]['historic_id'] == NULL ){ ?>hidden<?php } ?>>
         <div class="row">

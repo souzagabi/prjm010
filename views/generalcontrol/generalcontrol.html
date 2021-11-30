@@ -21,6 +21,21 @@
                 <input type="text" name="generalcontrol" value="generalcontrol" hidden>
               </form>
             </div>
+            <form action="/generalcontrol" method="get" {if="!$generalcontrols"}hidden{/if}>
+              <div class="col col-md-2"><label for="location">Localização</label><input type="text" name="location" id="location" class="form-control"></div>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="20" selected>20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>
@@ -68,6 +83,7 @@
             </thead>
             <tbody>
               {loop="$generalcontrols"}
+              {if="$value.generalcontrol_id != ''"}
               <tr>
                 <td>{$value.deslocation}</td>
                 <td>{$value.deslocal}</td>
@@ -79,6 +95,7 @@
                   <a href="/generalcontrol/{$value.generalcontrol_id}/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
+              {/if}
               {/loop}
             </tbody>
           </table>

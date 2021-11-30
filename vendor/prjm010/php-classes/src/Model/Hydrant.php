@@ -8,15 +8,12 @@
         public static function listAll($list)
         {
             $sql = new Sql();
-            
-            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-          
-            $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-            $list["start"] = ($pg - 1) * $list["limit"];
-            
-            $results =  $sql->select("CALL prc_hydrant_sel(:start, :limit)", array(
-                ":start"        => $list["start"],
-                ":limit"        => $list["limit"]
+           
+            $results =  $sql->select("CALL prc_hydrant_sel(:location,:tipe,:start, :limit)", array(
+                ":location" => $list["location"],
+                ":tipe"     => $list["tipe"],
+                ":start"    => $list["start"],
+                ":limit"    => $list["limit"]
             ));
             
             return $results;

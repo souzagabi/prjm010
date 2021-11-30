@@ -6,7 +6,7 @@
       </h1>
       <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="/airconditioning?pg=1">Ar Condicionado</a></li>
+        <li class="active">Ar Condicionado</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -14,13 +14,27 @@
       <div class="box box-primary">
         <div class="col form-control top">
           <div class="row">
-            <div class="col col-md-4">
+            <div class="col col-md-3">
               <form action="/airconditioning/create" method="get">
                 <input type="submit" name="btnairconditioning" class="btn btn-success" value="Cadastrar Ar Condicionado">
                 <input type="text" name="airconditioning" value="airconditioning" hidden>
               </form>
             </div>
-           
+            <form action="/airconditioning" method="get" {if="!$airconditionings"}hidden{/if}>
+              <div class="col col-md-2"><label for="location">Localização</label><input type="text" name="location" id="location" class="form-control"></div>
+              <div class="col col-md-2"><label for="daydate">Data Inicio</label><input type="text" name="daydate" id="daydate" class="form-control" onChange="replaceSlash(daydate)"></div>
+              <div class="col col-md-2"><label for="date_fim">Data Fim</label><input type="text" name="date_fim" id="date_fim" class="form-control" onChange="replaceSlash(date_fim)"></div>
+              <div class="col col-md-1"><label for="limit">Qtde</label>
+                <select name="limit" id="limit" class="form-control">
+                  <option value="20" selected>20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                </select>
+              </div>
+              <input type="submit" name="search" class="btn btn-primary" value="Pesquisar">
+            </form>
           </div>
         </div>
       </div>

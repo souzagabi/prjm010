@@ -8,16 +8,11 @@
         public static function listGeneralControlAll($list)
         {
             $sql = new Sql();
-            
-            $list["start"] = 0;
-            $pg = isset($_GET["pg"]) ? $_GET["pg"] : 1;
-          
-            $list["limit"] = (isset($list["limit"]) && $list["limit"] != '') ? $list["limit"] : 10;
-            if (($pg - 1) * $list["limit"] > 0) {
-                $list["start"] = ($pg - 1) * $list["limit"];
-            }
-                     
-            $results =  $sql->select("CALL prc_generalcontrol_sel(:start, :limit)", array(
+                
+            $results =  $sql->select("CALL prc_generalcontrol_sel(:location,:daydate, :date_fim, :start, :limit)", array(
+                ":location"     => $list["location"],   
+                ":daydate"      => $list["daydate"],
+                ":date_fim"     => $list["date_fim"],
                 ":start"        => $list["start"],
                 ":limit"        => $list["limit"]
             ));
